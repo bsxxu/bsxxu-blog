@@ -9,7 +9,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh">
-      <body>
+      <body className="min-h-screen w-full flex items-center justify-center">
         <Header />
         <NextTopLoader />
         {children}
