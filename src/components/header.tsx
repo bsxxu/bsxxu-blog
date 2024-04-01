@@ -4,9 +4,13 @@ import Avatar from '@/assets/avatar.jpg';
 
 export default function Header() {
   return (
-    <div className="w-full h-10 flex items-center justify-between bg-slate-400  fixed top-0">
+    <div className="w-full h-10 px-20 py-7 flex items-center justify-between fixed top-0 backdrop-blur-sm">
       <Link href="/">
-        <Image src={Avatar} alt="avatar" className="w-10 h-10 rounded-full" />
+        <Image
+          src={Avatar}
+          alt="avatar"
+          className="w-10 h-10 rounded-full hover:rotate-180 transition-transform duration-500"
+        />
       </Link>
       <Link href="/blog">blog</Link>
     </div>

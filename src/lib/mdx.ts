@@ -2,6 +2,8 @@ import path from 'node:path';
 import fs from 'node:fs';
 import matter from 'gray-matter';
 import readingTime, { ReadTimeResults } from 'reading-time';
+import remarkHeadings, { Heading } from '@vcarl/remark-headings';
+import { remark } from 'remark';
 
 export type PostMetadata = {
   title: string;
@@ -42,4 +44,9 @@ export function getAllPost() {
 
 export function getPost(slug: string) {
   return readMDXFile(path.join(postsDir, slug));
+}
+
+export async function getHeadings(content: string) {
+  const result = await remark().use(remarkHeadings).process(content);
+  return (result.data.headings ?? []) as Heading[];
 }

@@ -1,6 +1,6 @@
 import Header from '@/components/header';
-import './styles/globals.css';
-import NextTopLoader from 'nextjs-toploader';
+import TopLoader from '@/components/top-loader';
+import '@/styles/globals.css';
 
 export default function RootLayout({
   children,
@@ -9,10 +9,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh">
-      <body className="min-h-screen w-full flex items-center justify-center">
+      <body>
+        <TopLoader />
         <Header />
-        <NextTopLoader />
-        {children}
+        <main className="max-w-5xl mx-auto">{children}</main>
       </body>
     </html>
   );

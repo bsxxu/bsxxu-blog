@@ -12,13 +12,17 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.0.1",
+    "@vcarl/remark-headings": "^0.1.0",
+    "framer-motion": "^11.0.24",
     "gray-matter": "^4.0.3",
+    "jotai": "^2.7.2",
     "next": "14.1.4",
     "nextjs-toploader": "^1.6.11",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
     "reading-time": "^1.5.0",
+    "remark": "^15.0.1",
     "remark-github-alerts": "0.1.0-beta.3"
   },
   "devDependencies": {
