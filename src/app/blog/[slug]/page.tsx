@@ -8,7 +8,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
     <>
       <div className="text-center mt-32">{metadata.title}</div>
       <div>{metadata.readingTime?.minutes}</div>
-      <div className="flex p-5 gap-5">
+      <div className="flex justify-center p-5 gap-5">
         <MDXRemote content={content} />
         <Toc headings={await getHeadings(content)} />
       </div>

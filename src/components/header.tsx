@@ -12,7 +12,10 @@ export default function Header() {
           className="w-10 h-10 rounded-full hover:rotate-180 transition-transform duration-500"
         />
       </Link>
-      <Link href="/blog">blog</Link>
+      <div className="space-x-5">
+        <Link href="/blog">blog</Link>
+        <Link href="/gallery">gallery</Link>
+      </div>
     </div>
   );
 }

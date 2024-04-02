@@ -1,6 +1,8 @@
 import { compile, run, RunOptions } from '@mdx-js/mdx';
 import * as runtime from 'react/jsx-dev-runtime';
 import remarkGithubAlerts from 'remark-github-alerts';
+import remarkGfm from 'remark-gfm';
+import rehypeShiki from '@shikijs/rehype';
 
 import 'remark-github-alerts/styles/github-base.css';
 import 'remark-github-alerts/styles/github-colors-light.css';
@@ -20,14 +22,15 @@ export default async function MDXRemote({ content }: { content: string }) {
     await compile(content, {
       outputFormat: 'function-body',
       development: true,
-      remarkPlugins: [remarkGithubAlerts],
+      remarkPlugins: [remarkGithubAlerts, remarkGfm],
+      rehypePlugins: [[rehypeShiki, { theme: 'dracula-soft' }]],
     }),
   );
 
   const Content = (await run(compiledMdx, runtime as RunOptions)).default;
 
   return (
-    <article>
+    <article className="prose">
       <Content components={components} />;
     </article>
   );

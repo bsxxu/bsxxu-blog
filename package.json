@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.0.1",
+    "@shikijs/rehype": "^1.2.3",
     "@vcarl/remark-headings": "^0.1.0",
     "framer-motion": "^11.0.24",
     "gray-matter": "^4.0.3",
@@ -23,11 +24,13 @@
     "react-icons": "^5.0.1",
     "reading-time": "^1.5.0",
     "remark": "^15.0.1",
+    "remark-gfm": "^4.0.0",
     "remark-github-alerts": "0.1.0-beta.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
+    "@tailwindcss/typography": "^0.5.12",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

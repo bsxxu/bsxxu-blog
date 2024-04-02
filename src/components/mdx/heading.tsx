@@ -11,8 +11,8 @@ export default function Heading<
   const H = as ?? 'h1';
   return (
     <H id={children?.toString()} {...rest} className="scroll-m-32 group">
-      <a href={`#${children}`} className="flex items-center">
-        <RxLink2 className="absolute -translate-x-5 transition-opacity opacity-0 group-hover:opacity-100" />
+      <a href={`#${children}`} className="flex items-center no-underline">
+        <RxLink2 className="absolute -translate-x-7 transition-opacity opacity-0 group-hover:opacity-100" />
         {children}
       </a>
     </H>
