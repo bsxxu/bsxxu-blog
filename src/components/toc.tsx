@@ -5,7 +5,7 @@ export default function Toc({ headings }: { headings: Heading[] }) {
   headings = headings.map(h => ({ ...h, depth: h.depth - min }));
 
   return (
-    <div className="p-2 sticky top-20 self-start">
+    <div className="p-2 sticky top-20 min-w-44 self-start">
       <div>Table of Contents</div>
       {headings.map(h => (
         <a

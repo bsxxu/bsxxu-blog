@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Avatar from '@/assets/avatar.jpg';
+import ThemesToggle from './themes-toggle';
 
 export default function Header() {
   return (
@@ -15,6 +16,7 @@ export default function Header() {
       <div className="space-x-5">
         <Link href="/blog">blog</Link>
         <Link href="/gallery">gallery</Link>
+        <ThemesToggle />
       </div>
     </div>
   );

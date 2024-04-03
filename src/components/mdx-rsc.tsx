@@ -30,7 +30,7 @@ export default async function MDXRemote({ content }: { content: string }) {
   const Content = (await run(compiledMdx, runtime as RunOptions)).default;
 
   return (
-    <article className="prose">
+    <article className="prose max-w-none">
       <Content components={components} />;
     </article>
   );

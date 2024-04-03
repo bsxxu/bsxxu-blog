@@ -14,10 +14,12 @@
     "@mdx-js/mdx": "^3.0.1",
     "@shikijs/rehype": "^1.2.3",
     "@vcarl/remark-headings": "^0.1.0",
+    "clsx": "^2.1.0",
     "framer-motion": "^11.0.24",
     "gray-matter": "^4.0.3",
     "jotai": "^2.7.2",
     "next": "14.1.4",
+    "next-themes": "^0.3.0",
     "nextjs-toploader": "^1.6.11",
     "react": "^18",
     "react-dom": "^18",
@@ -25,7 +27,8 @@
     "reading-time": "^1.5.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
-    "remark-github-alerts": "0.1.0-beta.3"
+    "remark-github-alerts": "0.1.0-beta.3",
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",

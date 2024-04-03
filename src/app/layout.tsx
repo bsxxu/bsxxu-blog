@@ -1,7 +1,7 @@
 import Header from '@/components/header';
 import TopLoader from '@/components/top-loader';
+import ComposeProvider from '@/providers';
 import '@/styles/globals.css';
-import { Provider } from 'jotai';
 
 export default function RootLayout({
   children,
@@ -10,13 +10,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh" className="scroll-smooth">
-      <Provider>
-        <body>
+      <body>
+        <ComposeProvider>
           <TopLoader />
           <Header />
           <main className="max-w-5xl mx-auto">{children}</main>
-        </body>
-      </Provider>
+        </ComposeProvider>
+      </body>
     </html>
   );
 }
