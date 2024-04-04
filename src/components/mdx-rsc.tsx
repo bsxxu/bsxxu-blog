@@ -1,4 +1,5 @@
 import { compile, run, RunOptions } from '@mdx-js/mdx';
+//TODO dev prod
 import * as runtime from 'react/jsx-dev-runtime';
 import remarkGithubAlerts from 'remark-github-alerts';
 import remarkGfm from 'remark-gfm';
@@ -23,6 +24,7 @@ export default async function MDXRemote({ content }: { content: string }) {
       outputFormat: 'function-body',
       development: true,
       remarkPlugins: [remarkGithubAlerts, remarkGfm],
+      //TODO day night switch
       rehypePlugins: [[rehypeShiki, { theme: 'dracula-soft' }]],
     }),
   );
@@ -30,7 +32,7 @@ export default async function MDXRemote({ content }: { content: string }) {
   const Content = (await run(compiledMdx, runtime as RunOptions)).default;
 
   return (
-    <article className="prose max-w-none">
+    <article className="prose max-w-3xl">
       <Content components={components} />;
     </article>
   );

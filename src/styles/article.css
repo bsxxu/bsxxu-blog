@@ -1,0 +1,7 @@
+@layer base {
+
+  .prose p a:hover,
+  .prose ul a:hover {
+    @apply text-yellow-400;
+  }
+}

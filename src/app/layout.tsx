@@ -1,7 +1,8 @@
 import Header from '@/components/header';
 import TopLoader from '@/components/top-loader';
 import ComposeProvider from '@/providers';
-import '@/styles/globals.css';
+import { sansFont } from '@/lib/fonts';
+import '@/styles/index.css';
 
 export default function RootLayout({
   children,
@@ -9,8 +10,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh" className="scroll-smooth">
-      <body>
+    <html lang="zh" className={`${sansFont.variable} scroll-smooth font-sans`}>
+      <body className="bg-bk text-ft transition-colors">
         <ComposeProvider>
           <TopLoader />
           <Header />

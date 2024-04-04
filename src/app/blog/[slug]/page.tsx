@@ -6,7 +6,9 @@ export default async function Post({ params }: { params: { slug: string } }) {
   const { content, metadata } = getPost(params.slug);
   return (
     <>
-      <div className="text-center mt-32">{metadata.title}</div>
+      <div className="text-center mt-32 mb-10 text-ft-strong text-3xl font-bold">
+        {metadata.title}
+      </div>
       <div>{metadata.readingTime?.minutes}</div>
       <div className="flex justify-center p-5 gap-5">
         <MDXRemote content={content} />

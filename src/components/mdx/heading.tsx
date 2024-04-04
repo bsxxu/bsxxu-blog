@@ -1,3 +1,4 @@
+import { cm } from '@/utils/common';
 import { RxLink2 } from 'react-icons/rx';
 
 export default function Heading<
@@ -7,11 +8,18 @@ export default function Heading<
     as?: T;
   },
 ) {
-  const { children, as, ...rest } = props;
+  const { children, className, as, ...rest } = props;
   const H = as ?? 'h1';
   return (
-    <H id={children?.toString()} {...rest} className="scroll-m-32 group">
-      <a href={`#${children}`} className="flex items-center no-underline">
+    <H
+      id={children?.toString()}
+      {...rest}
+      className={cm('scroll-m-32 group', className)}
+    >
+      <a
+        href={`#${children}`}
+        className="flex items-center no-underline font-bold"
+      >
         <RxLink2 className="absolute -translate-x-7 transition-opacity opacity-0 group-hover:opacity-100" />
         {children}
       </a>

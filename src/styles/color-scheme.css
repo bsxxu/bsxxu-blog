@@ -1,0 +1,21 @@
+@layer base {
+  :root {
+    --bk: 0 0% 100%;
+    --ft: 0 0% 15%;
+
+    --bk-minor: 0 0% 88%;
+    --ft-minor: 0 0% 50%;
+
+    --ft-strong: 0 0% 5%;
+  }
+
+  .dark {
+    --bk: 240 3% 13%;
+    --ft: 0 0% 87%;
+
+    --bk-minor: 0 0% 35%;
+    --ft-minor: 0 0% 67%;
+
+    --ft-strong: 0 0% 100%;
+  }
+}

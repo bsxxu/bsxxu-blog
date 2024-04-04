@@ -5,7 +5,7 @@ import ThemesToggle from './themes-toggle';
 
 export default function Header() {
   return (
-    <div className="w-full h-10 px-20 py-7 flex items-center justify-between fixed top-0 backdrop-blur-sm">
+    <div className="w-full h-10 px-20 py-7 flex items-center justify-between fixed top-0 backdrop-blur shadow">
       <Link href="/">
         <Image
           src={Avatar}
