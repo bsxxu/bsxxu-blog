@@ -4,4 +4,8 @@
   .prose ul a:hover {
     @apply text-yellow-400;
   }
+
+  .prose {
+    @apply min-w-96;
+  }
 }

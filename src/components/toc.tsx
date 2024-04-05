@@ -3,6 +3,8 @@
 import { cm } from '@/utils/common';
 import { Heading } from '@vcarl/remark-headings';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import * as Separator from '@radix-ui/react-separator';
+import BackTop from './back-top';
 
 export default function Toc({ headings }: { headings: Heading[] }) {
   const hs = useMemo(() => {
@@ -34,7 +36,7 @@ export default function Toc({ headings }: { headings: Heading[] }) {
   }, [hs]);
 
   return (
-    <div className="p-2 sticky top-20 min-w-44 self-start space-y-2 text-sm text-ft-minor">
+    <div className="p-2 sticky top-20 min-w-44 max-h-[80vh] self-start space-y-2 text-sm text-ft-minor">
       <div>Table of Contents</div>
       {hs.map(h => (
         <a
@@ -52,6 +54,11 @@ export default function Toc({ headings }: { headings: Heading[] }) {
           {h.value}
         </a>
       ))}
+      <Separator.Root
+        className="w-full h-[1px] bg-ft-minor"
+        orientation="horizontal"
+      />
+      <BackTop />
     </div>
   );
 }
