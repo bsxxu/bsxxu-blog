@@ -1,3 +1,6 @@
+@import 'remark-github-alerts/styles/github-base.css';
+@import 'remark-github-alerts/styles/github-colors-light.css';
+
 @layer base {
 
   .prose p a:hover,
