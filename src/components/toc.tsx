@@ -1,12 +1,12 @@
 'use client';
 
 import { cm } from '@/utils/common';
-import { Heading } from '@vcarl/remark-headings';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as Separator from '@radix-ui/react-separator';
 import BackTop from './back-top';
+import { TocHeading } from '@/lib/mdx/plugins/remark-heading';
 
-export default function Toc({ headings }: { headings: Heading[] }) {
+export default function Toc({ headings }: { headings: TocHeading[] }) {
   const hs = useMemo(() => {
     const min = Math.min(...headings.map(h => h.depth));
     return headings.map(h => ({ ...h, depth: h.depth - min }));
@@ -17,7 +17,7 @@ export default function Toc({ headings }: { headings: Heading[] }) {
 
   useEffect(() => {
     observer.current?.disconnect();
-    const elements = hs.map(h => document.getElementById(h.value));
+    const headings = hs.map(h => document.getElementById(h.slug));
 
     observer.current = new IntersectionObserver(
       entries => {
@@ -30,28 +30,27 @@ export default function Toc({ headings }: { headings: Heading[] }) {
       },
       { rootMargin: '0% 0% -75% 0%' },
     );
-    for (let e of elements) e && observer.current?.observe(e);
+    for (let h of headings) h && observer.current?.observe(h);
 
     return () => observer.current?.disconnect();
   }, [hs]);
 
   return (
-    <div className="p-2 sticky top-20 min-w-44 max-h-[80vh] self-start space-y-2 text-sm text-ft-minor">
+    <div className=" hidden p-2 sticky top-20 min-w-44 max-h-[80vh] self-start space-y-2 text-sm text-ft-minor sm:block">
       <div>Table of Contents</div>
       {hs.map(h => (
         <a
-          id={h.value}
-          key={h.value}
-          href={`#${h.value}`}
+          key={h.slug}
+          href={`#${h.slug}`}
           className={cm(
             'block whitespace-nowrap transition-all duration-500 hover:text-ft',
             {
-              ['text-ft-strong translate-x-2']: active === h.value,
+              ['text-ft-strong translate-x-2']: active === h.slug,
             },
           )}
           style={{ paddingLeft: h.depth * 20 }}
         >
-          {h.value}
+          {h.title}
         </a>
       ))}
       <Separator.Root

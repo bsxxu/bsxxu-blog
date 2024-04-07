@@ -2,7 +2,6 @@ import path from 'node:path';
 import fs from 'node:fs';
 import matter from 'gray-matter';
 import readingTime, { ReadTimeResults } from 'reading-time';
-import remarkHeadings, { Heading } from '@vcarl/remark-headings';
 import { remark } from 'remark';
 import { compile, run, RunOptions } from '@mdx-js/mdx';
 import * as devRuntime from 'react/jsx-dev-runtime';
@@ -10,6 +9,9 @@ import * as prodRuntime from 'react/jsx-runtime';
 import rehypeShiki from '@shikijs/rehype';
 import remarkGfm from 'remark-gfm';
 import remarkGithubAlerts from 'remark-github-alerts';
+import remarkHeading, { TocHeading } from './plugins/remark-heading';
+import rehypeInlineCode from './plugins/rehype-inline-code';
+import { SHIKI_THEMES } from '@/constants/shiki-themes';
 
 export type PostMetadata = {
   title: string;
@@ -35,6 +37,7 @@ export function readMDXFile(path: string) {
   };
 }
 
+//TODO slug去除后缀
 export function getAllPost() {
   const files = fs
     .readdirSync(postsDir)
@@ -53,20 +56,22 @@ export function getPost(slug: string) {
 }
 
 export async function getHeadings(content: string) {
-  const result = await remark().use(remarkHeadings).process(content);
-  return (result.data.headings ?? []) as Heading[];
+  const result = await remark().use(remarkHeading).process(content);
+  return (result.data.headings ?? []) as TocHeading[];
 }
 
-export async function complieAndRun(content: string) {
+//TODO 添加代码拷贝、语言标识，尝试remark插件
+export async function compileAndRun(content: string) {
   const compiledMdx = String(
     //TODO vfile
     await compile(content, {
       outputFormat: 'function-body',
       development: true,
-      remarkPlugins: [remarkGithubAlerts, remarkGfm],
-      //TODO day night switch
-      //TODO inline code
-      rehypePlugins: [[rehypeShiki, { theme: 'dracula-soft' }]],
+      remarkPlugins: [remarkHeading, remarkGithubAlerts, remarkGfm],
+      rehypePlugins: [
+        rehypeInlineCode,
+        [rehypeShiki, { themes: SHIKI_THEMES }],
+      ],
     }),
   );
   const runtime =
