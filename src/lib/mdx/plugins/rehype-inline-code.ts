@@ -2,21 +2,20 @@
 
 import { Element, Node, Parent } from 'hast';
 import { SKIP, visit } from 'unist-util-visit';
-import { bundledLanguages, getHighlighter, type Highlighter } from 'shiki';
+import { bundledLanguages, getHighlighter } from 'shiki';
 import { SHIKI_THEMES } from '@/constants/shiki-themes';
 
 const inlineRegex = /(.*){:(.*)}$/;
 
+//TODO 懒加载
+let highlighterPromise = getHighlighter({
+  langs: Object.keys(bundledLanguages),
+  themes: Object.values(SHIKI_THEMES),
+});
+
 export default function rehypeInlineCode() {
-  let promise: Promise<Highlighter>;
   return async (tree: Node) => {
-    if (!promise) {
-      promise = getHighlighter({
-        langs: Object.keys(bundledLanguages),
-        themes: Object.values(SHIKI_THEMES),
-      });
-    }
-    const highlighter = await promise;
+    const highlighter = await highlighterPromise;
     visit(tree, 'element', (node: Element, index: number, parent: Parent) => {
       if (node.tagName !== 'code') return;
       const match = (node.children[0] as any)?.value?.match(inlineRegex);

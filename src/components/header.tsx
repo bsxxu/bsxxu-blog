@@ -6,7 +6,7 @@ import ThemesToggle from './themes-toggle';
 //TODO 下滚效果 下滚后透明度减少 一些句子
 export default function Header() {
   return (
-    <div className="w-full h-10 px-20 py-7 flex items-center justify-between fixed top-0 backdrop-blur shadow">
+    <div className="w-full h-10 px-20 py-7 flex items-center justify-between fixed top-0 backdrop-blur shadow z-10">
       <Link href="/">
         <Image
           src={Avatar}

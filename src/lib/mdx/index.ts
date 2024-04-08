@@ -6,12 +6,11 @@ import { remark } from 'remark';
 import { compile, run, RunOptions } from '@mdx-js/mdx';
 import * as devRuntime from 'react/jsx-dev-runtime';
 import * as prodRuntime from 'react/jsx-runtime';
-import rehypeShiki from '@shikijs/rehype';
 import remarkGfm from 'remark-gfm';
 import remarkGithubAlerts from 'remark-github-alerts';
 import remarkHeading, { TocHeading } from './plugins/remark-heading';
 import rehypeInlineCode from './plugins/rehype-inline-code';
-import { SHIKI_THEMES } from '@/constants/shiki-themes';
+import rehypeCode from './plugins/rehype-code';
 
 export type PostMetadata = {
   title: string;
@@ -60,7 +59,6 @@ export async function getHeadings(content: string) {
   return (result.data.headings ?? []) as TocHeading[];
 }
 
-//TODO 添加代码拷贝、语言标识，尝试remark插件
 export async function compileAndRun(content: string) {
   const compiledMdx = String(
     //TODO vfile
@@ -68,10 +66,7 @@ export async function compileAndRun(content: string) {
       outputFormat: 'function-body',
       development: true,
       remarkPlugins: [remarkHeading, remarkGithubAlerts, remarkGfm],
-      rehypePlugins: [
-        rehypeInlineCode,
-        [rehypeShiki, { themes: SHIKI_THEMES }],
-      ],
+      rehypePlugins: [rehypeInlineCode, rehypeCode],
     }),
   );
   const runtime =

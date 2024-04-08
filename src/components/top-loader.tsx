@@ -11,9 +11,19 @@ export default function TopLoader() {
 
   return show ? (
     theme === 'light' ? (
-      <NextTopLoader showSpinner={false} color="#535353" />
+      <NextTopLoader
+        showSpinner={false}
+        color="#535353"
+        shadow={false}
+        zIndex={20}
+      />
     ) : (
-      <NextTopLoader showSpinner={false} color="#FFFFFF" />
+      <NextTopLoader
+        showSpinner={false}
+        color="#FFFFFF"
+        shadow={false}
+        zIndex={20}
+      />
     )
   ) : null;
 }

@@ -13,7 +13,12 @@ export default function Heading<
   return (
     <H id={id} {...rest} className={cm('scroll-m-32 group', className)}>
       <a href={`#${id}`} className="flex items-center no-underline font-bold">
-        <RxLink2 className="absolute -translate-x-7 transition-opacity opacity-0 group-hover:opacity-100" />
+        <RxLink2
+          className={cm(
+            'absolute transition-opacity opacity-0 group-hover:opacity-100 -translate-x-7',
+            { ['-translate-x-10']: H === 'h1' },
+          )}
+        />
         {children}
       </a>
     </H>

@@ -1,5 +1,6 @@
 import { UseMdxComponents } from '@mdx-js/mdx';
 import Heading from './heading';
+import Pre from './pre';
 
 const mdxComponents: ReturnType<UseMdxComponents> = {
   //TODO other components
@@ -9,6 +10,7 @@ const mdxComponents: ReturnType<UseMdxComponents> = {
   h4: (props: any) => <Heading as="h4" {...props} />,
   h5: (props: any) => <Heading as="h5" {...props} />,
   h6: (props: any) => <Heading as="h6" {...props} />,
+  pre: (props: any) => <Pre {...props} />,
 };
 
 export default mdxComponents;
