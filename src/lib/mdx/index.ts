@@ -2,8 +2,15 @@ import path from 'node:path';
 import fs from 'node:fs';
 import matter from 'gray-matter';
 import readingTime, { ReadTimeResults } from 'reading-time';
-import remarkHeadings, { Heading } from '@vcarl/remark-headings';
 import { remark } from 'remark';
+import { compile, run, RunOptions } from '@mdx-js/mdx';
+import * as devRuntime from 'react/jsx-dev-runtime';
+import * as prodRuntime from 'react/jsx-runtime';
+import remarkGfm from 'remark-gfm';
+import remarkGithubAlerts from 'remark-github-alerts';
+import remarkHeading, { TocHeading } from './plugins/remark-heading';
+import rehypeInlineCode from './plugins/rehype-inline-code';
+import rehypeCode from './plugins/rehype-code';
 
 export type PostMetadata = {
   title: string;
@@ -29,6 +36,7 @@ export function readMDXFile(path: string) {
   };
 }
 
+//TODO slug去除后缀
 export function getAllPost() {
   const files = fs
     .readdirSync(postsDir)
@@ -47,6 +55,22 @@ export function getPost(slug: string) {
 }
 
 export async function getHeadings(content: string) {
-  const result = await remark().use(remarkHeadings).process(content);
-  return (result.data.headings ?? []) as Heading[];
+  const result = await remark().use(remarkHeading).process(content);
+  return (result.data.headings ?? []) as TocHeading[];
+}
+
+export async function compileAndRun(content: string) {
+  const compiledMdx = String(
+    //TODO vfile
+    await compile(content, {
+      outputFormat: 'function-body',
+      development: true,
+      remarkPlugins: [remarkHeading, remarkGithubAlerts, remarkGfm],
+      rehypePlugins: [rehypeInlineCode, rehypeCode],
+    }),
+  );
+  const runtime =
+    process.env.NODE_ENV === 'development' ? devRuntime : prodRuntime;
+  const res = (await run(compiledMdx, runtime as RunOptions)).default;
+  return res;
 }

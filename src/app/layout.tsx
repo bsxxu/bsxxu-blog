@@ -1,6 +1,9 @@
 import Header from '@/components/header';
 import TopLoader from '@/components/top-loader';
-import '@/styles/globals.css';
+import ComposeProvider from '@/providers';
+import { Toaster } from 'react-hot-toast';
+import { sansFont } from '@/lib/fonts';
+import '@/styles/index.css';
 
 export default function RootLayout({
   children,
@@ -8,11 +11,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh">
-      <body>
-        <TopLoader />
-        <Header />
-        <main className="max-w-5xl mx-auto">{children}</main>
+    <html lang="zh" className={`${sansFont.variable} scroll-smooth font-sans`}>
+      <body className="bg-bk text-ft transition-colors">
+        <ComposeProvider>
+          <Toaster />
+          <TopLoader />
+          <Header />
+          <main className="max-w-5xl mx-auto">{children}</main>
+        </ComposeProvider>
       </body>
     </html>
   );
