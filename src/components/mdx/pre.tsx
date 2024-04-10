@@ -1,16 +1,17 @@
 'use client';
 
 import { success } from '@/lib/toast';
-import { cm } from '@/utils/common';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { RiFileCopyFill } from 'react-icons/ri';
 
+//TODO 代码展开收起
+//TODO 滚动条
 export default function Pre(
   props: React.ComponentPropsWithoutRef<'pre'> & {
     ['data-lang']?: string;
   },
 ) {
-  const { children, className, 'data-lang': dataLang, ...rest } = props;
+  const { children, 'data-lang': dataLang, ...rest } = props;
   const lang = (dataLang ?? 'plaintext').toUpperCase();
   const ref = useRef<HTMLDivElement>(null);
   const [code, setCode] = useState('');
@@ -24,15 +25,17 @@ export default function Pre(
   }, []);
 
   return (
-    <pre className={cm(className, 'relative group')} {...rest}>
-      <button
-        onClick={handleCopy}
-        className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-ft-minor group-hover:opacity-100"
-      >
-        <RiFileCopyFill />
-      </button>
-      <span className="lang absolute right-1 bottom-1">{lang}</span>
-      <div ref={ref}>{children}</div>
-    </pre>
+    <div className="relative group">
+      <pre {...rest}>
+        <button
+          onClick={handleCopy}
+          className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-ft-minor group-hover:opacity-100"
+        >
+          <RiFileCopyFill />
+        </button>
+        <span className="lang absolute right-1 bottom-5">{lang}</span>
+        <div ref={ref}>{children}</div>
+      </pre>
+    </div>
   );
 }

@@ -1,9 +1,11 @@
-import Header from '@/components/header';
+import Header from '@/components/header/header';
 import TopLoader from '@/components/top-loader';
 import ComposeProvider from '@/providers';
 import { Toaster } from 'react-hot-toast';
 import { sansFont } from '@/lib/fonts';
 import '@/styles/index.css';
+
+//TODO seo
 
 export default function RootLayout({
   children,

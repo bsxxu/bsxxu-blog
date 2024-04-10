@@ -1,7 +1,8 @@
+import { PostMetadataProvider } from './post-metadata-provider';
 import ThemeProvider from './theme-provider';
-import { Provider as JotaiProvider } from 'jotai';
+import { TopLoaderShowProvider } from './toploader-show-provider';
 
-const providers = [ThemeProvider, JotaiProvider];
+const providers = [ThemeProvider, TopLoaderShowProvider, PostMetadataProvider];
 
 export default function ComposeProvider({
   children,
