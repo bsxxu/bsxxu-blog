@@ -64,7 +64,7 @@ export async function compileAndRun(content: string) {
     //TODO vfile
     await compile(content, {
       outputFormat: 'function-body',
-      development: true,
+      development: process.env.NODE_ENV === 'development',
       remarkPlugins: [remarkHeading, remarkGithubAlerts, remarkGfm],
       rehypePlugins: [rehypeInlineCode, rehypeCode],
     }),
