@@ -7,6 +7,7 @@
     --ft-minor: 0 0% 50%;
 
     --ft-strong: 0 0% 5%;
+    --bk-strong: 204 11% 91%;
   }
 
   .dark {
@@ -17,5 +18,6 @@
     --ft-minor: 0 0% 67%;
 
     --ft-strong: 0 0% 100%;
+    --bk-strong: 240 3% 7%;
   }
 }

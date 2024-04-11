@@ -4,7 +4,7 @@ import { useTopLoaderShowValue } from '@/providers/toploader-show-provider';
 import { useTheme } from 'next-themes';
 import NextTopLoader from 'nextjs-toploader';
 
-//TODO zindex问题
+//TODO 找代替方案
 export default function TopLoader() {
   const show = useTopLoaderShowValue();
   const { theme } = useTheme();

@@ -2,6 +2,7 @@
 
 import { PostMetadata } from '@/lib/mdx';
 import { useSetPostMetadata } from '@/providers/post-metadata-provider';
+import { useEffect } from 'react';
 
 export default function PostMetadataSetter({
   children,
@@ -11,6 +12,6 @@ export default function PostMetadataSetter({
   data: PostMetadata;
 }) {
   const setPostMetaData = useSetPostMetadata();
-  setPostMetaData(data);
+  useEffect(() => setPostMetaData(data), [data, setPostMetaData]);
   return children;
 }

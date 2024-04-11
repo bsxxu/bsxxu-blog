@@ -40,17 +40,17 @@ export default function Header() {
               <Image
                 src={Avatar}
                 alt="avatar"
-                className="w-10 h-10 rounded-xl hover:rotate-180 transition-transform duration-500"
+                className="w-10 h-10 rounded-xl hover:rotate-180 transition-transform duration-500 border"
               />
             </Link>
             <div className="font-semibold">
-              Bsx&rsquo;s tiny website
-              <div className="text-xs text-ft-minor translate-x-3">
+              Bsx&apos;s tiny website
+              <div className="text-xs font-normal text-ft-minor translate-x-3">
                 still alive...?
               </div>
             </div>
           </div>
-          <div className="flex gap-6 text-ft-minor">
+          <div className="flex items-center gap-6 text-ft-minor">
             {nav.map(n => (
               <Link
                 key={n}
@@ -62,7 +62,7 @@ export default function Header() {
                 {n}
               </Link>
             ))}
-            <ThemesToggle />
+            <ThemesToggle isScroll={isScroll} />
           </div>
         </div>
         <PostHeader />

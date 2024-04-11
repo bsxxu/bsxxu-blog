@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function AllPosts() {
   const posts = getAllPost();
   return (
-    <>
+    <div className="min-h-screen">
       <div className="text-center mt-32">共{posts.length}篇文章</div>
       {posts.map(p => (
         <Link href={`/blog/${p.slug}`} key={p.title}>
@@ -15,6 +15,6 @@ export default function AllPosts() {
           </div>
         </Link>
       ))}
-    </>
+    </div>
   );
 }

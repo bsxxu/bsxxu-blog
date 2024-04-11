@@ -1,6 +1,7 @@
 'use client';
 
-import { success } from '@/lib/toast';
+import { errorToast, successToast } from '@/lib/toast';
+import { useClipboard } from 'foxact/use-clipboard';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { RiFileCopyFill } from 'react-icons/ri';
 
@@ -15,10 +16,14 @@ export default function Pre(
   const lang = (dataLang ?? 'plaintext').toUpperCase();
   const ref = useRef<HTMLDivElement>(null);
   const [code, setCode] = useState('');
+  const { copy } = useClipboard({
+    onCopyError(error) {
+      errorToast(error.message);
+    },
+  });
   const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(code);
-    success('已复制到剪切板');
-  }, [code]);
+    copy(code).then(() => successToast('已复制到剪切板'));
+  }, [code, copy]);
 
   useEffect(() => {
     ref.current && setCode(ref.current.textContent ?? '');
@@ -29,7 +34,7 @@ export default function Pre(
       <pre {...rest}>
         <button
           onClick={handleCopy}
-          className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-ft-minor group-hover:opacity-100"
+          className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-ft-minor group-hover:opacity-100 hover:text-ft-minor/50"
         >
           <RiFileCopyFill />
         </button>

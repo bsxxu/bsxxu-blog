@@ -11,6 +11,7 @@ const config: Config = {
         bk: {
           DEFAULT: 'hsl(var(--bk))',
           minor: 'hsl(var(--bk-minor))',
+          strong: 'hsl(var(--bk-strong))',
         },
         ft: {
           DEFAULT: 'hsl(var(--ft))',
