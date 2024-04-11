@@ -6,6 +6,7 @@ import * as Separator from '@radix-ui/react-separator';
 import BackTop from './back-top';
 import { TocHeading } from '@/lib/mdx/plugins/remark-heading';
 
+//TODO 用fox重构
 export default function Toc({ headings }: { headings: TocHeading[] }) {
   const hs = useMemo(() => {
     const min = Math.min(...headings.map(h => h.depth));
@@ -36,14 +37,14 @@ export default function Toc({ headings }: { headings: TocHeading[] }) {
   }, [hs]);
 
   return (
-    <div className=" hidden p-2 sticky top-20 min-w-44 max-h-[80vh] self-start space-y-2 text-sm text-ft-minor sm:block">
+    <div className="hidden p-2 sticky top-20 min-w-44 max-w-60 max-h-[80vh] self-start space-y-2 text-sm text-ft-minor sm:block overflow-y-auto overflow-x-hidden">
       <div>Table of Contents</div>
       {hs.map(h => (
         <a
           key={h.slug}
           href={`#${h.slug}`}
           className={cm(
-            'block whitespace-nowrap transition-all duration-500 hover:text-ft',
+            'block whitespace-nowrap transition-all duration-500 hover:text-ft truncate',
             {
               ['text-ft-strong translate-x-2']: active === h.slug,
             },

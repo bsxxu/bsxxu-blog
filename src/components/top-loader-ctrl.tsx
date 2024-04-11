@@ -1,7 +1,6 @@
 'use client';
 
-import { showLoader } from '@/store/showloader';
-import { useSetAtom } from 'jotai';
+import { useSetTopLoaderShow } from '@/providers/toploader-show-provider';
 import { useEffect } from 'react';
 
 export default function TopLoaderCtrl({
@@ -9,11 +8,10 @@ export default function TopLoaderCtrl({
 }: {
   children: React.ReactNode;
 }) {
-  const setShowLoader = useSetAtom(showLoader);
+  const setTopLoaderShow = useSetTopLoaderShow();
   useEffect(() => {
-    setTimeout(() => setShowLoader(false), 1000);
-    return () => setShowLoader(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setTimeout(() => setTopLoaderShow(false), 1000);
+    return () => setTopLoaderShow(true);
+  }, [setTopLoaderShow]);
   return children;
 }

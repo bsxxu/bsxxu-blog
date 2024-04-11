@@ -7,5 +7,9 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  return <Provider attribute="class">{children}</Provider>;
+  return (
+    <Provider attribute="class" defaultTheme="system" enableSystem>
+      {children}
+    </Provider>
+  );
 }
