@@ -6,6 +6,7 @@ import { sansFont } from '@/lib/fonts';
 import '@/styles/index.css';
 import Background from '@/components/backgroud';
 import Footer from '@/components/footer';
+import PaschalEggs from '@/components/paschal-eggs';
 
 //TODO seo
 
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="zh" className={`${sansFont.variable} scroll-smooth font-sans`}>
       <body className="bg-bk text-ft transition-colors">
         <ComposeProvider>
+          <PaschalEggs />
           <Toaster />
           <TopLoader />
           <Header />
