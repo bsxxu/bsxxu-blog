@@ -9,7 +9,6 @@ import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import PostHeader from './post-header';
 import { cm } from '@/utils/common';
-import AnimateView from '../animate-view';
 
 const nav = ['blog', 'gallery'];
 
@@ -26,12 +25,9 @@ export default function Header() {
 
   return (
     <div className="w-full h-16 px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden z-10">
-      <AnimateView
-        as="div"
-        motionProps={{
-          animate: {
-            y: isScroll ? -60 : 0,
-          },
+      <motion.div
+        animate={{
+          y: isScroll ? -60 : 0,
         }}
       >
         <div className="flex items-center justify-between min-h-12">
@@ -66,7 +62,7 @@ export default function Header() {
           </div>
         </div>
         <PostHeader />
-      </AnimateView>
+      </motion.div>
     </div>
   );
 }

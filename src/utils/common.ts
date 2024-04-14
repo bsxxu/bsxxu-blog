@@ -1,12 +1,23 @@
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import dayjs from 'dayjs';
+import dayjs, { DayjsTimezone } from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export function timeFormat(
   time: string,
   pattern: string = 'YYYY-MM-DD HH:mm:ss',
 ) {
   return dayjs(time).format(pattern);
+}
+
+export function getTime(
+  tz: string = 'Asia/ShangHai',
+  pattern: string = 'YYYY-MM-DD HH:mm:ss',
+) {
+  return dayjs().tz(tz).format(pattern);
 }
 
 export const cm = (...args: any[]) => {
