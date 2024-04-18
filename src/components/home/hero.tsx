@@ -5,7 +5,7 @@ import avatar from '@/assets/avatar.jpg';
 import { motion } from 'framer-motion';
 import PopoverMsg from '../popover-msg';
 import { useCallback, useEffect, useState } from 'react';
-import Ripple from '../motion/ripple';
+import Ripple from '../ripple';
 import { getTime, throttled } from '@/utils/common';
 import Link from 'next/link';
 import {
@@ -14,7 +14,9 @@ import {
   RiTelegramFill,
   RiTwitterFill,
 } from 'react-icons/ri';
-import WatchMore from '../motion/watch-more';
+import WatchMore from '../watch-more';
+import { useSetPaschal } from '@/providers/paschal-provider';
+import { Eggs } from '../paschal-eggs';
 
 const msgs = ['hello!', '做什么?', '看点啥?', '睡会儿吧...'];
 const TZ = 'Asia/Shanghai';
@@ -22,13 +24,23 @@ const TP = 'DD/h:mm A';
 
 //TODO 头像整个点击提示
 export default function Hero() {
+  const setPaschal = useSetPaschal();
   const [idx, setIdx] = useState(0);
   const [time, setTime] = useState(getTime(TZ, TP));
+  const [count, setCount] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleClick = useCallback(
-    throttled(() => setIdx(~~(Math.random() * msgs.length)), 1000),
+    throttled(() => {
+      setCount(pre => pre + 1);
+      setIdx(~~(Math.random() * msgs.length));
+    }, 1000),
     [],
   );
+
+  //进入彩蛋osu
+  useEffect(() => {
+    count >= 15 && (setPaschal(Eggs.OSU), setCount(0));
+  }, [count, setPaschal]);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(getTime(TZ, TP)), 15 * 1000);
@@ -37,7 +49,7 @@ export default function Hero() {
 
   return (
     <motion.div
-      className="h-1/5 w-full flex items-center justify-between px-16"
+      className="h-1/4 w-full flex items-center justify-between px-16"
       initial={{
         y: 50,
         opacity: 0,

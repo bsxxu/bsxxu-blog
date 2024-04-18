@@ -2,10 +2,10 @@
 
 import { throttled } from '@/utils/common';
 import { HTMLMotionProps, motion } from 'framer-motion';
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 //秒
-export default function Ripple({ duration = 0.5 }: { duration?: number }) {
+function Ripple({ duration = 0.5 }: { duration?: number }) {
   const [p, setP] = useState<HTMLMotionProps<'div'>['animate']>({
     opacity: 0,
     scale: 1,
@@ -41,3 +41,5 @@ export default function Ripple({ duration = 0.5 }: { duration?: number }) {
     />
   );
 }
+
+export default memo(Ripple);

@@ -1,25 +1,19 @@
 'use client';
 
 import { cm } from '@/utils/common';
-import { useMotionValueEvent, useScroll } from 'framer-motion';
 import { RxArrowUp } from 'react-icons/rx';
-import { useState } from 'react';
+import { useScrollValue } from '@/providers/scroll-provider';
+import { memo } from 'react';
 
-export default function BackTop(
-  props: React.ComponentPropsWithoutRef<'button'>,
-) {
+function BackTop(props: React.ComponentPropsWithoutRef<'button'>) {
   const { className, ...rest } = props;
-  const { scrollYProgress } = useScroll();
-  const [show, setShow] = useState(true);
-  useMotionValueEvent(scrollYProgress, 'change', latest =>
-    latest >= 0.1 ? setShow(true) : setShow(false),
-  );
+  const y = useScrollValue();
 
   return (
     <button
       className={cm(
         'transition-opacity hover:text-ft flex items-center gap-2',
-        { 'opacity-0': !show },
+        { 'opacity-0': y <= 500 },
         className,
       )}
       onClick={() => window.scrollTo({ top: 0 })}
@@ -30,3 +24,5 @@ export default function BackTop(
     </button>
   );
 }
+
+export default memo(BackTop);

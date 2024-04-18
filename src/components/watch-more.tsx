@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
-export default function WatchMore() {
+function WatchMore() {
   return (
     <motion.div
       className="text-2xl absolute bottom-5 left-1/2 -translate-x-1/2 animate-bounce"
@@ -16,3 +17,5 @@ export default function WatchMore() {
     </motion.div>
   );
 }
+
+export default memo(WatchMore);

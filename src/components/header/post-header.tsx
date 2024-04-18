@@ -1,8 +1,9 @@
 import { usePostMetadataValue } from '@/providers/post-metadata-provider';
 import { timeFormat } from '@/utils/common';
+import { memo } from 'react';
 import { BiShareAlt, BiSolidLike } from 'react-icons/bi';
 
-export default function PostHeader() {
+function PostHeader() {
   const postMetadata = usePostMetadataValue();
 
   return (
@@ -34,3 +35,5 @@ export default function PostHeader() {
     </div>
   );
 }
+
+export default memo(PostHeader);

@@ -4,24 +4,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Avatar from '@/assets/avatar.jpg';
 import ThemesToggle from './themes-toggle';
-import { useState } from 'react';
-import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import PostHeader from './post-header';
 import { cm } from '@/utils/common';
+import { useScrollValue } from '@/providers/scroll-provider';
 
 const nav = ['blog', 'gallery'];
 
 //TODO 移动端适配
 export default function Header() {
-  const [isScroll, setScroll] = useState(false);
   const segments = usePathname().split('/');
-  const { scrollY } = useScroll();
-  useMotionValueEvent(scrollY, 'change', value => {
-    value >= 110 && segments.length > 2 && segments[1] === 'blog'
-      ? setScroll(true)
-      : setScroll(false);
-  });
+  const y = useScrollValue();
+  const isScroll = y >= 110 && segments.length > 2 && segments[1] === 'blog';
 
   return (
     <div className="w-full h-16 px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden z-10">

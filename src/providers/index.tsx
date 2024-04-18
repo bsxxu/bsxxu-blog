@@ -1,8 +1,16 @@
+import { PaschalProvider } from './paschal-provider';
 import { PostMetadataProvider } from './post-metadata-provider';
+import ScrollProvider from './scroll-provider';
 import ThemeProvider from './theme-provider';
 import { TopLoaderShowProvider } from './toploader-show-provider';
 
-const providers = [ThemeProvider, TopLoaderShowProvider, PostMetadataProvider];
+const providers = [
+  ThemeProvider,
+  TopLoaderShowProvider,
+  PostMetadataProvider,
+  PaschalProvider,
+  ScrollProvider,
+];
 
 export default function ComposeProvider({
   children,

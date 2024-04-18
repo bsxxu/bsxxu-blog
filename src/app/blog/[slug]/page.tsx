@@ -1,4 +1,4 @@
-import AnimateView from '@/components/motion/animate-view';
+import AnimateView from '@/components/animate-view';
 import MDXRemote from '@/components/mdx-rsc';
 import PostMetadataSetter from '@/components/post-metadata-setter';
 import Toc from '@/components/toc';

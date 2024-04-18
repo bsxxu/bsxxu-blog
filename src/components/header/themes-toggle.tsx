@@ -5,9 +5,9 @@ import { useTheme } from 'next-themes';
 import { useIsClient } from 'foxact/use-is-client';
 import * as Popover from '@radix-ui/react-popover';
 import { RiComputerLine, RiSunLine, RiMoonLine } from 'react-icons/ri';
-import { useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
-export default function ThemesToggle({ isScroll }: { isScroll: boolean }) {
+function ThemesToggle({ isScroll }: { isScroll: boolean }) {
   const { theme, setTheme } = useTheme();
   const isClient = useIsClient();
   const [open, setOpen] = useState(false);
@@ -71,3 +71,5 @@ export default function ThemesToggle({ isScroll }: { isScroll: boolean }) {
     </Popover.Root>
   );
 }
+
+export default memo(ThemesToggle);
