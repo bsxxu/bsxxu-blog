@@ -1,17 +1,16 @@
+import AboutMe from '@/components/home/about-me';
+import Gallery from '@/components/home/gallery';
+import Hero from '@/components/home/hero';
+import Recently from '@/components/home/recently';
+
+//TODO 开往https://list.travellings.cn/
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      hero
-      <br />
-      about me
-      <br />
-      recently post
-      <br />
-      gallery
-      <br />
-      contact me
-      <br />
-      还在施工哦...
+    <div className="h-[400vh]">
+      <Hero />
+      <Recently />
+      <Gallery />
+      <AboutMe />
     </div>
   );
 }

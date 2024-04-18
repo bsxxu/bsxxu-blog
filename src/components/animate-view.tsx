@@ -10,7 +10,7 @@ export default function AnimateView<T extends keyof ReactHTML>({
   motionProps,
   ...rest
 }: {
-  motionProps: HTMLMotionProps<T>;
+  motionProps?: HTMLMotionProps<T>;
   as: T;
 } & ComponentPropsWithoutRef<T>) {
   const M = motion[as as keyof typeof motion];

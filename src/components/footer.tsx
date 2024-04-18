@@ -1,5 +1,10 @@
 import Link from 'next/link';
-import { RiGithubFill, RiTwitterXLine, RiMailSendLine } from 'react-icons/ri';
+import {
+  RiGithubFill,
+  RiTwitterXLine,
+  RiMailSendLine,
+  RiTelegramFill,
+} from 'react-icons/ri';
 import { SiPixiv } from 'react-icons/si';
 
 export default function Footer() {
@@ -32,6 +37,13 @@ export default function Footer() {
           <RiMailSendLine />
           <Link href="mailto:Bsx<bsx_homu@163.com>" target="_blank">
             Mail
+          </Link>
+        </span>
+        ·
+        <span className="flex items-center gap-1 underline hover:text-ft-minor">
+          <RiTelegramFill />
+          <Link href="https://t.me/bsx_jzb" target="_blank">
+            Telegram
           </Link>
         </span>
       </div>

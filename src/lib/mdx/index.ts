@@ -59,6 +59,7 @@ export async function getHeadings(content: string) {
   return (result.data.headings ?? []) as TocHeading[];
 }
 
+//TODO 去除末尾分号
 export async function compileAndRun(content: string) {
   const compiledMdx = String(
     //TODO vfile
