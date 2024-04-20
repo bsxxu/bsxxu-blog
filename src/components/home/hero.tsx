@@ -49,7 +49,7 @@ export default function Hero() {
 
   return (
     <motion.div
-      className="h-1/4 w-full flex items-center justify-between px-16"
+      className="min-h-screen w-full flex items-center justify-between px-16"
       initial={{
         y: 50,
         opacity: 0,

@@ -67,7 +67,7 @@ export default function Carousel({
               <ModelView
                 key={idx}
                 content={
-                  <div className="max-h-[90vh] overflow-auto relative">
+                  <div className="max-h-[90vh] overflow-auto relative scrollbar-thin">
                     <Image
                       alt={`artwork-${idx}`}
                       className="rounded-md"

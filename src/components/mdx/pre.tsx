@@ -34,11 +34,11 @@ export default function Pre(
       <pre {...rest}>
         <button
           onClick={handleCopy}
-          className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-ft-minor group-hover:opacity-100 hover:text-ft-minor/50"
+          className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-ft-minor group-hover:opacity-100 hover:text-ft-minor/50 z-10"
         >
           <RiFileCopyFill />
         </button>
-        <span className="lang absolute right-1 bottom-5">{lang}</span>
+        <span className="lang absolute right-2 bottom-3">{lang}</span>
         <div ref={ref}>{children}</div>
       </pre>
     </div>

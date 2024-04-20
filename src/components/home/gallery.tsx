@@ -8,7 +8,7 @@ export default function Gallery() {
   return (
     <AnimateView
       as="div"
-      className="relative h-1/4 w-full flex flex-col items-center justify-center"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center"
       motionProps={{
         initial: {
           y: 50,

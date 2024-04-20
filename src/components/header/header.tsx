@@ -16,7 +16,10 @@ const nav = ['blog', 'gallery'];
 export default function Header() {
   const segments = usePathname().split('/');
   const y = useScrollValue();
-  const isScroll = y >= 110 && segments.length > 2 && segments[1] === 'blog';
+  const isScroll =
+    y >= 110 &&
+    ((segments.length > 2 && segments[1] === 'blog') ||
+      (segments.length === 2 && segments[1] === 'about'));
 
   return (
     <div className="w-full h-16 px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden z-10">

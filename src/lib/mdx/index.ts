@@ -21,7 +21,7 @@ export type PostMetadata = {
   readingTime?: ReadTimeResults;
 };
 
-const postsDir = path.join(process.cwd(), 'src', 'posts');
+const articlesDir = path.join(process.cwd(), 'src', 'articles');
 
 export function readMDXFile(path: string) {
   const raw = fs.readFileSync(path, 'utf-8');
@@ -38,20 +38,21 @@ export function readMDXFile(path: string) {
 
 //TODO slug去除后缀
 export function getAllPost() {
+  const dir = path.join(articlesDir, 'posts');
   const files = fs
-    .readdirSync(postsDir)
+    .readdirSync(dir)
     .filter(name => name.endsWith('.md') || name.endsWith('.mdx'));
 
   return files
     .map(slug => ({
-      ...readMDXFile(path.join(postsDir, slug)).metadata,
+      ...readMDXFile(path.join(dir, slug)).metadata,
       slug,
     }))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getPost(slug: string) {
-  return readMDXFile(path.join(postsDir, slug));
+export function getPost(...slug: string[]) {
+  return readMDXFile(path.join(articlesDir, ...slug));
 }
 
 export async function getHeadings(content: string) {
@@ -59,7 +60,6 @@ export async function getHeadings(content: string) {
   return (result.data.headings ?? []) as TocHeading[];
 }
 
-//TODO 去除末尾分号
 export async function compileAndRun(content: string) {
   const compiledMdx = String(
     //TODO vfile

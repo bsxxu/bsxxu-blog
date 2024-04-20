@@ -9,7 +9,7 @@ export default async function Recently() {
   return (
     <AnimateView
       as="div"
-      className="relative h-1/4 w-full py-24 px-32 space-y-3"
+      className="relative min-h-screen w-full py-24 px-32 space-y-3"
       motionProps={{
         initial: {
           y: 50,
