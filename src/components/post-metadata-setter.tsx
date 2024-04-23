@@ -13,5 +13,12 @@ export default function PostMetadataSetter({
 }) {
   const setPostMetaData = useSetPostMetadata();
   useEffect(() => setPostMetaData(data), [data, setPostMetaData]);
+  //移除文章末尾的分号
+  useEffect(() => {
+    const article = document.querySelector('article');
+    if (!article) return;
+    const node = Array.from(article.childNodes).at(-1);
+    node && node.nodeType === Node.TEXT_NODE && article.removeChild(node);
+  }, []);
   return children;
 }

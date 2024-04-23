@@ -10,9 +10,12 @@ export default function Background() {
   const segments = usePathname().split('/');
   const { resolvedTheme } = useTheme();
   const isClient = useIsClient();
+  const show =
+    (segments.length > 2 && segments[1] === 'blog') ||
+    (segments.length === 2 && segments[1] === 'about');
+
   return (
-    segments.length > 2 &&
-    segments[1] === 'blog' && (
+    show && (
       <motion.div
         className={cm(
           'absolute inset-0 -z-10 transition-all from-sky-400/10 bg-gradient-to-b to-[350px]',

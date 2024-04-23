@@ -28,6 +28,7 @@
 
   .prose pre {
     border: 1px solid hsl(var(--bk-minor));
+    @apply scrollbar-track-transparent scrollbar-thumb-bk-minor scrollbar-thin
   }
 
   .prose code:not(.prose pre code) {
@@ -41,4 +42,5 @@
     color: hsl(var(--ft-minor)) !important;
     font-weight: 600 !important;
   }
+
 }

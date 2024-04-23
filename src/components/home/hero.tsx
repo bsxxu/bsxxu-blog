@@ -49,7 +49,7 @@ export default function Hero() {
 
   return (
     <motion.div
-      className="h-1/4 w-full flex items-center justify-between px-16"
+      className="min-h-screen w-full flex flex-col-reverse justify-center items-center gap-10 md:flex-row md:justify-between px-16"
       initial={{
         y: 50,
         opacity: 0,
@@ -63,13 +63,13 @@ export default function Hero() {
         ease: 'easeOut',
       }}
     >
-      <div className="space-y-3">
+      <div className="space-y-3 text-center md:text-start">
         <div className="font-semibold text-4xl">Hi there 👋, I&apos;m Bsx.</div>
         <div className="text-lg">
           A budding front-end developer, who works hard to get better.
         </div>
         <div className="text-xs text-ft-minor">{time} · UTC/GMT +8</div>
-        <div className="flex items-center text-2xl gap-3">
+        <div className="flex items-center justify-center md:justify-start text-2xl gap-3">
           <Link href="https://www.github.com/BsXwerse" target="_blank">
             <RiGithubFill />
           </Link>
@@ -97,9 +97,14 @@ export default function Hero() {
           }}
           transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           onClick={handleClick}
+          className="shrink-0"
         >
           <Ripple />
-          <Image src={avatar} alt="avatar" className="w-64 h-64 rounded-full" />
+          <Image
+            src={avatar}
+            alt="avatar"
+            className="w-64 h-64 rounded-full shrink-0"
+          />
         </motion.button>
       </PopoverMsg>
       <WatchMore />

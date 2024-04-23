@@ -16,7 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh" className={`${sansFont.variable} scroll-smooth font-sans`}>
+    <html
+      lang="zh"
+      className={`${sansFont.variable} scroll-smooth scrollbar-thin font-sans`}
+    >
       <body className="bg-bk text-ft transition-colors">
         <ComposeProvider>
           <PaschalEggs />
@@ -24,7 +27,7 @@ export default function RootLayout({
           <TopLoader />
           <Header />
           <Background />
-          <main className="max-w-5xl mx-auto">{children}</main>
+          <main className="max-w-5xl mx-auto min-h-screen">{children}</main>
           <Footer />
         </ComposeProvider>
       </body>
