@@ -1,4 +1,3 @@
-import Gallery from '@/components/home/gallery';
 import Hero from '@/components/home/hero';
 import Other from '@/components/home/other';
 import Recently from '@/components/home/recently';
@@ -9,7 +8,6 @@ export default function Home() {
     <>
       <Hero />
       <Recently />
-      <Gallery />
       <Other />
     </>
   );

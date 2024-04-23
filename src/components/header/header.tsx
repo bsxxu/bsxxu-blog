@@ -10,7 +10,7 @@ import PostHeader from './post-header';
 import { cm } from '@/utils/common';
 import { useScrollValue } from '@/providers/scroll-provider';
 
-const nav = ['blog', 'gallery'];
+const nav = ['blog', 'life'];
 
 //TODO 移动端适配
 export default function Header() {
@@ -22,7 +22,7 @@ export default function Header() {
       (segments.length === 2 && segments[1] === 'about'));
 
   return (
-    <div className="w-full h-16 px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden z-10">
+    <div className="w-full h-16 px-2 md:px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden z-10">
       <motion.div
         animate={{
           y: isScroll ? -60 : 0,

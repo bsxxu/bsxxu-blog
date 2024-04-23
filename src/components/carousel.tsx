@@ -8,6 +8,7 @@ import ModelView from './model-view';
 import { Artwork } from '@/lib/artworks';
 import Link from 'next/link';
 
+//TODO 删除
 type CarouselProps = {
   containerWidth: number;
   containerHeight: number;

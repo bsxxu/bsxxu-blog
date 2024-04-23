@@ -6,7 +6,9 @@ export default async function About() {
   const { content, metadata } = await getPost('about', 'about-me.mdx');
   return (
     <PostMetadataSetter data={metadata}>
-      <div className=" mt-40">{metadata.title}</div>
+      <div className="text-center mt-40 mb-10 text-ft-strong text-3xl font-bold">
+        {metadata.title}
+      </div>
       <Article content={content} />
     </PostMetadataSetter>
   );

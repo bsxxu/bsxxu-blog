@@ -34,8 +34,8 @@ function PostCard({
         },
       }}
     >
-      <div className="font-semibold text-lg">{metadata.title}</div>
-      <div className="text-sm">{metadata.description}</div>
+      <div className="font-semibold text-lg line-clamp-1">{metadata.title}</div>
+      <div className="text-sm line-clamp-2">{metadata.description}</div>
       <div className="text-xs text-ft-minor">
         <span>{metadata.date}</span>
         <span>{metadata.tags?.join('·')}</span>
