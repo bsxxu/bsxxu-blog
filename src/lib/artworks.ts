@@ -3,7 +3,7 @@ import madoHomu from '@/assets/arts/20221222.jpg';
 import elysia1 from '@/assets/arts/20230414.jpg';
 import elysia2 from '@/assets/arts/20230503.jpg';
 import robin from '@/assets/arts/20240217.jpg';
-
+//TODO 删除
 export type Artwork = {
   data: StaticImageData | string;
   title?: string;

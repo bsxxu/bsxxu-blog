@@ -9,13 +9,19 @@ export default async function Article({ content }: { content: string }) {
       <AnimateView
         as="div"
         className="w-full"
-        motionProps={{ initial: { x: -50 }, animate: { x: 0 } }}
+        motionProps={{
+          initial: { opacity: 0, x: -50 },
+          animate: { opacity: 1, x: 0 },
+        }}
       >
         <MDXRemote content={content} />
       </AnimateView>
       <AnimateView
         as="div"
-        motionProps={{ initial: { x: 50 }, animate: { x: 0 } }}
+        motionProps={{
+          initial: { opacity: 0, x: 50 },
+          animate: { opacity: 1, x: 0 },
+        }}
       >
         <Toc headings={await getHeadings(content)} />
       </AnimateView>

@@ -7,9 +7,11 @@ import { RiArrowRightSFill } from 'react-icons/ri';
 function PostCard({
   metadata,
   offset = 0,
+  delay = 0.7,
 }: {
   metadata: PostMetadata & { slug: string };
   offset?: number;
+  delay?: number;
 }) {
   return (
     <AnimateView
@@ -25,7 +27,7 @@ function PostCard({
           x: 0,
         },
         transition: {
-          delay: 0.7,
+          delay: delay,
           duration: 0.5,
           ease: 'easeInOut',
         },

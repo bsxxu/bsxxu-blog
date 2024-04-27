@@ -22,7 +22,7 @@ export default function Header() {
       (segments.length === 2 && segments[1] === 'about'));
 
   return (
-    <div className="w-full h-16 px-2 md:px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden z-10">
+    <div className="w-full h-16 px-2 md:px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden border-b border-bk-minor z-10">
       <motion.div
         animate={{
           y: isScroll ? -60 : 0,
@@ -34,7 +34,7 @@ export default function Header() {
               <Image
                 src={Avatar}
                 alt="avatar"
-                className="w-10 h-10 rounded-xl hover:rotate-180 transition-transform duration-500 border"
+                className="w-10 h-10 rounded-xl hover:rotate-180 transition-transform duration-500"
               />
             </Link>
             <div className="font-semibold">
