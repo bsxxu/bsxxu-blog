@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Fuse from 'fuse.js';
+import { cm } from '@/utils/common';
 
 export default function FuseSearch<
   T extends Record<string, any>,
@@ -15,18 +16,37 @@ export default function FuseSearch<
   keys: K[];
   wrapperClassName?: string;
 }) {
-  const [filteredItems, setFilteredItems] = useState(items);
   const [search, setSearch] = useState('');
-  const doFilter = () => {
-    const fuse = new Fuse(items, {
-      keys: keys as any,
-    });
-    setFilteredItems(fuse.search(search).map(r => r.item) ?? []);
-  };
+  const fuse = useMemo(
+    () =>
+      new Fuse(items, {
+        keys: keys as any,
+      }),
+    [items, keys],
+  );
+  const filteredItems = useMemo(
+    () => fuse.search(search).map(r => r.item) ?? [],
+    [fuse, search],
+  );
+
   return (
-    <div className={wrapperClassName}>
-      <input />
-      <div>{items.map(i => renderer(i))}</div>
+    <div
+      className={cm(
+        'bg-transparent rounded-md border border-bk-minor min-w-[700px] h-[400px]',
+        wrapperClassName,
+      )}
+    >
+      <div className="absolute rounded-md -z-10 inset-0 bg-bk/50  backdrop-blur " />
+      <input
+        className="w-full bg-transparent outline-none p-2 px-5 border-b border-bk-minor"
+        placeholder="Search..."
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearch(e.target.value)
+        }
+      />
+      <div className="space-y-3 p-4 max-h-[350px] overflow-auto scrollbar-thin">
+        {filteredItems.map(i => renderer(i))}
+      </div>
     </div>
   );
 }

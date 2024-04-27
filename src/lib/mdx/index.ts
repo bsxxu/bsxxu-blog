@@ -43,12 +43,10 @@ export function getAllPost() {
     .readdirSync(dir)
     .filter(name => name.endsWith('.md') || name.endsWith('.mdx'));
 
-  return files
-    .map(slug => ({
-      ...readMDXFile(path.join(dir, slug)).metadata,
-      slug,
-    }))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return files.map(slug => ({
+    ...readMDXFile(path.join(dir, slug)).metadata,
+    slug,
+  }));
 }
 
 export function getPost(...slug: string[]) {

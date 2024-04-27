@@ -22,6 +22,7 @@ const msgs = ['hello!', '做什么?', '看点啥?', '睡会儿吧...'];
 const TZ = 'Asia/Shanghai';
 const TP = 'DD/h:mm A';
 
+//TODO 抽象动画组件
 //TODO 头像整个点击提示
 export default function Hero() {
   const setPaschal = useSetPaschal();

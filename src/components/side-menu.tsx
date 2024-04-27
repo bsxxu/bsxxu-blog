@@ -1,5 +1,3 @@
-//TODO 模糊搜索
-
 import { Dispatch, SetStateAction } from 'react';
 import {
   RiSearch2Line,
@@ -11,6 +9,7 @@ import AnimateView from './animate-view';
 import ModelView from './model-view';
 import FuseSearch from './fuse-search';
 import { getAllPost } from '@/lib/mdx';
+import Link from 'next/link';
 
 function ButtonAnimateView({
   children,
@@ -24,7 +23,7 @@ function ButtonAnimateView({
       as="button"
       onClick={onClick}
       motionProps={{
-        whileHover: { scale: 1.1 },
+        whileHover: { scale: 1.15 },
         whileTap: { scale: 0.9 },
         transition: { type: 'spring', stiffness: 400, damping: 17 },
       }}
@@ -36,10 +35,12 @@ function ButtonAnimateView({
 
 export default function SideMenu({
   setComplex,
+  setNewToOld,
   isComplex,
   posts,
 }: {
   setComplex: Dispatch<SetStateAction<boolean>>;
+  setNewToOld: Dispatch<SetStateAction<boolean>>;
   isComplex: boolean;
   posts: ReturnType<typeof getAllPost>;
 }) {
@@ -60,7 +61,19 @@ export default function SideMenu({
           <FuseSearch
             items={posts}
             keys={['title', 'tags', 'description']}
-            renderer={item => <div></div>}
+            renderer={item => (
+              <div
+                key={item.title}
+                className="space-y-1 transition-colors hover:bg-bk-minor p-1 rounded"
+              >
+                <Link href={`/blog/${item.slug}`} className="hover:underline">
+                  {item.title}
+                </Link>
+                <div className="line-clamp-2 text-xs text-ft-minor">
+                  {item.description}
+                </div>
+              </div>
+            )}
           />
         }
       >
@@ -68,7 +81,7 @@ export default function SideMenu({
           <RiSearch2Line />
         </ButtonAnimateView>
       </ModelView>
-      <ButtonAnimateView>
+      <ButtonAnimateView onClick={() => setNewToOld(n => !n)}>
         <RiArrowUpDownFill />
       </ButtonAnimateView>
     </AnimateView>
