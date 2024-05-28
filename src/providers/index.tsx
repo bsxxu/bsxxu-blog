@@ -5,17 +5,18 @@ import ThemeProvider from './theme-provider';
 import { TopLoaderShowProvider } from './toploader-show-provider';
 
 const providers = [
-  ThemeProvider,
-  TopLoaderShowProvider,
-  PostMetadataProvider,
-  PaschalProvider,
-  ScrollProvider,
+	ThemeProvider,
+	TopLoaderShowProvider,
+	PostMetadataProvider,
+	PaschalProvider,
+	ScrollProvider,
 ];
 
 export default function ComposeProvider({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return providers.reduce((kids, Parent) => <Parent>{kids}</Parent>, children);
+	// biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
+	return providers.reduce((kids, Parent) => <Parent>{kids}</Parent>, children);
 }

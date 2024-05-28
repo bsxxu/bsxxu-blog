@@ -6,14 +6,14 @@ import NextTopLoader from 'nextjs-toploader';
 
 //TODO 找代替方案
 export default function TopLoader() {
-  const show = useTopLoaderShowValue();
-  const { theme } = useTheme();
+	const show = useTopLoaderShowValue();
+	const { theme } = useTheme();
 
-  return show ? (
-    theme === 'light' ? (
-      <NextTopLoader showSpinner={false} color="#535353" shadow={false} />
-    ) : (
-      <NextTopLoader showSpinner={false} color="#FFFFFF" shadow={false} />
-    )
-  ) : null;
+	return show ? (
+		theme === 'light' ? (
+			<NextTopLoader showSpinner={false} color="#535353" shadow={false} />
+		) : (
+			<NextTopLoader showSpinner={false} color="#FFFFFF" shadow={false} />
+		)
+	) : null;
 }

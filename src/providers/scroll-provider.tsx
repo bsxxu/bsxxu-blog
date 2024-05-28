@@ -8,20 +8,20 @@ const [Provider, useScrollValue, useSetScroll] = createContextState(0);
 export { useScrollValue };
 
 function ScrollSetter({ children }: { children: React.ReactNode }) {
-  const { scrollY } = useScroll();
-  const setScroll = useSetScroll();
-  useMotionValueEvent(scrollY, 'change', value => setScroll(value));
-  return children;
+	const { scrollY } = useScroll();
+	const setScroll = useSetScroll();
+	useMotionValueEvent(scrollY, 'change', (value) => setScroll(value));
+	return children;
 }
 
 export default function ScrollProvider({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <Provider>
-      <ScrollSetter>{children}</ScrollSetter>
-    </Provider>
-  );
+	return (
+		<Provider>
+			<ScrollSetter>{children}</ScrollSetter>
+		</Provider>
+	);
 }

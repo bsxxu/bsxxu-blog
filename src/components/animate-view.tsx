@@ -2,21 +2,21 @@
 
 import type { HTMLMotionProps } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { ReactHTML, ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef, ReactHTML } from 'react';
 
 export default function AnimateView<T extends keyof ReactHTML>({
-  children,
-  as,
-  motionProps,
-  ...rest
+	children,
+	as,
+	motionProps,
+	...rest
 }: {
-  motionProps?: HTMLMotionProps<T>;
-  as: T;
+	motionProps?: HTMLMotionProps<T>;
+	as: T;
 } & ComponentPropsWithoutRef<T>) {
-  const M = motion[as as keyof typeof motion];
-  return (
-    <M {...(motionProps as any)} {...rest}>
-      {children}
-    </M>
-  );
+	const M = motion[as as keyof typeof motion];
+	return (
+		<M {...(motionProps as any)} {...rest}>
+			{children}
+		</M>
+	);
 }
