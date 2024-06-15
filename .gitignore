@@ -54,7 +54,7 @@ coverage/
 *.tsbuildinfo
 next-env.d.ts
 
-posts/test*.mdx
+test*.mdx
 
 drizzle/
 
