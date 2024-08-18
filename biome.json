@@ -1,8 +1,8 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
+	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
 	"organizeImports": { "enabled": true },
 	"files": {
-		"ignore": [".next/**", "dist/**", ".turbo/**"]
+		"ignore": [".next/**", "dist/**", ".turbo/**", "node_modules/**"]
 	},
 	"linter": {
 		"enabled": true,
