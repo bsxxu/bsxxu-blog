@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "tsx watch ./src/main.ts",
-		"build": "rimraf ./dist && tsx ./scripts/build.ts",
+		"build": "rimraf ./dist && tsx ./build.ts",
 		"start": "pnpm build && node ./dist/main.js",
 		"typecheck": "tsc --noEmit"
 	},
