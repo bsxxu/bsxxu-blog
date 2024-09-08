@@ -1,30 +1,30 @@
 {
-	"name": "@bsxxu/server",
-	"version": "1.0.0",
-	"private": true,
-	"scripts": {
-		"dev": "tsx watch ./src/main.ts",
-		"build": "rimraf ./dist && tsx ./build.ts",
-		"start": "pnpm build && node ./dist/main.js",
-		"typecheck": "tsc --noEmit"
-	},
-	"dependencies": {
-		"@lucia-auth/adapter-drizzle": "^1.1.0",
-		"@trpc/server": "11.0.0-rc.477",
-		"dotenv": "^16.4.5",
-		"drizzle-orm": "^0.33.0",
-		"fastify": "^4.28.1",
-		"lucia": "^3.2.0",
-		"pino-pretty": "^11.2.2",
-		"postgres": "^3.4.4",
-		"zod": "^3.23.8"
-	},
-	"devDependencies": {
-		"@types/node": "^20.14.2",
-		"drizzle-kit": "^0.24.0",
-		"esbuild": "^0.23.1",
-		"rimraf": "^6.0.1",
-		"tsx": "^4.17.0",
-		"typescript": "^5.4.5"
-	}
+  "name": "@bsxxu/server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch ./src/main.ts",
+    "build": "rimraf ./dist && tsx ./build.ts",
+    "start": "pnpm build && node ./dist/main.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.1.0",
+    "@trpc/server": "11.0.0-rc.477",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
+    "fastify": "^4.28.1",
+    "lucia": "^3.2.0",
+    "pino-pretty": "^11.2.2",
+    "postgres": "^3.4.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "drizzle-kit": "^0.24.0",
+    "esbuild": "^0.23.1",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.17.0",
+    "typescript": "^5.4.5"
+  }
 }

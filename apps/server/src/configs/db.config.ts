@@ -1,7 +1,7 @@
 type DbConfig = {
-	name: string;
+  name: string;
 };
 
 export const dbConfig: DbConfig = {
-	name: 'test',
+  name: 'test',
 };

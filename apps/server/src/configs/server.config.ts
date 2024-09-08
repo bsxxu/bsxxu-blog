@@ -1,7 +1,7 @@
 type ServerConfig = {
-	port: number;
+  port: number;
 };
 
 export const serverConfig: ServerConfig = {
-	port: 3000,
+  port: 3000,
 };

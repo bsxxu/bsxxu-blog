@@ -4,19 +4,19 @@ import { usePaschalValue } from '@/providers/paschal-provider';
 import Osu from './osu';
 
 export enum Eggs {
-	OSU = 'osu',
-	Null = 'null',
+  OSU = 'osu',
+  Null = 'null',
 }
 
 export default function PaschalEggs() {
-	const p = usePaschalValue();
-	let page: React.ReactNode | null;
-	switch (p) {
-		case Eggs.OSU:
-			page = <Osu />;
-			break;
-		default:
-			page = null;
-	}
-	return page;
+  const p = usePaschalValue();
+  let page: React.ReactNode | null;
+  switch (p) {
+    case Eggs.OSU:
+      page = <Osu />;
+      break;
+    default:
+      page = null;
+  }
+  return page;
 }
