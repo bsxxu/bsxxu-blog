@@ -1,4 +1,4 @@
-import { cm } from '@/utils/common';
+import { cn } from '@/lib/utils';
 import Fuse from 'fuse.js';
 import { useMemo, useState } from 'react';
 
@@ -31,14 +31,14 @@ export default function FuseSearch<
 
   return (
     <div
-      className={cm(
-        'bg-transparent rounded-md border border-bk-minor min-w-[700px] h-[400px]',
+      className={cn(
+        'bg-transparent rounded-md border border-muted min-w-[700px] h-[400px]',
         wrapperClassName,
       )}
     >
-      <div className="absolute rounded-md -z-10 inset-0 bg-bk/50  backdrop-blur " />
+      <div className="absolute rounded-md -z-10 inset-0 bg-background/50  backdrop-blur " />
       <input
-        className="w-full bg-transparent outline-none p-2 px-5 border-b border-bk-minor"
+        className="w-full bg-transparent outline-none p-2 px-5 border-b border-muted"
         placeholder="Search..."
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setSearch(e.target.value)

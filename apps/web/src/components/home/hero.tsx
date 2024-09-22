@@ -1,8 +1,9 @@
 'use client';
 
 import avatar from '@/assets/avatar.jpg';
-import { useSetPaschal } from '@/providers/paschal-provider';
-import { getTime, throttled } from '@/utils/common';
+import { getTime } from '@/lib/utils';
+import { useSetPaschal } from '@/providers/context-state-provider';
+import { throttled } from '@/utils/common';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -62,7 +63,7 @@ export default function Hero() {
         <div className="text-lg">
           A budding front-end developer, who works hard to get better.
         </div>
-        <div className="text-xs text-ft-minor">{time} · UTC/GMT +8</div>
+        <div className="text-xs text-muted-foreground">{time} · UTC/GMT +8</div>
         <div className="flex items-center justify-center md:justify-start text-2xl gap-3">
           <Link href="https://www.github.com/BsXwerse" target="_blank">
             <RiGithubFill />

@@ -63,7 +63,7 @@ export default function Other() {
               <Link href={n.href} className="flex flex-col items-center gap-2">
                 {n.icon}
                 <span className="text-sm">{n.name}</span>
-                <div className="text-xs text-ft-minor text-center">
+                <div className="text-xs text-muted-foreground text-center">
                   {n.description}
                 </div>
               </Link>

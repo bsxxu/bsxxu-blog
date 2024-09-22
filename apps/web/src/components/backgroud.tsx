@@ -1,6 +1,6 @@
 'use client';
 
-import { cm } from '@/utils/common';
+import { cn } from '@/lib/utils';
 import { useIsClient } from 'foxact/use-is-client';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
@@ -17,7 +17,7 @@ export default function Background() {
   return (
     show && (
       <motion.div
-        className={cm(
+        className={cn(
           'absolute inset-0 -z-10 transition-all from-sky-400/10 bg-gradient-to-b to-[350px]',
           {
             ['from-slate-600/50']: isClient && resolvedTheme === 'dark',

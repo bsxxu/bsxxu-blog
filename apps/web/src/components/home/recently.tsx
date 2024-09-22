@@ -20,7 +20,7 @@ export default async function Recently() {
       <div className="text-center font-semibold py-3">
         <Link
           href="/blog"
-          className="p-2 hover:bg-bk-minor transition-colors rounded-md border border-bk-minor"
+          className="p-2 hover:bg-muted transition-colors rounded-md border border-muted"
         >
           More..
         </Link>

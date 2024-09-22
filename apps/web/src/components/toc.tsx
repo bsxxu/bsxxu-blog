@@ -1,7 +1,7 @@
 'use client';
 
 import type { TocHeading } from '@/lib/mdx/plugins/remark-heading';
-import { cm } from '@/utils/common';
+import { cn } from '@/lib/utils';
 import * as Separator from '@radix-ui/react-separator';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BackTop from './back-top';
@@ -37,16 +37,16 @@ export default function Toc({ headings }: { headings: TocHeading[] }) {
   }, [hs]);
 
   return (
-    <div className="hidden p-2 sticky top-20 min-w-44 max-w-60 max-h-[80vh] self-start space-y-2 text-sm text-ft-minor sm:block overflow-y-auto overflow-x-hidden">
+    <div className="hidden p-2 sticky top-20 min-w-44 max-w-60 max-h-[80vh] self-start space-y-2 text-sm text-muted-foreground sm:block overflow-y-auto overflow-x-hidden">
       <div>Table of Contents</div>
       {hs.map((h) => (
         <a
           key={h.slug}
           href={`#${h.slug}`}
-          className={cm(
-            'block whitespace-nowrap transition-all duration-500 hover:text-ft truncate',
+          className={cn(
+            'block whitespace-nowrap transition-all duration-500 hover:text-accent-foreground truncate',
             {
-              ['text-ft-strong translate-x-2']: active === h.slug,
+              ['translate-x-2 text-accent-foreground']: active === h.slug,
             },
           )}
           style={{ paddingLeft: h.depth * 20 }}
@@ -55,7 +55,7 @@ export default function Toc({ headings }: { headings: TocHeading[] }) {
         </a>
       ))}
       <Separator.Root
-        className="w-full h-[1px] bg-ft-minor"
+        className="w-full h-[1px] bg-muted-foreground"
         orientation="horizontal"
       />
       <BackTop />

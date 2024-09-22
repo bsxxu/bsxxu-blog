@@ -4,7 +4,7 @@ import * as esbuild from 'esbuild';
   try {
     await esbuild.build({
       entryPoints: ['./src/main.ts'],
-      outfile: './dist/main.js',
+      outfile: './dist/main.cjs',
       bundle: true,
       minify: true,
       drop: ['console'],

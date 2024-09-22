@@ -1,7 +1,7 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { useScrollValue } from '@/providers/scroll-provider';
-import { cm } from '@/utils/common';
 import { memo } from 'react';
 import { RxArrowUp } from 'react-icons/rx';
 
@@ -11,8 +11,8 @@ function BackTop(props: React.ComponentPropsWithoutRef<'button'>) {
 
   return (
     <button
-      className={cm(
-        'transition-opacity hover:text-ft flex items-center gap-2',
+      className={cn(
+        'transition-opacity hover:text-foreground flex items-center gap-2',
         { 'opacity-0': y <= 500 },
         className,
       )}

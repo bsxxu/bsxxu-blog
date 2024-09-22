@@ -1,7 +1,7 @@
 'use client';
 
 import type { getAllPost } from '@/lib/mdx';
-import { timeFormat } from '@/utils/common';
+import { timeFormat } from '@/lib/utils';
 import * as Separator from '@radix-ui/react-separator';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
@@ -36,7 +36,7 @@ export default function PostList({
           ))
         ) : (
           <div className="flex">
-            <Separator.Root className="w-[1.5px] bg-ft-minor/50" />
+            <Separator.Root className="w-[1.5px]  bg-muted-foreground/50" />
             <ul>
               {posts.map((p) => (
                 <DownToTopView
@@ -44,12 +44,12 @@ export default function PostList({
                   className="leading-disc relative right-[6px] flex items-center"
                   key={p.title}
                 >
-                  <span className="absolute -translate-x-[70px] text-xs text-ft-minor">
+                  <span className="absolute -translate-x-[70px] text-xs text-muted-foreground">
                     {timeFormat(p.date, 'DD/MM/YYYY')}
                   </span>
                   <Link
                     href={`/blog/${p.slug}`}
-                    className="hover:translate-x-4 transition-transform duration-200 hover:text-ft-strong"
+                    className="hover:translate-x-4 transition-transform duration-200 "
                   >
                     {p.title}
                   </Link>

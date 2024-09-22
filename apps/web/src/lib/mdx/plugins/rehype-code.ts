@@ -1,4 +1,4 @@
-import { SHIKI_THEMES } from '@/constants/shiki-themes';
+import { SHIKI_THEMES } from '@/lib/constants';
 import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype';
 
 const shortCase = new Map([

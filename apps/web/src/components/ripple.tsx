@@ -31,7 +31,7 @@ function Ripple({ duration = 0.5 }: { duration?: number }) {
 
   return (
     <motion.div
-      className="absolute inset-0 border border-ft-minor rounded-full"
+      className="absolute inset-0 border border-muted-foreground rounded-full"
       animate={p}
       onClick={handleClick}
       transition={{

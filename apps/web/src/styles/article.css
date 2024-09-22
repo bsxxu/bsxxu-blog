@@ -1,8 +1,7 @@
-@import 'remark-github-alerts/styles/github-base.css';
-@import 'remark-github-alerts/styles/github-colors-light.css';
+@import "remark-github-alerts/styles/github-base.css";
+@import "remark-github-alerts/styles/github-colors-light.css";
 
 @layer base {
-
   html.dark .shiki,
   html.dark .shiki span {
     color: var(--shiki-dark) !important;
@@ -27,20 +26,19 @@
   }
 
   .prose pre {
-    border: 1px solid hsl(var(--bk-minor));
-    @apply scrollbar-track-transparent scrollbar-thumb-bk-minor scrollbar-thin
+    border: 1px solid hsl(var(--muted));
+    @apply scrollbar-track-transparent scrollbar-thumb-muted scrollbar-thin;
   }
 
   .prose code:not(.prose pre code) {
     padding: 1px 8px 2px 8px;
     margin: 0 4px;
     border-radius: 6px;
-    background-color: hsl(var(--bk-minor)) !important;
+    background-color: hsl(var(--muted)) !important;
   }
 
   .prose pre span.lang {
-    color: hsl(var(--ft-minor)) !important;
+    color: hsl(var(--muted-foreground)) !important;
     font-weight: 600 !important;
   }
-
 }

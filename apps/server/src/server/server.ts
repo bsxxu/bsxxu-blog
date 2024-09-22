@@ -1,3 +1,4 @@
+import { registerHooks } from '@/hooks';
 import {
   type FastifyTRPCPluginOptions,
   fastifyTRPCPlugin,
@@ -22,12 +23,14 @@ export function createServer() {
     },
   });
 
+  server.register(registerHooks);
+
   server.register(fastifyTRPCPlugin, {
     prefix: '/trpc',
     trpcOptions: {
       router: appRouter,
       createContext,
-      onError({ path, error }) {
+      onError({ path, error }: any) {
         console.error(`Error in tRPC handler on path '${path}':`, error);
       },
     } satisfies FastifyTRPCPluginOptions<AppRouter>['trpcOptions'],

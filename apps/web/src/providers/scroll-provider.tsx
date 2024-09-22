@@ -17,7 +17,7 @@ function ScrollSetter({ children }: { children: React.ReactNode }) {
 export default function ScrollProvider({
   children,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <Provider>

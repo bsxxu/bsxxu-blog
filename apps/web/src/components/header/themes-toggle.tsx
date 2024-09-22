@@ -1,6 +1,6 @@
 'use client';
 
-import { cm } from '@/utils/common';
+import { cn } from '@/lib/utils';
 import * as Popover from '@radix-ui/react-popover';
 import { useIsClient } from 'foxact/use-is-client';
 import { useTheme } from 'next-themes';
@@ -20,7 +20,7 @@ function ThemesToggle({ isScroll }: { isScroll: boolean }) {
     <Popover.Root open={!open ? false : undefined}>
       <Popover.Trigger asChild>
         <button
-          className="hover:text-ft-strong transition-colors"
+          className="hover:text-accent-foreground transition-colors"
           onClick={() => setOpen(true)}
         >
           {isClient && theme === 'system' && <RiComputerLine />}
@@ -34,12 +34,12 @@ function ThemesToggle({ isScroll }: { isScroll: boolean }) {
           className="z-40 popover-content"
           sideOffset={15}
         >
-          <div className="flex flex-col gap-1 backdrop-blur border-[2px] rounded-md border-ft-minor/50 p-2">
+          <div className="flex flex-col gap-1 backdrop-blur border-[2px] rounded-md border-muted-foreground/50 p-2">
             <button
               type="button"
-              className={cm(
-                'flex items-center transition-colors gap-2 p-1 rounded-md hover:bg-ft-minor/30',
-                { ['bg-ft-minor/30']: isClient && theme === 'system' },
+              className={cn(
+                'flex items-center transition-colors gap-2 p-1 rounded-md hover:bg-muted-foreground/30',
+                { ['bg-muted-foreground/30']: isClient && theme === 'system' },
               )}
               onClick={useCallback(() => setTheme('system'), [setTheme])}
             >
@@ -48,9 +48,9 @@ function ThemesToggle({ isScroll }: { isScroll: boolean }) {
             </button>
             <button
               type="button"
-              className={cm(
-                'flex items-center transition-colors gap-2 p-1 rounded-md hover:bg-ft-minor/30',
-                { ['bg-ft-minor/30']: isClient && theme === 'light' },
+              className={cn(
+                'flex items-center transition-colors gap-2 p-1 rounded-md hover:bg-muted-foreground/30',
+                { ['bg-muted-foreground/30']: isClient && theme === 'light' },
               )}
               onClick={useCallback(() => setTheme('light'), [setTheme])}
             >
@@ -59,9 +59,9 @@ function ThemesToggle({ isScroll }: { isScroll: boolean }) {
             </button>
             <button
               type="button"
-              className={cm(
-                'flex items-center transition-colors gap-2 p-1 rounded-md hover:bg-ft-minor/30',
-                { ['bg-ft-minor/30']: isClient && theme === 'dark' },
+              className={cn(
+                'flex items-center transition-colors gap-2 p-1 rounded-md hover:bg-muted-foreground/30',
+                { ['bg-muted-foreground/30']: isClient && theme === 'dark' },
               )}
               onClick={useCallback(() => setTheme('dark'), [setTheme])}
             >

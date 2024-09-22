@@ -1,8 +1,8 @@
 'use client';
 
 import Avatar from '@/assets/avatar.jpg';
+import { cn } from '@/lib/utils';
 import { useScrollValue } from '@/providers/scroll-provider';
-import { cm } from '@/utils/common';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ export default function Header() {
       (segments.length === 2 && segments[1] === 'about'));
 
   return (
-    <div className="w-full h-16 px-2 md:px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden border-b border-bk-minor z-10">
+    <div className="w-full h-16 px-2 md:px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden border-b border-muted z-10">
       <motion.div
         animate={{
           y: isScroll ? -60 : 0,
@@ -39,19 +39,22 @@ export default function Header() {
             </Link>
             <div className="font-semibold">
               Bsx&apos;s tiny website
-              <div className="text-xs font-normal text-ft-minor translate-x-3">
+              <div className="text-xs font-normal text-muted-foreground translate-x-3">
                 still alive...?
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-6 text-ft-minor">
+          <div className="flex items-center gap-6 text-muted-foreground">
             {nav.map((n) => (
               <Link
                 key={n}
                 href={`/${n}`}
-                className={cm('hover:text-ft-strong transition-colors', {
-                  ['text-ft-strong font-semibold']: segments[1] === n,
-                })}
+                className={cn(
+                  'transition-colors hover:text-accent-foreground',
+                  {
+                    ['font-semibold text-accent-foreground']: segments[1] === n,
+                  },
+                )}
               >
                 {n}
               </Link>

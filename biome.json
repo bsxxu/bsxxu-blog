@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.9.1/schema.json",
   "organizeImports": { "enabled": true },
   "files": {
     "ignore": [".next/**", "dist/**", ".turbo/**", "node_modules/**"]
@@ -23,5 +23,10 @@
   "formatter": {
     "indentStyle": "space",
     "indentWidth": 2
+  },
+  "css": {
+    "formatter": {
+      "enabled": true
+    }
   }
 }

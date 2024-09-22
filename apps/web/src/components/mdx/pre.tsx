@@ -1,6 +1,6 @@
 'use client';
 
-import { errorToast, successToast } from '@/lib/toast';
+import { errorToast, successToast } from '@/lib/utils';
 import { useClipboard } from 'foxact/use-clipboard';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { RiFileCopyFill } from 'react-icons/ri';
@@ -34,7 +34,7 @@ export default function Pre(
       <pre {...rest}>
         <button
           onClick={handleCopy}
-          className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-ft-minor group-hover:opacity-100 hover:text-ft-minor/50 z-10"
+          className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-muted-foreground group-hover:opacity-100 hover:text-muted-foreground/50 z-10"
         >
           <RiFileCopyFill />
         </button>

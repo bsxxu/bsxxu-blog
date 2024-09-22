@@ -1,16 +1,16 @@
-import { usePostMetadataValue } from '@/providers/post-metadata-provider';
-import { timeFormat } from '@/utils/common';
+import { timeFormat } from '@/lib/utils';
+import { useBlogMetadata } from '@/providers/context-state-provider';
 import { memo } from 'react';
 import { BiShareAlt, BiSolidLike } from 'react-icons/bi';
 
 function PostHeader() {
-  const postMetadata = usePostMetadataValue();
+  const postMetadata = useBlogMetadata();
 
   return (
     <div className="px-32 mt-3 min-h-12 flex items-center justify-between">
       <div>
         <div className="font-semibold">{postMetadata.title}</div>
-        <div className="text-xs text-ft-minor">
+        <div className="text-xs text-muted-foreground">
           {timeFormat(postMetadata.date, 'YYYY-MM-DD')}
           <span className="pl-3">
             {postMetadata.tags?.slice(0, 3).join(' · ') ?? ''}
@@ -18,7 +18,7 @@ function PostHeader() {
         </div>
       </div>
       <div>
-        <div className="text-xs text-ft-minor -translate-x-5">
+        <div className="text-xs text-muted-foreground -translate-x-5">
           if you like it...
         </div>
         <div className="flex gap-3">

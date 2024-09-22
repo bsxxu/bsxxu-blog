@@ -1,6 +1,6 @@
 //参考 https://github.com/wevm/vocs/blob/75e0cfc874e7abe8648be139a8554e1fe87a18d1/src/vite/plugins/rehype/inline-shiki.ts
 
-import { SHIKI_THEMES } from '@/constants/shiki-themes';
+import { SHIKI_THEMES } from '@/lib/constants';
 import type { Element, Node, Parent } from 'hast';
 import { bundledLanguages, getHighlighter } from 'shiki';
 import { SKIP, visit } from 'unist-util-visit';

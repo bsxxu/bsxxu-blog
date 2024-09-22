@@ -43,12 +43,12 @@ export default function SideMenu({
             renderer={(item) => (
               <div
                 key={item.title}
-                className="space-y-1 transition-colors hover:bg-bk-minor p-1 rounded"
+                className="space-y-1 transition-colors hover:bg-muted p-1 rounded"
               >
                 <Link href={`/blog/${item.slug}`} className="hover:underline">
                   {item.title}
                 </Link>
-                <div className="line-clamp-2 text-xs text-ft-minor">
+                <div className="line-clamp-2 text-xs text-muted-foreground">
                   {item.description}
                 </div>
               </div>

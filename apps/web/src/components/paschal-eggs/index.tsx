@@ -1,6 +1,6 @@
 'use client';
 
-import { usePaschalValue } from '@/providers/paschal-provider';
+import { usePaschal } from '@/providers/context-state-provider';
 import Osu from './osu';
 
 export enum Eggs {
@@ -9,7 +9,7 @@ export enum Eggs {
 }
 
 export default function PaschalEggs() {
-  const p = usePaschalValue();
+  const p = usePaschal();
   let page: React.ReactNode | null;
   switch (p) {
     case Eggs.OSU:

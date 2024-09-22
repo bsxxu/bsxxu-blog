@@ -16,7 +16,7 @@ function PostCard({
   return (
     <AnimateView
       as="div"
-      className="p-4 space-y-3 rounded-xl border border-bk-minor relative hover:bg-bk-minor transition-colors"
+      className="p-4 space-y-3 rounded-xl border border-muted relative hover:bg-muted transition-colors"
       motionProps={{
         initial: {
           opacity: 0,
@@ -38,13 +38,13 @@ function PostCard({
     >
       <div className="font-semibold text-lg line-clamp-1">{metadata.title}</div>
       <div className="text-sm line-clamp-2">{metadata.description}</div>
-      <div className="text-xs text-ft-minor">
+      <div className="text-xs text-muted-foreground">
         <span>{metadata.date}</span>
         <span>{metadata.tags?.join('·')}</span>
       </div>
       <Link
         href={`/blog/${metadata.slug}`}
-        className="absolute right-3 bottom-3 flex items-center transition-colors hover:text-ft-minor"
+        className="absolute right-3 bottom-3 flex items-center transition-colors hover:text-muted-foreground"
       >
         <RiArrowRightSFill />
         阅读

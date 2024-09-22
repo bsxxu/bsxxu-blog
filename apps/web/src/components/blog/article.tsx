@@ -1,7 +1,7 @@
 import { getHeadings } from '@/lib/mdx';
-import AnimateView from './animate-view';
-import MDXRemote from './mdx-rsc';
-import Toc from './toc';
+import AnimateView from '../animate-view';
+import MDXRemote from '../mdx-rsc';
+import Toc from '../toc';
 
 export default async function Article({ content }: { content: string }) {
   return (

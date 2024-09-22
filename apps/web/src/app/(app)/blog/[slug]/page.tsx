@@ -1,18 +1,20 @@
-import Article from '@/components/article';
+import Article from '@/components/blog/article';
 import PostMetadataSetter from '@/components/post-metadata-setter';
+import ProgressBar from '@/components/progress-bar';
 import { getPost } from '@/lib/mdx';
-import { timeFormat } from '@/utils/common';
+import { timeFormat } from '@/lib/utils';
 import { RiCalendar2Fill, RiHashtag, RiTimeFill } from 'react-icons/ri';
 
 //TODO 标题下小字
 export default async function Post({ params }: { params: { slug: string } }) {
-  const { content, metadata } = getPost('posts', params.slug);
+  const { content, metadata } = await getPost('posts', params.slug);
   return (
     <PostMetadataSetter data={metadata}>
-      <div className="text-center mt-40 mb-10 text-ft-strong text-3xl font-bold">
+      <ProgressBar />
+      <div className="text-center mt-40 mb-10 text-3xl font-bold">
         {metadata.title}
       </div>
-      <div className="mb-5 flex justify-center gap-2 text-ft-minor text-xs">
+      <div className="mb-5 flex justify-center gap-2 text-muted-foreground text-xs">
         <div className="flex items-center gap-1">
           <RiCalendar2Fill />
           {timeFormat(metadata.date, 'YYYY-MM-DD')}

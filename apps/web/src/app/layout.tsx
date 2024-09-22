@@ -1,5 +1,4 @@
 import Header from '@/components/header/header';
-import TopLoader from '@/components/top-loader';
 import { sansFont } from '@/lib/fonts';
 import ComposeProvider from '@/providers';
 import { Toaster } from 'react-hot-toast';
@@ -18,13 +17,12 @@ export default function RootLayout({
   return (
     <html
       lang="zh"
-      className={`${sansFont.variable} scroll-smooth scrollbar-thin font-sans`}
+      className={`${sansFont.variable} scroll-smooth scrollbar-thin font-sans antialiased `}
     >
-      <body className="bg-bk text-ft transition-colors">
+      <body className="bg-background text-foreground transition-colors">
         <ComposeProvider>
           <PaschalEggs />
           <Toaster />
-          <TopLoader />
           <Header />
           <Background />
           <main className="max-w-5xl mx-auto min-h-screen">{children}</main>

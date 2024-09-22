@@ -1,7 +1,7 @@
 'use client';
 
 import type { PostMetadata } from '@/lib/mdx';
-import { useSetPostMetadata } from '@/providers/post-metadata-provider';
+import { useSetBlogMetadata } from '@/providers/context-state-provider';
 import { useEffect } from 'react';
 
 export default function PostMetadataSetter({
@@ -11,7 +11,7 @@ export default function PostMetadataSetter({
   children: React.ReactNode;
   data: PostMetadata;
 }) {
-  const setPostMetaData = useSetPostMetadata();
+  const setPostMetaData = useSetBlogMetadata();
   useEffect(() => setPostMetaData(data), [data, setPostMetaData]);
   //移除文章末尾的分号
   useEffect(() => {

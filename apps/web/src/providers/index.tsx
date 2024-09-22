@@ -1,15 +1,16 @@
-import { PaschalProvider } from './paschal-provider';
-import { PostMetadataProvider } from './post-metadata-provider';
+import { ComposeContextProvider } from 'foxact/compose-context-provider';
+import {
+  BlogMetadataProvider,
+  PaschalProvider,
+} from './context-state-provider';
 import ScrollProvider from './scroll-provider';
 import ThemeProvider from './theme-provider';
-import { TopLoaderShowProvider } from './toploader-show-provider';
 
 const providers = [
-  ThemeProvider,
-  TopLoaderShowProvider,
-  PostMetadataProvider,
-  PaschalProvider,
-  ScrollProvider,
+  <ThemeProvider key="theme" />,
+  <PaschalProvider key="paschal" />,
+  <ScrollProvider key="scroll" />,
+  <BlogMetadataProvider key="blogMetadata" />,
 ];
 
 export default function ComposeProvider({
@@ -17,6 +18,9 @@ export default function ComposeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
-  return providers.reduce((kids, Parent) => <Parent>{kids}</Parent>, children);
+  return (
+    <ComposeContextProvider contexts={providers}>
+      {children}
+    </ComposeContextProvider>
+  );
 }
