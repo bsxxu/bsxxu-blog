@@ -1,14 +1,22 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { commonConfig } from '@/configs/index.config';
+import dayjs from 'dayjs';
 import matter from 'gray-matter';
+import readingTime from 'reading-time';
+import { commonConfig } from '../configs/index.config';
+import type { PostMetadata } from '../data/interfaces/post';
 
 export async function readMDXFile(path: string) {
   const raw = await fs.promises.readFile(path, 'utf-8');
-  const { content, data } = matter(raw);
-
+  const { content, data } = matter(raw) as unknown as {
+    content: string;
+    data: PostMetadata;
+  };
+  const timestamp = dayjs(data.date, 'YYYY-MM-DD HH:mm').unix();
   return {
     content,
+    timestamp,
+    readingTime: readingTime(content),
     ...data,
   };
 }

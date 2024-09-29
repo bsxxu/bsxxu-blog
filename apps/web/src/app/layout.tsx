@@ -6,10 +6,11 @@ import '@/styles/index.css';
 import Background from '@/components/backgroud';
 import Footer from '@/components/footer';
 import PaschalEggs from '@/components/paschal-eggs';
+import '@/lib/env';
 
 //TODO seo
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

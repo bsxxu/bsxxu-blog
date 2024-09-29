@@ -1,4 +1,3 @@
-import type { PostMetadata } from '@/lib/mdx';
 import Link from 'next/link';
 import { memo } from 'react';
 import { RiArrowRightSFill } from 'react-icons/ri';
@@ -9,7 +8,7 @@ function PostCard({
   offset = 0,
   delay = 0.7,
 }: {
-  metadata: PostMetadata & { slug: string };
+  metadata: any;
   offset?: number;
   delay?: number;
 }) {
@@ -43,7 +42,7 @@ function PostCard({
         <span>{metadata.tags?.join('·')}</span>
       </div>
       <Link
-        href={`/blog/${metadata.slug}`}
+        href={`/blog/${metadata.key}`}
         className="absolute right-3 bottom-3 flex items-center transition-colors hover:text-muted-foreground"
       >
         <RiArrowRightSFill />

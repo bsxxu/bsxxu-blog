@@ -1,7 +1,7 @@
-import { POSTS_INDEX } from '@/lib/constants';
-import { searchClient } from '@/lib/search';
-import { getAllPost } from '@/lib/utils';
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import { POSTS_INDEX } from '../lib/constants';
+import { searchClient } from '../lib/search';
+import { getAllPost } from '../lib/utils';
 
 export function syncMeiliSearch(
   fastify: FastifyInstance,
@@ -10,7 +10,22 @@ export function syncMeiliSearch(
 ) {
   fastify.addHook('onReady', async () => {
     try {
+      await searchClient.index(POSTS_INDEX).deleteAllDocuments();
+      await searchClient.deleteIndex(POSTS_INDEX);
       await searchClient.createIndex(POSTS_INDEX, { primaryKey: 'key' });
+      await searchClient
+        .index(POSTS_INDEX)
+        .updateSortableAttributes(['timestamp']);
+      await searchClient
+        .index(POSTS_INDEX)
+        .updateDisplayedAttributes([
+          'key',
+          'title',
+          'tags',
+          'description',
+          'date',
+          'timestamp',
+        ]);
       const docs = await getAllPost();
       await searchClient.index(POSTS_INDEX).addDocuments(docs);
       fastify.log.info('meilisearch has been synchronized');

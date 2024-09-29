@@ -2,12 +2,22 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["//#lint", "//#service:check", "^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["//#service:check"]
+    },
+    "start": {},
+    "//#lint": {},
+    "//#service:up": {},
+    "//#service:check": {
+      "dependsOn": ["//#service:up"]
+    },
+    "@bsxxu/web#build": {
+      "dependsOn": ["@bsxxu/server#build"]
     }
   }
 }

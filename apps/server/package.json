@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "tsx watch --env-file ./.env.development ./src/main.ts",
+    "dev": "tsx watch --env-file ./.env ./src/main.ts",
     "build": "rimraf ./dist && tsx ./build.ts",
-    "start": "pnpm build && node --env-file ./.env.development ./dist/main.cjs",
+    "start": "pnpm build && node --env-file ./.env ./dist/main.cjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "meilisearch": "^0.42.0",
     "pino-pretty": "^11.2.2",
     "postgres": "^3.4.4",
+    "reading-time": "^1.5.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

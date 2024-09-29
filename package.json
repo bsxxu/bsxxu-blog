@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
+    "build": "./scripts/pre-check.sh && turbo run build; pnpm service:down",
+    "dev": "./scripts/pre-check.sh && turbo run dev",
+    "service:up": "docker-compose -f ./compose.dev.yaml up -d",
+    "service:down": "docker-compose -f ./compose.dev.yaml down",
+    "service:check": "./scripts/service-check.sh",
+    "start": "turbo run start",
     "lint": "biome check ./",
     "lint:fix": "biome check --write ./",
     "prepare": "husky"

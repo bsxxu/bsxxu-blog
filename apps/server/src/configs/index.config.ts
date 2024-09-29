@@ -3,7 +3,7 @@ import type {
   DbConfig,
   SearchConfig,
   ServerConfig,
-} from '@/data/interfaces/config';
+} from '../data/interfaces/config';
 
 const checkEmpty = (key: string) => {
   const value = process.env[key];

@@ -9,7 +9,6 @@ import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkGithubAlerts from 'remark-github-alerts';
 import rehypeCode from './plugins/rehype-code';
-import rehypeInlineCode from './plugins/rehype-inline-code';
 import remarkHeading, { type TocHeading } from './plugins/remark-heading';
 
 export type PostMetadata = {
@@ -64,8 +63,8 @@ export async function compileAndRun(content: string) {
     await compile(content, {
       outputFormat: 'function-body',
       development: process.env.NODE_ENV === 'development',
-      remarkPlugins: [remarkHeading, remarkGithubAlerts, remarkGfm],
-      rehypePlugins: [rehypeInlineCode, rehypeCode],
+      remarkPlugins: [remarkHeading, remarkGithubAlerts as any, remarkGfm],
+      rehypePlugins: [rehypeCode],
     }),
   );
   const runtime =

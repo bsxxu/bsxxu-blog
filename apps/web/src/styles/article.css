@@ -20,25 +20,24 @@
     @apply min-w-52;
   }
 
-  .prose code::after,
-  .prose code::before {
-    display: none;
-  }
-
+  /* 代码块 */
   .prose pre {
     border: 1px solid hsl(var(--muted));
     @apply scrollbar-track-transparent scrollbar-thumb-muted scrollbar-thin;
   }
 
-  .prose code:not(.prose pre code) {
-    padding: 1px 8px 2px 8px;
-    margin: 0 4px;
-    border-radius: 6px;
-    background-color: hsl(var(--muted)) !important;
+  /* 行内代码块 */
+  .prose code::after,
+  .prose code::before {
+    display: none;
   }
-
-  .prose pre span.lang {
-    color: hsl(var(--muted-foreground)) !important;
-    font-weight: 600 !important;
+  .prose span.shiki {
+    padding: 0px 5px;
+    margin: 0px 5px;
+    border-radius: 5px;
+  }
+  .prose span.shiki span span {
+    position: relative;
+    top: -1px;
   }
 }

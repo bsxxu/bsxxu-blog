@@ -9,6 +9,7 @@ const shortCase = new Map([
 const rehypeCode: [any, RehypeShikiOptions] = [
   rehypeShiki,
   {
+    inline: 'tailing-curly-colon',
     themes: SHIKI_THEMES,
     transformers: [
       {

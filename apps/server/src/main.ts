@@ -6,7 +6,10 @@ import test from './test';
   const server = createServer();
   try {
     server.register(test);
-    await server.listen({ port: serverConfig.port });
+    server.get('/bsxxu', (_, rpy) => {
+      rpy.send('success');
+    });
+    await server.listen({ port: serverConfig.port, host: '0.0.0.0' });
   } catch (err) {
     server.log.error(err);
     process.exit(1);

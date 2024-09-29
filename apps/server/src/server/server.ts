@@ -1,10 +1,10 @@
-import { registerHooks } from '@/hooks';
 import {
   type FastifyTRPCPluginOptions,
   fastifyTRPCPlugin,
 } from '@trpc/server/adapters/fastify';
 import fastify from 'fastify';
 import pretty from 'pino-pretty';
+import { registerHooks } from '../hooks';
 import { createContext } from './context';
 import { type AppRouter, appRouter } from './router';
 
