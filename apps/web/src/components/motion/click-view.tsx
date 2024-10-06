@@ -1,27 +1,24 @@
-import type { ReactHTML } from 'react';
-import AnimateView from '../animate-view';
-import type { AnimatePropsWithoutMotion } from './type';
+import clsx from 'clsx';
+import * as motion from 'framer-motion/client';
 
-export default function ClickView<T extends keyof ReactHTML>({
+export default function ClickView({
   children,
-  as,
   onClick = undefined,
-  ...rest
-}: AnimatePropsWithoutMotion<T> & {
+  className,
+}: {
+  children: React.ReactNode;
   onClick?: (...args: any[]) => any;
+  className?: string;
 }) {
   return (
-    <AnimateView
-      as={as as any}
+    <motion.div
+      className={clsx('cursor-pointer', className)}
       onClick={onClick}
-      motionProps={{
-        whileHover: { scale: 1.15 },
-        whileTap: { scale: 0.9 },
-        transition: { type: 'spring', stiffness: 400, damping: 17 },
-      }}
-      {...rest}
+      whileHover={{ scale: 1.15 }}
+      whileTap={{ scale: 0.9 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
     >
       {children}
-    </AnimateView>
+    </motion.div>
   );
 }

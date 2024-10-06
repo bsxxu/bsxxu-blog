@@ -18,17 +18,27 @@ export const postsRouter = router({
       ),
     )
     .query(async (opts) => {
-      const { page = PAGE_NUM, pageSize = PAGE_SIZE } = opts.input ?? {};
+      const { page, pageSize } = opts.input ?? {};
+      const searchParams = {
+        hitsPerPage: +(pageSize ?? PAGE_SIZE),
+        page: +(page ?? PAGE_NUM),
+        attributesToRetrieve: [
+          'key',
+          'title',
+          'tags',
+          'description',
+          'date',
+          'timestamp',
+          'readingTime',
+        ],
+        sort: ['timestamp:desc'],
+      };
       const res = await searchClient
         .index(POSTS_INDEX)
-        .search<
-          Omit<PostData, 'content'>,
-          { page: number; hitsPerPage: number; sort: string[] }
-        >(null, {
-          hitsPerPage: +pageSize,
-          page: +page,
-          sort: ['timestamp:desc'],
-        });
+        .search<Omit<PostData, 'content'>, typeof searchParams>(
+          null,
+          searchParams,
+        );
       return res;
     }),
   getPostByKey: publicProcedure.input(z.string()).query(async (opts) => {

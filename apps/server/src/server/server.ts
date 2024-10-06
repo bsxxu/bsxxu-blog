@@ -26,7 +26,7 @@ export function createServer() {
   server.register(registerHooks);
 
   server.register(fastifyTRPCPlugin, {
-    prefix: '/trpc',
+    prefix: '/api/trpc',
     trpcOptions: {
       router: appRouter,
       createContext,

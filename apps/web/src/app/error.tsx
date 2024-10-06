@@ -1,8 +1,8 @@
 'use client';
+
 import { useEffect } from 'react';
 
-// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
-export default function Error({
+export default function ErrorPage({
   error,
   reset,
 }: {

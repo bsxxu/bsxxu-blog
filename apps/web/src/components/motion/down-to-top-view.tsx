@@ -1,39 +1,35 @@
-import type { ReactHTML } from 'react';
-import AnimateView from '../animate-view';
-import type { AnimatePropsWithoutMotion } from './type';
+import * as motion from 'framer-motion/client';
 
-export default function DownToTopView<T extends keyof ReactHTML>({
+export default function DownToTopView({
   children,
-  as,
   delay = 0,
-  ...rest
-}: AnimatePropsWithoutMotion<T> & {
+  className,
+}: {
+  children: React.ReactNode;
   delay?: number;
+  className?: string;
 }) {
   return (
-    <AnimateView
-      as={as as any}
-      motionProps={{
-        initial: {
-          y: 50,
-          opacity: 0,
-        },
-        whileInView: {
-          y: 0,
-          opacity: 1,
-        },
-        transition: {
-          duration: 0.5,
-          delay: delay,
-          ease: 'easeOut',
-        },
-        viewport: {
-          once: true,
-        },
+    <motion.div
+      initial={{
+        y: 50,
+        opacity: 0,
       }}
-      {...rest}
+      whileInView={{
+        y: 0,
+        opacity: 1,
+      }}
+      transition={{
+        duration: 0.5,
+        delay: delay,
+        ease: 'easeOut',
+      }}
+      viewport={{
+        once: true,
+      }}
+      className={className}
     >
       {children}
-    </AnimateView>
+    </motion.div>
   );
 }

@@ -1,11 +1,11 @@
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify';
-import { syncMeiliSearch } from './meilisearch';
+import { syncSearch } from './search';
 
 export function registerHooks(
   fastify: FastifyInstance,
   _: FastifyPluginOptions,
   done: (err?: Error) => void,
 ) {
-  fastify.register(syncMeiliSearch);
+  fastify.register(syncSearch);
   done();
 }

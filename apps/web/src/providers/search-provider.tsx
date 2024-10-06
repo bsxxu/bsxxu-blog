@@ -1,12 +1,19 @@
-import { instantSearchClient } from '@/lib/search-client';
-import { useEffect } from 'react';
+'use client';
+
+import { POSTS_INDEX } from '@/lib/constants';
+import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
+import { useSingleton } from 'foxact/use-singleton';
 import { InstantSearch } from 'react-instantsearch';
 
 export default function SearchProvider({
   children,
-}: { children: React.ReactNode }) {
+  host,
+  apikey,
+}: { children?: React.ReactNode; host: string; apikey: string }) {
+  const clientRef = useSingleton(() => instantMeiliSearch(host, apikey));
+  const { searchClient } = clientRef.current;
   return (
-    <InstantSearch indexName="posts" searchClient={instantSearchClient}>
+    <InstantSearch indexName={POSTS_INDEX} searchClient={searchClient}>
       {children}
     </InstantSearch>
   );

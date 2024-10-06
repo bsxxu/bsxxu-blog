@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { RxLink2 } from 'react-icons/rx';
 
 export default function Heading<
   T extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
@@ -17,9 +16,9 @@ export default function Heading<
         href={`#${id}`}
         className="flex items-center no-underline font-bold"
       >
-        <RxLink2
+        <span
           className={cn(
-            'absolute transition-opacity opacity-0 group-hover:opacity-100 -translate-x-7',
+            'i-ri-links-fill absolute transition-opacity opacity-0 group-hover:opacity-100 -translate-x-7',
             { ['-translate-x-10']: H === 'h1' },
           )}
         />

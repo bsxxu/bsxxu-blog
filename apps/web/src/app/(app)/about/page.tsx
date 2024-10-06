@@ -1,15 +1,18 @@
-import Article from '@/components/blog/article';
-import PostMetadataSetter from '@/components/post-metadata-setter';
-import { getPost } from '@/lib/mdx';
+import Article from '@/components/post/article';
+import PostMetadataSetter from '@/components/post/post-metadata-setter';
+import ProgressBar from '@/components/post/progress-bar';
+import { trpcServer } from '@/lib/trpc/server';
 
 export default async function About() {
-  const { content, metadata } = await getPost('about', 'about-me.mdx');
+  const res = await trpcServer.posts.getPostByKey.query('about-me');
   return (
-    <PostMetadataSetter data={metadata}>
+    <>
+      <PostMetadataSetter data={res} />
+      <ProgressBar />
       <div className="text-center mt-40 mb-10 text-foreground text-3xl font-bold">
-        {metadata.title}
+        {res.title}
       </div>
-      <Article content={content} />
-    </PostMetadataSetter>
+      <Article content={res.content} />
+    </>
   );
 }

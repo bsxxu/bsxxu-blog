@@ -1,13 +1,10 @@
 'use client';
 
-import type { PostMetadata } from '@/lib/mdx';
 import { createContextState } from 'foxact/context-state';
+import type { PostMetadata } from '../../../server/src/data/interfaces/post';
 
 export const [BlogMetadataProvider, useBlogMetadata, useSetBlogMetadata] =
-  createContextState<PostMetadata>({
-    title: '',
-    date: '',
-  });
+  createContextState<PostMetadata | null>(null);
 
 export const [PaschalProvider, usePaschal, useSetPaschal] =
   createContextState('null');

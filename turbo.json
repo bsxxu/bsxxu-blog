@@ -10,7 +10,6 @@
       "persistent": true,
       "dependsOn": ["//#service:check"]
     },
-    "start": {},
     "//#lint": {},
     "//#service:up": {},
     "//#service:check": {

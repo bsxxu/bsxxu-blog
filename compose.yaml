@@ -25,7 +25,7 @@ services:
     env_file: /var/bsxxu/config/meilisearch.env
 
   nginx:
-    image: nginx:latest
+    image: nginx:alpine
     ports:
       - "80:80"
     volumes:

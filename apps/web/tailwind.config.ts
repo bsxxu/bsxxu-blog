@@ -1,3 +1,4 @@
+import { getIconCollections, iconsPlugin } from '@egoist/tailwindcss-icons';
 import typography from '@tailwindcss/typography';
 import type { Config } from 'tailwindcss';
 import type { PluginUtils } from 'tailwindcss/types/config';
@@ -9,6 +10,9 @@ const config: Config = {
     require('tailwindcss-animate'),
     typography,
     require('tailwind-scrollbar'),
+    iconsPlugin({
+      collections: getIconCollections(['ri', 'simple-icons', 'radix-icons']),
+    }),
   ],
   theme: {
     extend: {
@@ -84,9 +88,8 @@ const config: Config = {
             '--tw-prose-td-borders': theme('colors.muted.foreground'),
           },
         },
-      }), //
+      }),
     },
   },
 };
 export default config;
-//,

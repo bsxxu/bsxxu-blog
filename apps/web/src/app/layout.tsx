@@ -1,12 +1,12 @@
-import Header from '@/components/header/header';
 import { sansFont } from '@/lib/fonts';
 import ComposeProvider from '@/providers';
 import { Toaster } from 'react-hot-toast';
 import '@/styles/index.css';
-import Background from '@/components/backgroud';
-import Footer from '@/components/footer';
 import PaschalEggs from '@/components/paschal-eggs';
 import '@/lib/env';
+import Background from '@/components/common/backgroud';
+import Footer from '@/components/common/footer';
+import Header from '@/components/common/header';
 
 //TODO seo
 

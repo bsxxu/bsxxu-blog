@@ -6,3 +6,9 @@ services:
     ports:
       - "7700:7700"
     env_file: /var/bsxxu/config/meilisearch.env
+
+  nginx:
+    image: nginx:alpine
+    network_mode: "host"
+    volumes:
+      - ./configs/nginx.dev.conf:/etc/nginx/nginx.conf

@@ -1,9 +1,7 @@
-import { AiOutlineLoading } from 'react-icons/ai';
-
 export default function CommonLoading() {
   return (
     <div className="absolute-center flex flex-col items-center">
-      <AiOutlineLoading className="animate-spin" />
+      <span className="animate-spin i-ri-loader-5-fill" />
       <div>loading...</div>
     </div>
   );
