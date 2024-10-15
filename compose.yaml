@@ -1,22 +1,13 @@
-name: bsxxu-prod
+name: bsxxu
 
 services:
   bsxxu_web:
-    build: ./apps/web
+    build: .
     ports:
       - "3000:3000"
     volumes:
       - /var/bsxxu/config/web.env:/etc/bsxxu/web.env
-
-  bsxxu_server:
-    build: ./apps/server
-    ports:
-      - "8080:8080"
-    volumes:
-      - /var/bsxxu/config/server.env:/etc/bsxxu/server.env
       - /var/bsxxu/posts:/var/bsxxu/posts
-    depends_on:
-      - meilisearch
 
   meilisearch:
     image: getmeili/meilisearch:v1.10
@@ -32,4 +23,3 @@ services:
       - /var/bsxxu/config/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - bsxxu_web
-      - bsxxu_server

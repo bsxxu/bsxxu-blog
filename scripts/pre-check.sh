@@ -1,7 +1,7 @@
 #!/bin/bash
 pnpm service:down
 
-FILES=("meilisearch.env" "nginx.conf" "server.env" "web.env")
+FILES=("meilisearch.env" "nginx.conf" "web.env")
 
 for FILE in "${FILES[@]}"; do
   if [[ ! -f "/var/bsxxu/config/$FILE" ]]; then
