@@ -9,7 +9,6 @@ export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const keys = await getAllPostsKeys();
-  console.log(keys);
   return keys.map((k) => ({
     slug: k,
   }));

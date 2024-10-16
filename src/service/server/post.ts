@@ -6,6 +6,9 @@ import { PAGE_NUM, PAGE_SIZE, POSTS_INDEX } from '@/lib/constants';
 import { POSTS_PATH } from '@/lib/env';
 import { getAllPost, readMDXFile } from '@/lib/mdx';
 import { searchClient } from '@/lib/search';
+import { revalidatePath } from 'next/cache';
+
+let isInit = false;
 
 export async function getPost(key: string) {
   const res = await readMDXFile(path.join(POSTS_PATH, `${key}.mdx`));
@@ -13,7 +16,7 @@ export async function getPost(key: string) {
 }
 
 export async function getAllPostsKeys() {
-  await checkIndex();
+  await initSearch();
   let res = await searchClient
     .index(POSTS_INDEX)
     .getDocuments<{ key: string }>({
@@ -36,7 +39,7 @@ export async function getPostsByPage(
   page: number = PAGE_NUM,
   pageSize: number = PAGE_SIZE,
 ) {
-  await checkIndex();
+  await initSearch();
   const searchParams = {
     hitsPerPage: pageSize,
     page: page,
@@ -57,22 +60,37 @@ export async function getPostsByPage(
   return res;
 }
 
-async function checkIndex() {
-  try {
-    const res = await searchClient.index(POSTS_INDEX).getRawInfo();
-    if (!res) {
-      await syncSearch();
-    }
-  } catch (e) {
-    await syncSearch();
-  }
-}
-
-export async function syncSearch() {
-  await searchClient.index(POSTS_INDEX).deleteAllDocuments();
-  await searchClient.deleteIndex(POSTS_INDEX);
-  await searchClient.createIndex(POSTS_INDEX, { primaryKey: 'key' });
-  await searchClient.index(POSTS_INDEX).updateSortableAttributes(['timestamp']);
+const init = async () => {
+  const tasks = [];
+  tasks.push(
+    await searchClient.createIndex(POSTS_INDEX, { primaryKey: 'key' }),
+  );
+  tasks.push(
+    await searchClient
+      .index(POSTS_INDEX)
+      .updateSortableAttributes(['timestamp']),
+  );
   const docs = await getAllPost();
-  await searchClient.index(POSTS_INDEX).addDocuments(docs);
+  tasks.push(await searchClient.index(POSTS_INDEX).addDocuments(docs));
+  while (true) {
+    const ts = await Promise.all(
+      tasks.map((t) => searchClient.getTask(t.taskUid)),
+    );
+    if (ts.some((t) => t.status === 'failed'))
+      throw new Error('sync meilisearch failed');
+    if (ts.some((t) => t.status === 'processing' || t.status === 'enqueued'))
+      await new Promise((res) => setTimeout(res, 1000));
+    else break;
+    revalidatePath('/tasks');
+  }
+  isInit = true;
+};
+
+async function initSearch() {
+  if (isInit) return;
+  try {
+    !(await searchClient.index(POSTS_INDEX).getRawInfo()) && (await init());
+  } catch (e) {
+    await init();
+  }
 }

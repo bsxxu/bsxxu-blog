@@ -10,8 +10,8 @@ export default function BgDot() {
   const draw = useCallback(
     (s?: Konva.Stage) => {
       if (!s) return;
-      const iw = window.innerWidth;
-      const ih = window.innerHeight;
+      const iw = window ? window.innerWidth : 3000;
+      const ih = window ? window.innerHeight : 2000;
       const layer = new Konva.Layer();
       for (let j = -20; j < 200; j += 16) {
         for (let i = (j / 20) & 1 ? 0 : 8; i < iw; i += 16) {
@@ -39,15 +39,15 @@ export default function BgDot() {
   );
 
   const { stage, container } = useCanvas({
-    height: window.innerHeight,
-    width: window.innerWidth,
+    height: 3000,
+    width: 2000,
     init: draw,
   });
 
   useEffect(() => {
     const update = () => draw(stage);
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    window?.addEventListener('resize', update);
+    return () => window?.removeEventListener('resize', update);
   }, [draw, stage]);
 
   return <div ref={container} className="fixed left-0 top-0 -z-10" />;

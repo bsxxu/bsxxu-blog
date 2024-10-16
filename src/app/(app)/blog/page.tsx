@@ -5,6 +5,7 @@ import BlogPagination from '@/components/post/blog-pagination';
 import PostCard from '@/components/post/post-card';
 import SideMenu from '@/components/post/side-menu';
 import { NEW_FIRST } from '@/lib/constants';
+import { getAllPostsKeys } from '@/service/server/post';
 import {
   type MotionValue,
   motion,

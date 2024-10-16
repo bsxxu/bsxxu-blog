@@ -8,8 +8,9 @@ import { useCallback, useEffect } from 'react';
 export default function BgHome() {
   const { resolvedTheme } = useTheme();
   const draw = useCallback((s?: Konva.Stage) => {
-    const iw = window.innerWidth;
-    const ih = window.innerHeight;
+    const iw = window ? window.innerWidth : 3000;
+    const ih = window ? window.innerHeight : 2000;
+    console.log(iw);
     const layer = new Konva.Layer();
     for (let i = 10; i < iw; i += 25) {
       layer.add(
@@ -48,15 +49,15 @@ export default function BgHome() {
   }, []);
 
   const { stage, container } = useCanvas({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 3000,
+    height: 2000,
     init: draw,
   });
 
   useEffect(() => {
     const update = () => draw(stage);
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    window?.addEventListener('resize', update);
+    return () => window?.removeEventListener('resize', update);
   }, [draw, stage]);
 
   return <div ref={container} className="fixed left-0 top-0 -z-10" />;
