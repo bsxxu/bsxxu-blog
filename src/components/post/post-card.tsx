@@ -1,6 +1,8 @@
+import type { PostDataWithoutContent } from '@/data/interfaces/post';
 import * as motion from 'framer-motion/client';
 import Link from 'next/link';
 import { memo } from 'react';
+import DownToTopView from '../motion/down-to-top-view';
 
 function PostCard({
   metadata,
@@ -38,7 +40,7 @@ function PostCard({
         <span>{metadata.tags?.join('·')}</span>
       </div>
       <Link
-        href={`/blog/${metadata.key}`}
+        href={`/post/${metadata.key}`}
         className="absolute right-3 bottom-3 flex items-center transition-colors hover:text-muted-foreground"
       >
         <span className="i-ri-arrow-right-s-fill" />
@@ -49,3 +51,14 @@ function PostCard({
 }
 
 export default memo(PostCard);
+
+export function PostCardN({ data }: { data: PostDataWithoutContent }) {
+  return (
+    <DownToTopView>
+      <div className="flex">
+        <div>{data.title}</div>
+        <div>{data.date}</div>
+      </div>
+    </DownToTopView>
+  );
+}

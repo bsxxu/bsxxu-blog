@@ -29,7 +29,7 @@ export default function BlogPagination({
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             <PaginationItem key={idx}>
               <PaginationLink
-                href={`/blog?page=${idx + 1}&pageSize=${pageSize}`}
+                href={`/post?page=${idx + 1}&pageSize=${pageSize}`}
                 isActive={idx + 1 === currentPage}
               >
                 {idx + 1}

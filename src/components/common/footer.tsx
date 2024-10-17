@@ -9,10 +9,10 @@ export default function Footer() {
         <div className="space-y-3">
           <div>
             <span className="mr-2">CC BY-NC-SA 4.0</span>
-            <CurrentYear /> - NOW
+            2024 - <CurrentYear />
             <span className="ml-2">© Bsx</span>
           </div>
-          <div>Powered by nextjs</div>
+          <div>Powered by Next.js</div>
         </div>
         <button
           className="hover:text-accent-foreground group flex items-center gap-2"

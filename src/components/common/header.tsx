@@ -11,7 +11,7 @@ import ClickView from '../motion/click-view';
 import PostHeader from './post-header';
 import ThemesToggle from './themes-toggle';
 
-const nav = ['blog', 'life'];
+const nav = ['post', 'project'];
 
 //TODO 移动端适配
 export default function Header() {
@@ -23,7 +23,7 @@ export default function Header() {
       (segments.length === 2 && segments[1] === 'about'));
 
   return (
-    <div className="w-full h-16 px-2 md:px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden border-b border-muted z-10">
+    <div className="w-full h-16 px-2 md:px-20 py-2 fixed top-0 backdrop-blur shadow overflow-hidden border-b border-muted z-20">
       <motion.div
         animate={{
           y: isScroll ? -60 : 0,
@@ -59,7 +59,7 @@ export default function Header() {
                   },
                 )}
               >
-                {n}
+                {`${n.charAt(0).toUpperCase()}${n.slice(1)}`}
               </Link>
             ))}
             <ThemesToggle />

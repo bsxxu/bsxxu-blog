@@ -13,3 +13,5 @@ export interface PostData extends PostMetadata {
   content: string;
   readingTime: ReadTimeResults;
 }
+
+export type PostDataWithoutContent = Omit<PostData, 'content'>;

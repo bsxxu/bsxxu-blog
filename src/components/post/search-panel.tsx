@@ -24,7 +24,7 @@ type HitType<T extends Record<string, any>> = HitComponentType<T>['hit'];
 const SearchItem = ({ hit }: { hit: HitType<PostData> }) => {
   return (
     <Link
-      href={`/blog/${hit.key}`}
+      href={`/post/${hit.key}`}
       className="group my-3 p-2 flex items-center justify-between rounded cursor-pointer hover:bg-muted"
     >
       <div>

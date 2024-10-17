@@ -1,5 +1,3 @@
-import type { PostListSearch } from '@/app/(app)/blog/page';
-import { OLD_FIRST } from '@/lib/constants';
 import * as motion from 'framer-motion/client';
 import ClickView from '../motion/click-view';
 import {

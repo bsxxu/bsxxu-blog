@@ -1,11 +1,12 @@
 import 'server-only';
 
 import path from 'node:path';
-import type { PostData } from '@/data/interfaces/post';
-import { PAGE_NUM, PAGE_SIZE, POSTS_INDEX } from '@/lib/constants';
+import type { PostDataWithoutContent } from '@/data/interfaces/post';
+import { POSTS_INDEX } from '@/lib/constants';
 import { POSTS_PATH } from '@/lib/env';
 import { getAllPost, readMDXFile } from '@/lib/mdx';
 import { searchClient } from '@/lib/search';
+import dayjs from 'dayjs';
 import { revalidatePath } from 'next/cache';
 
 let isInit = false;
@@ -13,6 +14,33 @@ let isInit = false;
 export async function getPost(key: string) {
   const res = await readMDXFile(path.join(POSTS_PATH, `${key}.mdx`));
   return res;
+}
+
+export async function getPostsGroupByYear() {
+  await initSearch();
+  const searchParams = {
+    limit: 1000,
+    attributesToRetrieve: [
+      'key',
+      'title',
+      'tags',
+      'description',
+      'date',
+      'timestamp',
+      'readingTime',
+    ],
+    sort: ['timestamp:desc'],
+  };
+  const res = await searchClient
+    .index(POSTS_INDEX)
+    .search<PostDataWithoutContent, typeof searchParams>(null, searchParams);
+  const yearMap = new Map<number, PostDataWithoutContent[]>();
+  for (const p of res.hits) {
+    const year = dayjs.unix(p.timestamp).year();
+    yearMap.set(year, yearMap.get(year) ?? []);
+    yearMap.get(year)?.push(p);
+  }
+  return Array.from(yearMap.entries());
 }
 
 export async function getAllPostsKeys() {
@@ -33,31 +61,6 @@ export async function getAllPostsKeys() {
     keys.push(...res.results.map((x) => x.key));
   }
   return keys;
-}
-
-export async function getPostsByPage(
-  page: number = PAGE_NUM,
-  pageSize: number = PAGE_SIZE,
-) {
-  await initSearch();
-  const searchParams = {
-    hitsPerPage: pageSize,
-    page: page,
-    attributesToRetrieve: [
-      'key',
-      'title',
-      'tags',
-      'description',
-      'date',
-      'timestamp',
-      'readingTime',
-    ],
-    sort: ['timestamp:desc'],
-  };
-  const res = await searchClient
-    .index(POSTS_INDEX)
-    .search<Omit<PostData, 'content'>, typeof searchParams>(null, searchParams);
-  return res;
 }
 
 const init = async () => {
