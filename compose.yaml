@@ -1,0 +1,25 @@
+name: bsxxu
+
+services:
+  bsxxu_web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - /var/bsxxu/config/web.env:/etc/bsxxu/web.env
+      - /var/bsxxu/posts:/var/bsxxu/posts
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.10
+    ports:
+      - "7700:7700"
+    env_file: /var/bsxxu/config/meilisearch.env
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - /var/bsxxu/config/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - bsxxu_web

@@ -45,7 +45,8 @@ coverage/
 *.pem
 
 .env*.local
-.env
+.env.dev*
+.env.prod*
 
 .vercel/
 
@@ -59,3 +60,7 @@ test*.mdx
 drizzle/
 
 backup/
+
+apps/web/posts/
+
+.env

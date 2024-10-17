@@ -1,9 +1,0 @@
-{
-	"name": "@bsxxu/tsconfig",
-	"version": "0.0.0",
-	"private": "true",
-	"publishConfig": {
-		"access": "public"
-	},
-	"files": ["base.json", "next.json", "nest.json"]
-}
