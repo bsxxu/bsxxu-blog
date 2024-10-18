@@ -2,7 +2,6 @@ import { sansFont } from '@/lib/fonts';
 import ComposeProvider from '@/providers';
 import { Toaster } from 'react-hot-toast';
 import '@/styles/index.css';
-import PaschalEggs from '@/components/paschal-eggs';
 import '@/lib/env';
 import Background from '@/components/common/backgroud';
 import Footer from '@/components/common/footer';
@@ -22,7 +21,6 @@ export default async function RootLayout({
     >
       <body className="bg-background text-foreground transition-colors">
         <ComposeProvider>
-          <PaschalEggs />
           <Toaster />
           <Header />
           <Background />
