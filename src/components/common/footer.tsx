@@ -1,5 +1,6 @@
 'use client';
 
+import dayjs from 'dayjs';
 import { CurrentYear } from 'foxact/current-year';
 
 export default function Footer() {
@@ -9,7 +10,7 @@ export default function Footer() {
         <div className="space-y-3">
           <div>
             <span className="mr-2">CC BY-NC-SA 4.0</span>
-            2024 - <CurrentYear />
+            2024 - <CurrentYear defaultYear={dayjs().year()} />
             <span className="ml-2">© Bsx</span>
           </div>
           <div>Powered by Next.js</div>

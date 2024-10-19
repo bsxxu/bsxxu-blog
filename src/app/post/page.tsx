@@ -21,7 +21,7 @@ export default async function Posts() {
           <PostList key={d[0]} data={d[1]} year={d[0]} />
         ))}
       </div>
-      <div className="right-5 fixed top-[50vh]">
+      <div className="right-5 fixed top-1/2 -translate-y-1/2">
         <SideMenu />
       </div>
     </>
