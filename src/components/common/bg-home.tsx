@@ -10,7 +10,6 @@ export default function BgHome() {
   const draw = useCallback((s?: Konva.Stage) => {
     const iw = window ? window.innerWidth : 3000;
     const ih = window ? window.innerHeight : 2000;
-    console.log(iw);
     const layer = new Konva.Layer();
     for (let i = 10; i < iw; i += 25) {
       layer.add(

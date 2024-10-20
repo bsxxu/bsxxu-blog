@@ -1,6 +1,5 @@
 import Article from '@/components/post/article';
 import PostMetadataSetter from '@/components/post/post-metadata-setter';
-import ProgressBar from '@/components/post/progress-bar';
 import { timeFormat } from '@/lib/utils';
 import { getAllPostsKeys, getPost } from '@/service/server/post';
 
@@ -20,8 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <>
       <PostMetadataSetter data={res} />
-      <ProgressBar />
-      <div className="text-center mt-40 mb-10 text-3xl font-bold">
+      <div className="text-center mt-32 mb-10 text-3xl font-bold">
         {res.title}
       </div>
       <div className="mb-5 flex justify-center gap-2 text-muted-foreground text-xs">
