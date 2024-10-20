@@ -3,7 +3,6 @@ import 'server-only';
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle';
 import { Lucia, type Session, type User } from 'lucia';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { cache } from 'react';
 import { db } from '../db';
 import { sessionTable, userTable } from '../db/schema';
@@ -47,27 +46,32 @@ export const validateRequest = cache(
         user: null,
         session: null,
       };
+    const result = await lucia.validateSession(sessionId);
 
-    return await lucia.validateSession(sessionId);
+    try {
+      if (result.session?.fresh) {
+        const sessionCookie = lucia.createSessionCookie(result.session.id);
+        cookies().set(
+          sessionCookie.name,
+          sessionCookie.value,
+          sessionCookie.attributes,
+        );
+      }
+      if (!result.session) {
+        const sessionCookie = lucia.createBlankSessionCookie();
+        cookies().set(
+          sessionCookie.name,
+          sessionCookie.value,
+          sessionCookie.attributes,
+        );
+      }
+    } catch {}
+
+    return result;
   },
 );
 
-export async function logout() {
-  'use server';
-  const { session } = await validateRequest();
-  if (!session) {
-    return {
-      error: 'Unauthorized',
-    };
-  }
-
-  await lucia.invalidateSession(session.id);
-
-  const sessionCookie = lucia.createBlankSessionCookie();
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes,
-  );
-  return redirect('/');
+export async function isAdmin() {
+  const { user } = await validateRequest();
+  return user?.githubId === 97532041;
 }

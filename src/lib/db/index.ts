@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import env from '../env';
 import * as schema from './schema';

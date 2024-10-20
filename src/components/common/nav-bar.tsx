@@ -4,9 +4,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const nav = ['post', 'project'];
-
-export default function NavBar() {
+export default function NavBar({ nav }: { nav: string[] }) {
   const segments = usePathname().split('/');
   return (
     <>

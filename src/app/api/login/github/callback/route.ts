@@ -25,7 +25,7 @@ export async function GET(request: Request): Promise<Response> {
   try {
     const tokens = await github.validateAuthorizationCode(code);
     const githubUser = await ofetch<{
-      id: string;
+      id: number;
       login: string;
     }>('https://api.github.com/user', {
       headers: {

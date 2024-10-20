@@ -1,7 +1,10 @@
+import { validateRequest } from '@/lib/auth';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import LoginButton from './login-button';
+import LogoutButton from './logout-button';
 
-export default function MoreButton() {
+export default async function MoreButton() {
+  const { session } = await validateRequest();
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -11,7 +14,7 @@ export default function MoreButton() {
         className="z-30 mx-4 max-w-[150px] w-auto p-2"
         sideOffset={20}
       >
-        <LoginButton />
+        {session ? <LogoutButton /> : <LoginButton />}
       </PopoverContent>
     </Popover>
   );

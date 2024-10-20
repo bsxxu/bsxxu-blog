@@ -1,35 +1,28 @@
-import { validateRequest } from '@/lib/auth';
 import Link from 'next/link';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 
 export default async function LoginButton() {
-  const { session } = await validateRequest();
-
   return (
     <Dialog>
       <DialogTrigger>
         <div className="flex items-center gap-3  hover:bg-muted transition-colors rounded px-2 py-1">
-          {session ? (
-            <>
-              <span className="i-ri-logout-box-line" />
-              Logout
-            </>
-          ) : (
-            <>
-              <span className="i-ri-login-box-line" />
-              Login
-            </>
-          )}
+          <span className="i-ri-login-box-line" />
+          Login
         </div>
       </DialogTrigger>
       <DialogContent>
-        <DialogTitle>Login</DialogTitle>
+        <DialogHeader>
+          <DialogTitle>Login</DialogTitle>
+          <DialogDescription>Select a login method.</DialogDescription>
+        </DialogHeader>
         <div className="mx-auto">
           <Tabs defaultValue="oauth" className="w-[400px]">
             <TabsList className="grid w-full grid-cols-2">

@@ -1,6 +1,6 @@
 'use client';
 
-import { errorToast, successToast } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 import { useClipboard } from 'foxact/use-clipboard';
 import { useCallback, useState } from 'react';
 
@@ -14,9 +14,14 @@ export default function Pre(
   const { children, 'data-lang': dataLang, ...rest } = props;
   const lang = (dataLang ?? 'plaintext').toUpperCase();
   const [code, setCode] = useState('');
+  const { toast } = useToast();
   const { copy } = useClipboard({
     onCopyError(error) {
-      errorToast(error.message);
+      toast({
+        variant: 'destructive',
+        title: 'Copy to clipboard failed.',
+        description: error.message,
+      });
     },
   });
 
@@ -24,7 +29,13 @@ export default function Pre(
     <div className="relative group">
       <pre {...rest}>
         <button
-          onClick={() => copy(code).then(() => successToast('已复制到剪切板'))}
+          onClick={() =>
+            copy(code).then(() =>
+              toast({
+                description: 'Copy to clipboard successfully.',
+              }),
+            )
+          }
           className="opacity-0 absolute top-1 right-1 transition-opacity text-lg text-muted-foreground group-hover:opacity-100 hover:text-muted-foreground/50 z-10"
         >
           <div className="i-ri-file-copy-fill" />
