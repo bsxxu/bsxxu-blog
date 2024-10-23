@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "./scripts/dev.sh",
-    "build": "./scripts/pre-check.sh && pnpm lint && pnpm service:up && ./scripts/service-check.sh && pnpm next build; pnpm service:down",
+    "build": "./scripts/build.sh",
     "service:up": "docker-compose -f ./compose.dev.yaml up -d --remove-orphans",
     "service:down": "docker-compose -f ./compose.dev.yaml down --remove-orphans",
     "lint": "biome check ./",
@@ -79,6 +79,7 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
     "drizzle-kit": "^0.26.2",
     "husky": "^9.1.6",
     "postcss-import": "^16.1.0",

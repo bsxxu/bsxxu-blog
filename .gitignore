@@ -64,3 +64,5 @@ backup/
 apps/web/posts/
 
 .env
+
+.kamal

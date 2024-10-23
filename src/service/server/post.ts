@@ -79,12 +79,12 @@ const init = async () => {
     const ts = await Promise.all(
       tasks.map((t) => searchClient.getTask(t.taskUid)),
     );
+    console.log(ts.map((x) => x.status));
     if (ts.some((t) => t.status === 'failed'))
       throw new Error('sync meilisearch failed');
     if (ts.some((t) => t.status === 'processing' || t.status === 'enqueued'))
       await new Promise((res) => setTimeout(res, 1000));
     else break;
-    revalidatePath('/tasks');
   }
   isInit = true;
 };

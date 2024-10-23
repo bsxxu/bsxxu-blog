@@ -14,8 +14,9 @@ export default function Home() {
         <div className="mt-6 font-semibold text-lg">about me</div>
         <div className="mt-3">
           I am a coder driven by interest, and I love learning new knowledge or
-          skills. Besides programming, I like reading and traveling. I am also
-          an anime fan, as you can see from my avatar.
+          skills. Besides programming, I like reading and watching documentaries
+          in free time. I am also an anime fan, as you can see from my avatar,
+          which was drew by myself.
         </div>
         <div className="mt-6 font-semibold text-lg">find me</div>
         <div className="mt-3">

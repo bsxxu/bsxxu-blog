@@ -1,4 +1,3 @@
-import BgDot from '@/components/common/bg-dot';
 import RightToLeftView from '@/components/motion/right-to-left-view';
 import PostList from '@/components/post/post-list';
 import SideMenu from '@/components/post/side-menu';
@@ -10,7 +9,6 @@ export default async function Page() {
   const data = await getPostsGroupByYear();
   return (
     <>
-      <BgDot />
       <RightToLeftView className="mt-24 ">
         <div className="text-right text-4xl font-bold pr-10 text-muted-foreground">
           <div>Posts</div>
