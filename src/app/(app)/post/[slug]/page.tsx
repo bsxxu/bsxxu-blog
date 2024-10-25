@@ -13,8 +13,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const res = await getPost(params.slug);
+type Params = Promise<{
+  slug: string;
+}>;
+
+export default async function Page({ params }: { params: Params }) {
+  const { slug } = await params;
+  const res = await getPost(slug);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { MEILI_APIKEY, MEILI_HOST } from '@/lib/env';
+import env from '@/lib/env';
 import { ComposeContextProvider } from 'foxact/compose-context-provider';
 import {
   BlogMetadataProvider,
@@ -13,7 +13,11 @@ const providers = [
   <PaschalProvider key="paschal" />,
   <ScrollProvider key="scroll" />,
   <BlogMetadataProvider key="blogMetadata" />,
-  <SearchProvider host={MEILI_HOST} apikey={MEILI_APIKEY} key="search" />,
+  <SearchProvider
+    host={env.MEILI_HOST}
+    apikey={env.MEILI_MASTER_KEY}
+    key="search"
+  />,
 ];
 
 export default function ComposeProvider({

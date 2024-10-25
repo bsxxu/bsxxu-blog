@@ -3,7 +3,7 @@
 import { POSTS_INDEX } from '@/lib/constants';
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
 import { useSingleton } from 'foxact/use-singleton';
-import { InstantSearchNext } from 'react-instantsearch-nextjs';
+import { InstantSearch } from 'react-instantsearch';
 
 export default function SearchProvider({
   children,
@@ -13,8 +13,8 @@ export default function SearchProvider({
   const clientRef = useSingleton(() => instantMeiliSearch(host, apikey));
   const { searchClient } = clientRef.current;
   return (
-    <InstantSearchNext indexName={POSTS_INDEX} searchClient={searchClient}>
+    <InstantSearch indexName={POSTS_INDEX} searchClient={searchClient}>
       {children}
-    </InstantSearchNext>
+    </InstantSearch>
   );
 }

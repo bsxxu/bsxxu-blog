@@ -1,7 +1,7 @@
 import { MeiliSearch } from 'meilisearch';
-import { MEILI_APIKEY, MEILI_HOST } from './env';
+import env from './env';
 
 export const searchClient = new MeiliSearch({
-  host: MEILI_HOST,
-  apiKey: MEILI_APIKEY,
+  host: env.MEILI_HOST,
+  apiKey: env.MEILI_MASTER_KEY,
 });

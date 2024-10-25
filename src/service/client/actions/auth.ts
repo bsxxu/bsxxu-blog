@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import { lucia, validateRequest } from '../../../lib/auth';
 
 export async function logout() {
+  const cookieStore = await cookies();
   const { session } = await validateRequest();
   if (!session) {
     return {
@@ -15,7 +16,7 @@ export async function logout() {
   await lucia.invalidateSession(session.id);
 
   const sessionCookie = lucia.createBlankSessionCookie();
-  cookies().set(
+  cookieStore.set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes,

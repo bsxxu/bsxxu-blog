@@ -1,6 +1,6 @@
 #!/bin/bash
-
-./scripts/pre-check.sh &&
+pnpm service:down &&
+  ./scripts/pre-check.sh &&
   pnpm lint &&
   pnpm service:up &&
   ./scripts/service-check.sh &&

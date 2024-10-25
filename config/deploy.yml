@@ -1,0 +1,36 @@
+service: bsxxu-blog
+
+image: jzb0bsx/bsxxu-blog
+
+servers:
+  - 107.174.205.151
+
+proxy:
+  app_port: 3000
+  healthcheck:
+    path: /api/health
+
+registry:
+  username: jzb0bsx
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+  context: .
+  driver: docker
+
+volumes:
+  - /var/bsxxu:/var/bsxxu
+
+accessories:
+  meilisearch:
+    host: 107.174.205.151
+    image: getmeili/meilisearch:v1.10
+    port: "7700:7700"
+    env:
+      secret:
+        - MEILI_MASTER_KEY
+
+ssh:
+  keys: ["~/.ssh/id.rsa"]
