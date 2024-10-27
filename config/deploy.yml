@@ -3,7 +3,7 @@ service: bsxxu-blog
 image: jzb0bsx/bsxxu-blog
 
 servers:
-  - 107.174.205.151
+  - ip
 
 proxy:
   app_port: 3000
@@ -25,12 +25,9 @@ volumes:
 
 accessories:
   meilisearch:
-    host: 107.174.205.151
+    host: ip
     image: getmeili/meilisearch:v1.10
     port: "7700:7700"
     env:
       secret:
         - MEILI_MASTER_KEY
-
-ssh:
-  keys: ["~/.ssh/id.rsa"]
