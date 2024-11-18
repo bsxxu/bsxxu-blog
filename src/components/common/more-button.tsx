@@ -1,10 +1,10 @@
-import { validateRequest } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import LoginButton from './login-button';
 import LogoutButton from './logout-button';
 
 export default async function MoreButton() {
-  const { session } = await validateRequest();
+  const session = await auth();
   return (
     <Popover>
       <PopoverTrigger asChild>

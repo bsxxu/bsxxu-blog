@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { loginWithGithub } from '@/service/client/actions/auth';
+import { Button } from '../ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,6 +9,7 @@ import {
   DialogTrigger,
 } from '../ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import EmailLoginForm from './email-login-form';
 
 export default async function LoginButton() {
   return (
@@ -27,14 +29,16 @@ export default async function LoginButton() {
           <Tabs defaultValue="oauth" className="w-[400px]">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="oauth">OAuth</TabsTrigger>
-              <TabsTrigger value="password">Password</TabsTrigger>
+              <TabsTrigger value="email">Email</TabsTrigger>
             </TabsList>
             <TabsContent value="oauth">
               <div>
-                <Link href="/api/login/github">github</Link>
+                <Button onClick={loginWithGithub}>github</Button>
               </div>
             </TabsContent>
-            <TabsContent value="password">password</TabsContent>
+            <TabsContent value="email">
+              <EmailLoginForm />
+            </TabsContent>
           </Tabs>
         </div>
       </DialogContent>

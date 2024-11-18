@@ -7,5 +7,4 @@ export default defineConfig({
   dbCredentials: {
     url: '/var/bsxxu/db/bsxxu.db',
   },
-  casing: 'snake_case',
 });

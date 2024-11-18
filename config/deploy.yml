@@ -15,6 +15,9 @@ registry:
   password:
     - KAMAL_REGISTRY_PASSWORD
 
+ssh:
+  port: "452"
+
 builder:
   arch: amd64
   context: .

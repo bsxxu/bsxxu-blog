@@ -46,6 +46,7 @@ export default function LogoutButton() {
                   description: 'You are logged out.',
                 });
               } catch (e) {
+                console.error(e);
                 toast({
                   variant: 'destructive',
                   description: 'Logout failed, please try refreshing the page.',
