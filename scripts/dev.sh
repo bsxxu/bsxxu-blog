@@ -9,4 +9,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-cross-env MEILI_HOST=http://localhost:7700 next dev
+export MEILI_HOST=127.0.0.1
+export REDIS_HOST=127.0.0.1
+next dev

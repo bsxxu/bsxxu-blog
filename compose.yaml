@@ -6,3 +6,9 @@ services:
     ports:
       - "7700:7700"
     env_file: ./.env
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    env_file: ./.env
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]

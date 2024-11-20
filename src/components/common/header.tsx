@@ -1,4 +1,4 @@
-import Avatar from '@/assets/avatar.jpg';
+import Avatar from '@/assets/avatar.png';
 import { isAdmin } from '@/lib/auth';
 import Image from 'next/image';
 import Link from 'next/link';

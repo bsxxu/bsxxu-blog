@@ -14,7 +14,7 @@ const providers = [
   <ScrollProvider key="scroll" />,
   <BlogMetadataProvider key="blogMetadata" />,
   <SearchProvider
-    host={env.MEILI_HOST}
+    host={`http://${env.MEILI_HOST}:${env.MEILI_PORT}`}
     apikey={env.MEILI_MASTER_KEY}
     key="search"
   />,

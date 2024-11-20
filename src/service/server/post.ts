@@ -3,7 +3,7 @@ import 'server-only';
 import path from 'node:path';
 import type { PostDataWithoutContent } from '@/data/interfaces/post';
 import { POSTS_INDEX } from '@/lib/constants';
-import { POSTS_PATH } from '@/lib/env';
+import env from '@/lib/env';
 import { getAllPost, readMDXFile } from '@/lib/mdx';
 import { searchClient } from '@/lib/search';
 import dayjs from 'dayjs';
@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 let isInit = false;
 
 export async function getPost(key: string) {
-  const res = await readMDXFile(path.join(POSTS_PATH, `${key}.mdx`));
+  const res = await readMDXFile(path.join(env.POSTS_PATH, `${key}.mdx`));
   return res;
 }
 

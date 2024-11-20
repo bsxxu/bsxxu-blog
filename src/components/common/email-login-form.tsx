@@ -2,7 +2,7 @@
 
 import { useToast } from '@/hooks/use-toast';
 import { useThrottle } from '@/lib/utils';
-import { loginWithEmail } from '@/service/client/actions/auth';
+import { loginWithEmail } from '@/service/server/actions/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -22,7 +22,6 @@ const formSchema = z.object({
   email: z.string().email(),
 });
 
-//TODO 限流
 export default function EmailLoginForm() {
   const { toast } = useToast();
   const [processing, setProcessing] = useState(false);
@@ -36,15 +35,16 @@ export default function EmailLoginForm() {
   const onSubmit = useThrottle(async (values: z.infer<typeof formSchema>) => {
     try {
       setProcessing(true);
-      await new Promise((res) => setTimeout(res, 3000));
-      // await loginWithEmail(values.email);
+      await loginWithEmail(values.email);
       toast({
         description: 'Email has been sent, please check your mailbox.',
       });
-    } catch (e) {
+    } catch (e: any) {
       toast({
         variant: 'destructive',
-        title: 'Email sending failed, please refresh or try again later.',
+        title:
+          e.message ??
+          'Email sending failed, please refresh or try again later.',
       });
     } finally {
       setProcessing(false);

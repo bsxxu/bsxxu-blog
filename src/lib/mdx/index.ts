@@ -10,7 +10,7 @@ import readingTime from 'reading-time';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkGithubAlerts from 'remark-github-alerts';
-import { POSTS_PATH } from '../env';
+import env from '../env';
 import rehypeCode from './rehype-code';
 import remarkHeading, { type TocHeading } from './remark-heading';
 
@@ -30,7 +30,7 @@ export async function readMDXFile(path: string) {
 }
 
 export async function getAllPost() {
-  const dir = POSTS_PATH;
+  const dir = env.POSTS_PATH;
   const files = await fs.promises.readdir(dir);
   const posts = files.filter(
     (name) => name.endsWith('.md') || name.endsWith('.mdx'),

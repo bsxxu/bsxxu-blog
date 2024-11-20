@@ -14,7 +14,7 @@ const sendVerificationRequest = async ({
   url,
 }: { identifier: string; url: string }) => {
   const command = new SendEmailCommand({
-    Source: 'noreply@bsxxu.me',
+    Source: 'Bsx<noreply@bsxxu.me>',
     Destination: {
       ToAddresses: [email],
     },

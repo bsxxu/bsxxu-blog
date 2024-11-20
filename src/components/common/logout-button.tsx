@@ -1,7 +1,7 @@
 'use client';
 
 import { useToast } from '@/hooks/use-toast';
-import { logout } from '@/service/client/actions/auth';
+import { logout } from '@/service/server/actions/auth';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import {

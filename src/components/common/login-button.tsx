@@ -1,4 +1,4 @@
-import { loginWithGithub } from '@/service/client/actions/auth';
+import { loginWithGithub } from '@/service/server/actions/auth';
 import { Button } from '../ui/button';
 import {
   Dialog,
