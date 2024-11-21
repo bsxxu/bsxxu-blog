@@ -1,5 +1,5 @@
 import Avatar from '@/assets/avatar.png';
-import { isAdmin } from '@/lib/auth';
+import { auth, isAdmin } from '@/lib/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import ClickView from '../motion/click-view';
@@ -8,7 +8,8 @@ import NavBar from './nav-bar';
 import ThemesToggle from './themes-toggle';
 
 export default async function Header() {
-  const nav = ['post', 'project'];
+  const session = await auth();
+  const nav = ['post', 'project', 'guestbook'];
   (await isAdmin()) && nav.push('admin');
 
   return (
@@ -17,8 +18,10 @@ export default async function Header() {
         <Link href="/">
           <ClickView>
             <Image
-              src={Avatar}
+              src={session?.user?.image ?? Avatar}
               alt="avatar"
+              width={40}
+              height={40}
               className="w-10 h-10 rounded-full"
             />
           </ClickView>
@@ -26,7 +29,9 @@ export default async function Header() {
         <div className="font-semibold">
           Bsx&apos;s blog ✨
           <div className="text-xs scale-90 font-normal text-muted-foreground translate-x-3">
-            君の銀の庭
+            {session?.user?.name
+              ? `Welcome, ${session.user.name}`
+              : '君の銀の庭'}
           </div>
         </div>
       </div>

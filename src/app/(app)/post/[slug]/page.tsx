@@ -1,4 +1,5 @@
 import Article from '@/components/post/article';
+import PostComment from '@/components/post/comment/comment';
 import PostMetadataSetter from '@/components/post/post-metadata-setter';
 import { timeFormat } from '@/lib/utils';
 import { getAllPostsKeys, getPost } from '@/service/server/post';
@@ -45,6 +46,7 @@ export default async function Page({ params }: { params: Params }) {
         </div>
       </div>
       <Article content={res.content} />
+      <PostComment postKey={res.key} />
     </>
   );
 }

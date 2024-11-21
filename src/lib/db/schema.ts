@@ -1,4 +1,6 @@
+import { sql } from 'drizzle-orm';
 import {
+  type AnySQLiteColumn,
   integer,
   primaryKey,
   sqliteTable,
@@ -84,3 +86,27 @@ export const authenticators = sqliteTable(
     }),
   }),
 );
+
+export const comments = sqliteTable('comment', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  isRoot: integer('is_root', { mode: 'boolean' }).notNull().default(true),
+  replyTo: text('reply_to').references((): AnySQLiteColumn => comments.id, {
+    onDelete: 'cascade',
+  }),
+  rootCommentId: text('root_comment_id').references(
+    (): AnySQLiteColumn => comments.id,
+    {
+      onDelete: 'cascade',
+    },
+  ),
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  postKey: text('post_key').notNull(),
+  content: text('content').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .notNull()
+    .default(sql`(current_timestamp)`),
+});

@@ -7,6 +7,10 @@ export async function loginWithGithub() {
   await signIn('github');
 }
 
+export async function loginWithGoogle() {
+  await signIn('google');
+}
+
 //TODO 抛出特定错误
 export async function loginWithEmail(email: string) {
   const redisKey = `login-email:${email}`;
