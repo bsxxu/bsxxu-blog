@@ -4,6 +4,7 @@ import {
   BlogMetadataProvider,
   PaschalProvider,
 } from './context-state-provider';
+import ReactQueryProvider from './react-query-provider';
 import ScrollProvider from './scroll-provider';
 import SearchProvider from './search-provider';
 import ThemeProvider from './theme-provider';
@@ -18,6 +19,7 @@ const providers = [
     apikey={env.MEILI_MASTER_KEY}
     key="search"
   />,
+  <ReactQueryProvider key="query" />,
 ];
 
 export default function ComposeProvider({

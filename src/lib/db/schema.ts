@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import {
   type AnySQLiteColumn,
   integer,
@@ -92,9 +92,12 @@ export const comments = sqliteTable('comment', {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   isRoot: integer('is_root', { mode: 'boolean' }).notNull().default(true),
-  replyTo: text('reply_to').references((): AnySQLiteColumn => comments.id, {
-    onDelete: 'cascade',
-  }),
+  replyToId: text('reply_to_id').references(
+    (): AnySQLiteColumn => comments.id,
+    {
+      onDelete: 'cascade',
+    },
+  ),
   rootCommentId: text('root_comment_id').references(
     (): AnySQLiteColumn => comments.id,
     {
@@ -106,7 +109,24 @@ export const comments = sqliteTable('comment', {
     .references(() => users.id, { onDelete: 'cascade' }),
   postKey: text('post_key').notNull(),
   content: text('content').notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+  createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(current_timestamp)`),
+    .default(sql`(unixepoch())`),
 });
+
+export const commentsRelation = relations(comments, ({ one, many }) => ({
+  rootComment: one(comments, {
+    fields: [comments.rootCommentId],
+    references: [comments.id],
+    relationName: 'rootComment',
+  }),
+  replyToComment: one(comments, {
+    fields: [comments.replyToId],
+    references: [comments.id],
+  }),
+  user: one(users, {
+    fields: [comments.userId],
+    references: [users.id],
+  }),
+  descendantComments: many(comments, { relationName: 'rootComment' }),
+}));
