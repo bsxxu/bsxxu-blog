@@ -12,11 +12,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useThrottle } from '@/lib/utils';
 import { queryClient } from '@/providers/react-query-provider';
-import { createComment } from '@/service/server/actions/comment';
+import { createComment, replyComment } from '@/service/server/actions/comment';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import type { CommentType } from './type';
 
 const formSchema = z.object({
   content: z
@@ -29,7 +30,22 @@ const formSchema = z.object({
     }),
 });
 
-export default function CommentForm({ postKey }: { postKey: string }) {
+type NewCommentFormProps = {
+  type: 'new';
+  postKey: string;
+  afterComment?: () => void;
+};
+
+type ReplyCommentFormProps = {
+  type: 'reply';
+  replyToComment: CommentType;
+  afterComment?: () => void;
+};
+
+export type CommentFormProps = NewCommentFormProps | ReplyCommentFormProps;
+
+//TODO update shadcn
+export default function CommentForm(props: CommentFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,11 +59,19 @@ export default function CommentForm({ postKey }: { postKey: string }) {
     async (data: z.infer<typeof formSchema>) => {
       try {
         setProcessing(true);
-        await createComment(postKey, data.content);
+        props.type === 'reply'
+          ? await replyComment(props.replyToComment.id, data.content)
+          : await createComment(props.postKey, data.content);
         queryClient.invalidateQueries({
-          queryKey: ['comments', postKey],
+          queryKey: [
+            'comments',
+            props.type === 'reply'
+              ? (props.replyToComment.rootCommentId ?? props.replyToComment.id)
+              : props.postKey,
+          ],
         });
         form.reset();
+        props.afterComment?.();
         toast({
           description: '评论成功',
         });

@@ -29,7 +29,7 @@ const OauthLink = ({
   );
 };
 
-export default async function LoginButton() {
+export default function LoginButton() {
   return (
     <Dialog>
       <DialogTrigger>

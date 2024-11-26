@@ -1,24 +1,26 @@
 'use client';
 
-import DefaultAvatar from '@/assets/default-avatar.png';
+import CommonLoading from '@/components/common/loading';
 import trpc from '@/lib/trpc/client';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import { useMotionValueEvent, useScroll } from 'framer-motion';
-import Image from 'next/image';
+import React from 'react';
+import { CommentItem } from './comment-item';
+import CommentSkeleton from './comment-skeleton';
+import ReplyList from './reply-list';
 
 export default function CommentList({ postKey }: { postKey: string }) {
   const {
     data,
     error,
-    isPending,
+    isLoading,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ['comments', postKey],
     queryFn: ({ pageParam }) =>
-      trpc.comment.getCommentsByPage.query({
+      trpc.comment.getRootCommentsByPage.query({
         page: pageParam,
         pageSize: 10,
         postKey,
@@ -35,36 +37,29 @@ export default function CommentList({ postKey }: { postKey: string }) {
     (v) => v >= 0.98 && hasNextPage && !isFetchingNextPage && fetchNextPage(),
   );
 
-  if (error) return <div>error</div>;
+  if (error)
+    return (
+      <div className="flex items-center justify-center h-52 mx-auto">
+        ( ´•̥̥̥ω•̥̥̥` ) 诶？好像出错了，等这个家伙慢慢修吧...
+      </div>
+    );
 
   const dataList = data?.pages?.flat();
 
   return (
-    <div className="space-y-7 mx-5">
-      {dataList?.map((d) => (
-        <div key={d.id} className="flex items-start gap-3 group">
-          <Image
-            src={d.user.image ?? DefaultAvatar}
-            alt="avatar"
-            width={30}
-            height={30}
-            className="rounded-full"
-          />
-          <div className="text-sm overflow-auto space-y-2">
-            <div className="space-x-3">
-              <span>{d.user.name}</span>
-              <span className="text-muted-foreground text-xs">
-                {dayjs(d.createdAt)
-                  .utcOffset(8)
-                  .format('YYYY-MM-DD HH:mm:ss CST')}
-              </span>
-            </div>
-            <div className="break-words">{d.content}</div>
-          </div>
-          <div className="i-ri-message-2-fill self-end invisible text-sm shrink-0 group-hover:visible hover:cursor-pointer transition-all" />
-        </div>
+    <div className="space-y-5 mx-5 mt-8">
+      {dataList?.map((comment) => (
+        <React.Fragment key={comment.id}>
+          <CommentItem type="root" comment={comment} />
+          <ReplyList rootComment={comment} />
+        </React.Fragment>
       ))}
-      {(isPending || isFetchingNextPage) && <div>Loading...</div>}
+      {isLoading && <CommentSkeleton />}
+      {isFetchingNextPage && (
+        <div className="relative mt-16">
+          <CommonLoading />
+        </div>
+      )}
     </div>
   );
 }

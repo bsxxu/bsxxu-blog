@@ -2,6 +2,7 @@
 
 import { signIn, signOut } from '@/lib/auth';
 import redis from '@/lib/redis';
+import { revalidatePath } from 'next/cache';
 
 export async function loginWithGithub() {
   await signIn('github');
@@ -23,4 +24,5 @@ export async function loginWithEmail(email: string) {
 
 export async function logout() {
   await signOut({ redirect: false });
+  revalidatePath('/');
 }
