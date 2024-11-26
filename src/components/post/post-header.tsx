@@ -3,12 +3,11 @@
 import { timeFormat } from '@/lib/utils';
 import { useBlogMetadata } from '@/providers/context-state-provider';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { memo, useRef, useState } from 'react';
 
 function PostHeader() {
   const scrollRef = useRef(0);
-  const router = useRouter();
   const postMetadata = useBlogMetadata();
   const { scrollY } = useScroll();
   const [y, setY] = useState(0);
@@ -46,10 +45,7 @@ function PostHeader() {
         </div>
         <div>
           <div className="flex gap-3">
-            <button
-              className="i-ri-arrow-go-back-fill"
-              onClick={() => router.back()}
-            />
+            <Link className="i-ri-arrow-go-back-fill" href="/post" />
             <button className="i-ri-heart-fill" />
             <button className="i-ri-share-line" />
           </div>

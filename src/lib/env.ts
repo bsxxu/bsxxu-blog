@@ -9,20 +9,32 @@ const checkEnv = (name: string, defaultVal?: string) => {
   return val;
 };
 
-export const MEILI_APIKEY = checkEnv('MEILI_APIKEY');
-export const MEILI_HOST = checkEnv('MEILI_HOST');
-export const POSTS_PATH = checkEnv('POSTS_PATH');
-export const DB_FILE_PATH = checkEnv('DB_FILE_PATH');
-const GITHUB_CLIENT_ID = checkEnv('GITHUB_CLIENT_ID');
-const GITHUB_CLIENT_SECRET = checkEnv('GITHUB_CLIENT_SECRET');
+const MEILI_MASTER_KEY = checkEnv('MEILI_MASTER_KEY');
+const MEILI_HOST = checkEnv('MEILI_HOST');
+const MEILI_PORT = checkEnv('MEILI_PORT', '7700');
+const POSTS_PATH = checkEnv('POSTS_PATH');
+const DB_FILE_PATH = checkEnv('DB_FILE_PATH');
+const AWS_ACCESS_KEY_ID = checkEnv('AWS_ACCESS_KEY_ID');
+const AWS_SECRET_ACCESS_KEY = checkEnv('AWS_SECRET_ACCESS_KEY');
+const AWS_REGIN = checkEnv('AWS_REGIN');
+const REDIS_PASSWORD = checkEnv('REDIS_PASSWORD');
+const REDIS_HOST = checkEnv('REDIS_HOST');
+const REDIS_PORT = checkEnv('REDIS_PORT', '6379');
+checkEnv('AUTH_GITHUB_ID');
+checkEnv('AUTH_GITHUB_SECRET');
 
 const env = {
-  MEILI_APIKEY,
+  MEILI_MASTER_KEY,
   MEILI_HOST,
+  MEILI_PORT,
   POSTS_PATH,
   DB_FILE_PATH,
-  GITHUB_CLIENT_ID,
-  GITHUB_CLIENT_SECRET,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
+  AWS_REGIN,
+  REDIS_PASSWORD,
+  REDIS_HOST,
+  REDIS_PORT,
 };
 
 export default env;

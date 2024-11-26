@@ -25,5 +25,14 @@ function check_meilisearch() {
   return 1
 }
 
+function check_redis() {
+  if ss -tunel | grep -q 6379; then
+    return 0
+  fi
+  return 1
+}
+
+
 check check_meilisearch meilisearch
+check check_redis redis
 exit 0

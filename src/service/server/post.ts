@@ -3,16 +3,15 @@ import 'server-only';
 import path from 'node:path';
 import type { PostDataWithoutContent } from '@/data/interfaces/post';
 import { POSTS_INDEX } from '@/lib/constants';
-import { POSTS_PATH } from '@/lib/env';
+import env from '@/lib/env';
 import { getAllPost, readMDXFile } from '@/lib/mdx';
 import { searchClient } from '@/lib/search';
 import dayjs from 'dayjs';
-import { revalidatePath } from 'next/cache';
 
 let isInit = false;
 
 export async function getPost(key: string) {
-  const res = await readMDXFile(path.join(POSTS_PATH, `${key}.mdx`));
+  const res = await readMDXFile(path.join(env.POSTS_PATH, `${key}.mdx`));
   return res;
 }
 
@@ -44,23 +43,8 @@ export async function getPostsGroupByYear() {
 }
 
 export async function getAllPostsKeys() {
-  await initSearch();
-  let res = await searchClient
-    .index(POSTS_INDEX)
-    .getDocuments<{ key: string }>({
-      fields: ['key'],
-      limit: 50,
-    });
-  const keys = res.results.map((x) => x.key);
-  while (res.results && res.results.length > 0) {
-    res = await searchClient.index(POSTS_INDEX).getDocuments({
-      fields: ['key'],
-      limit: 50,
-      offset: keys.length,
-    });
-    keys.push(...res.results.map((x) => x.key));
-  }
-  return keys;
+  const ps = await getAllPost();
+  return ps.map((p) => p.key);
 }
 
 const init = async () => {
@@ -75,17 +59,18 @@ const init = async () => {
   );
   const docs = await getAllPost();
   tasks.push(await searchClient.index(POSTS_INDEX).addDocuments(docs));
-  while (true) {
-    const ts = await Promise.all(
-      tasks.map((t) => searchClient.getTask(t.taskUid)),
-    );
-    if (ts.some((t) => t.status === 'failed'))
-      throw new Error('sync meilisearch failed');
-    if (ts.some((t) => t.status === 'processing' || t.status === 'enqueued'))
-      await new Promise((res) => setTimeout(res, 1000));
-    else break;
-    revalidatePath('/tasks');
-  }
+  await new Promise((res) => setTimeout(res, 3000));
+  // while (true) {
+  //   const ts = await Promise.all(
+  //     tasks.map((t) => searchClient.getTask(t.taskUid)),
+  //   );
+  //   console.log(ts.map((x) => x.status));
+  //   if (ts.some((t) => t.status === 'failed'))
+  //     throw new Error('sync meilisearch failed');
+  //   if (ts.some((t) => t.status === 'processing' || t.status === 'enqueued'))
+  //     await new Promise((res) => setTimeout(res, 1000));
+  //   else break;
+  // }
   isInit = true;
 };
 

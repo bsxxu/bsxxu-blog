@@ -38,6 +38,8 @@ pids
 
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+.vscode
+
 coverage/
 .nyc_output/
 
@@ -64,3 +66,5 @@ backup/
 apps/web/posts/
 
 .env
+
+.kamal/secrets

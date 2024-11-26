@@ -11,8 +11,8 @@ function BackTop(props: React.ComponentPropsWithoutRef<'button'>) {
   return (
     <button
       className={cn(
-        'transition-opacity hover:text-foreground flex items-center gap-2',
-        { 'opacity-0': y <= 500 },
+        'hover:text-foreground flex items-center gap-2',
+        { invisible: y <= 500 },
         className,
       )}
       onClick={() => window.scrollTo({ top: 0 })}

@@ -1,11 +1,13 @@
 #!/bin/bash
-pnpm service:down
 
-FILES=("meilisearch.env" "nginx.conf" "web.env")
+if [[ ! -f "/var/bsxxu/db/bsxxu.db" ]]; then
+  echo "/var/bsxxu/db/bsxxu.db not existed."
+  exit 1
+fi
 
-for FILE in "${FILES[@]}"; do
-  if [[ ! -f "/var/bsxxu/config/$FILE" ]]; then
-    echo "/var/bsxxu/config/$FILE not existed."
-    exit 1
-  fi
-done
+if [[ ! -d "/var/bsxxu/posts" ]]; then
+  echo "/var/bsxxu/posts not existed."
+  exit 1
+fi
+
+exit 0

@@ -1,4 +1,5 @@
 import Article from '@/components/post/article';
+import PostComment from '@/components/post/comment/comment';
 import PostMetadataSetter from '@/components/post/post-metadata-setter';
 import { timeFormat } from '@/lib/utils';
 import { getAllPostsKeys, getPost } from '@/service/server/post';
@@ -13,8 +14,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const res = await getPost(params.slug);
+type Params = Promise<{
+  slug: string;
+}>;
+
+export default async function Page({ params }: { params: Params }) {
+  const { slug } = await params;
+  const res = await getPost(slug);
 
   return (
     <>
@@ -40,6 +46,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
       <Article content={res.content} />
+      <PostComment postKey={res.key} />
     </>
   );
 }

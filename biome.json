@@ -2,7 +2,14 @@
   "$schema": "https://biomejs.dev/schemas/1.9.2/schema.json",
   "organizeImports": { "enabled": true },
   "files": {
-    "ignore": [".next/**", "dist/**", ".turbo/**", "node_modules/**"]
+    "ignore": [
+      ".next/**",
+      "dist/**",
+      ".turbo/**",
+      "node_modules/**",
+      "drizzle/**",
+      ".vscode/**"
+    ]
   },
   "linter": {
     "enabled": true,
