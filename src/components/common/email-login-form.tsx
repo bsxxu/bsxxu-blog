@@ -1,7 +1,7 @@
 'use client';
 
+import useThrottleFn from '@/hooks/use-throttle-fn';
 import { useToast } from '@/hooks/use-toast';
-import { useThrottle } from '@/lib/utils';
 import { loginWithEmail } from '@/service/server/actions/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -32,7 +32,7 @@ export default function EmailLoginForm() {
     },
   });
 
-  const onSubmit = useThrottle(async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = useThrottleFn(async (values: z.infer<typeof formSchema>) => {
     try {
       setProcessing(true);
       await loginWithEmail(values.email);

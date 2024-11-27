@@ -13,7 +13,7 @@ export default function SearchProvider({
   const clientRef = useSingleton(() => instantMeiliSearch(host, apikey));
   const { searchClient } = clientRef.current;
   return (
-    <InstantSearch indexName={POSTS_INDEX} searchClient={searchClient}>
+    <InstantSearch searchClient={searchClient} indexName={POSTS_INDEX}>
       {children}
     </InstantSearch>
   );

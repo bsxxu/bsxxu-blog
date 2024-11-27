@@ -17,7 +17,7 @@ export default async function RootLayout({
   return (
     <html
       lang="zh"
-      className={`${sansFont.variable} scroll-smooth scrollbar-thin font-sans antialiased `}
+      className={`${sansFont.variable} scroll-smooth scrollbar-thin font-sans antialiased dark`}
     >
       <body className="bg-background text-foreground transition-colors">
         <ComposeProvider>

@@ -3,6 +3,8 @@ import ClickView from '../motion/click-view';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog';
@@ -22,7 +24,10 @@ export default function SideMenu() {
           </ClickView>
         </DialogTrigger>
         <DialogContent>
-          <DialogTitle>Search</DialogTitle>
+          <DialogHeader>
+            <DialogTitle>搜索</DialogTitle>
+            <DialogDescription />
+          </DialogHeader>
           <SearchPanel />
         </DialogContent>
       </Dialog>

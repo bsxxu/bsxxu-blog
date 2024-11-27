@@ -1,18 +1,18 @@
 'use client';
 
+import type { PostData } from '@/data/interfaces/post';
+import useDebounceFn from '@/hooks/use-debounce-fn';
+import Link from 'next/link';
 import {
   Configure,
   Highlight,
-  InfiniteHits,
   type InfiniteHitsProps,
-  SearchBox,
   Snippet,
   useInfiniteHits,
+  useSearchBox,
 } from 'react-instantsearch';
-
-import type { PostData } from '@/data/interfaces/post';
-import Link from 'next/link';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 
 type HitComponentType<T extends Record<string, any>> = NonNullable<
   InfiniteHitsProps<T>['hitComponent']
@@ -28,44 +28,53 @@ const SearchItem = ({ hit }: { hit: HitType<PostData> }) => {
       className="group my-3 p-2 flex items-center justify-between rounded cursor-pointer hover:bg-muted"
     >
       <div>
-        <Highlight hit={hit} attribute="title" />
+        <Highlight
+          hit={hit}
+          attribute="title"
+          classNames={{
+            highlighted: 'bg-foreground text-background',
+          }}
+        />
         <Snippet
           hit={hit}
           attribute="content"
           className=" text-sm block pt-1"
+          classNames={{
+            highlighted: 'bg-foreground text-background',
+          }}
         />
       </div>
-      <span className="hidden group-hover:inline-block i-ri-arrow-go-forward-line" />
+      <div className="i-ri-arrow-right-up-line opacity-0 group-hover:opacity-100 transition-opacity" />
     </Link>
   );
 };
 
-//TODO 用hook做防抖
 export default function SearchPanel() {
-  const { showMore, isLastPage } = useInfiniteHits();
+  const { showMore, isLastPage, items } = useInfiniteHits<PostData>();
+  const { refine } = useSearchBox();
+  const debounceRefine = useDebounceFn(refine);
+
   return (
     <>
-      <SearchBox
-        classNames={{
-          form: 'relative h-12',
-          input:
-            'h-12 w-full outline-none absolute border-none py-2 pl-10 pr-7 bg-accent rounded-md',
-          submit: 'absolute pl-10 top-1/2 -translate-y-1/2 i-ri-search-2-line',
-          reset:
-            'absolute i-radix-icons-cross-1 top-1/2 -translate-y-1/2 right-3',
-        }}
-      />
-      <Configure hitsPerPage={3} attributesToSnippet={['content']} />
-      <div className="max-h-[400px] overflow-auto scrollbar-none">
-        <InfiniteHits
-          hitComponent={SearchItem}
-          classNames={{
-            loadMore: 'hidden',
-            loadPrevious: 'hidden',
-          }}
+      <div className="relative">
+        <Input
+          type="search"
+          className="pl-8"
+          onChange={(e) => debounceRefine(e.target.value)}
         />
+        <span className="absolute top-1/2 -translate-y-1/2 left-3 i-ri-search-2-line" />
+      </div>
+      <Configure hitsPerPage={5} attributesToSnippet={['content']} />
+      <div className="max-h-[400px] overflow-auto scrollbar-none">
+        {items.map((hit) => (
+          <SearchItem key={hit.key} hit={hit} />
+        ))}
         {!isLastPage && (
-          <Button className="w-full mx-auto" onClick={showMore}>
+          <Button
+            variant="outline"
+            className="w-full mx-auto"
+            onClick={showMore}
+          >
             加载更多
           </Button>
         )}

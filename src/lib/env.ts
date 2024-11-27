@@ -20,10 +20,12 @@ const AWS_REGIN = checkEnv('AWS_REGIN');
 const REDIS_PASSWORD = checkEnv('REDIS_PASSWORD');
 const REDIS_HOST = checkEnv('REDIS_HOST');
 const REDIS_PORT = checkEnv('REDIS_PORT', '6379');
+const BLOG_URL = checkEnv('BLOG_URL');
 checkEnv('AUTH_GITHUB_ID');
 checkEnv('AUTH_GITHUB_SECRET');
 
-const env = {
+export default {
+  BLOG_URL,
   MEILI_MASTER_KEY,
   MEILI_HOST,
   MEILI_PORT,
@@ -36,5 +38,3 @@ const env = {
   REDIS_HOST,
   REDIS_PORT,
 };
-
-export default env;

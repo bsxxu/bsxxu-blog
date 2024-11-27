@@ -9,8 +9,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
+import useThrottleFn from '@/hooks/use-throttle-fn';
 import { useToast } from '@/hooks/use-toast';
-import { useThrottle } from '@/lib/utils';
 import { queryClient } from '@/providers/react-query-provider';
 import { createComment, replyComment } from '@/service/server/actions/comment';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -55,7 +55,7 @@ export default function CommentForm(props: CommentFormProps) {
   const [processing, setProcessing] = useState(false);
   const { toast } = useToast();
 
-  const onSubmit = useThrottle(
+  const onSubmit = useThrottleFn(
     async (data: z.infer<typeof formSchema>) => {
       try {
         setProcessing(true);
