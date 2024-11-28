@@ -4,7 +4,7 @@ import useThrottleFn from '@/hooks/use-throttle-fn';
 import { useToast } from '@/hooks/use-toast';
 import { loginWithEmail } from '@/service/server/actions/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../ui/button';
@@ -24,7 +24,7 @@ const formSchema = z.object({
 
 export default function EmailLoginForm() {
   const { toast } = useToast();
-  const [processing, setProcessing] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,22 +33,21 @@ export default function EmailLoginForm() {
   });
 
   const onSubmit = useThrottleFn(async (values: z.infer<typeof formSchema>) => {
-    try {
-      setProcessing(true);
-      await loginWithEmail(values.email);
-      toast({
-        description: 'Email has been sent, please check your mailbox.',
-      });
-    } catch (e: any) {
-      toast({
-        variant: 'destructive',
-        title:
-          e.message ??
-          'Email sending failed, please refresh or try again later.',
-      });
-    } finally {
-      setProcessing(false);
-    }
+    startTransition(async () => {
+      try {
+        await loginWithEmail(values.email);
+        toast({
+          description: 'Email has been sent, please check your mailbox.',
+        });
+      } catch (e: any) {
+        toast({
+          variant: 'destructive',
+          title:
+            e.message ??
+            'Email sending failed, please refresh or try again later.',
+        });
+      }
+    });
   });
 
   return (
@@ -71,8 +70,8 @@ export default function EmailLoginForm() {
           )}
         />
         <div className="flex justify-end">
-          <Button type="submit" className=" w-32" disabled={processing}>
-            {processing && <span className="i-ri-loader-4-fill animate-spin" />}
+          <Button type="submit" className=" w-32" disabled={isPending}>
+            {isPending && <span className="i-ri-loader-4-fill animate-spin" />}
             Send
           </Button>
         </div>

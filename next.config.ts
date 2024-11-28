@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/meilisearch/multi-search',
+        destination: `http://${process.env.MEILI_HOST}:${process.env.MEILI_PORT}/multi-search`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

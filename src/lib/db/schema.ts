@@ -130,3 +130,23 @@ export const commentsRelation = relations(comments, ({ one, many }) => ({
   }),
   descendantComments: many(comments, { relationName: 'rootComment' }),
 }));
+
+export const messages = sqliteTable('message', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  content: text('content').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .notNull()
+    .default(sql`(unixepoch())`),
+});
+
+export const messagesRelation = relations(messages, ({ one }) => ({
+  user: one(users, {
+    fields: [messages.userId],
+    references: [users.id],
+  }),
+}));

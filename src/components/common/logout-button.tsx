@@ -3,7 +3,7 @@
 import { useToast } from '@/hooks/use-toast';
 import { logout } from '@/service/server/actions/auth';
 import { signOut } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { Button } from '../ui/button';
 import {
   Dialog,
@@ -17,7 +17,7 @@ import {
 
 export default function LogoutButton() {
   const [open, setOpen] = useState(false);
-  const [processing, setProcessing] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
   return (
@@ -40,25 +40,24 @@ export default function LogoutButton() {
             <Button variant="ghost">Maybe not</Button>
           </DialogClose>
           <Button
-            disabled={processing}
+            disabled={isPending}
             onClick={async () => {
-              try {
-                setProcessing(true);
-                await signOut({ redirect: false });
-                await logout();
-                setOpen(false);
-                toast({
-                  description: 'You are logged out.',
-                });
-              } catch (e) {
-                console.error(e);
-                toast({
-                  variant: 'destructive',
-                  description: 'Logout failed, please try refreshing the page.',
-                });
-              } finally {
-                setProcessing(false);
-              }
+              startTransition(async () => {
+                try {
+                  await signOut({ redirect: false });
+                  await logout();
+                  setOpen(false);
+                  toast({
+                    description: 'You are logged out.',
+                  });
+                } catch (e) {
+                  toast({
+                    variant: 'destructive',
+                    description:
+                      'Logout failed, please try refreshing the page.',
+                  });
+                }
+              });
             }}
           >
             Sure

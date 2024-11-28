@@ -1,8 +1,11 @@
 import Article from '@/components/post/article';
 import PostComment from '@/components/post/comment/comment';
-import PostMetadataSetter from '@/components/post/post-metadata-setter';
+import PostHeader from '@/components/post/post-header';
+import ProgressBar from '@/components/post/progress-bar';
+import type { PostData } from '@/data/interfaces/post';
 import { timeFormat } from '@/lib/utils';
 import { getAllPostsKeys, getPost } from '@/service/server/post';
+import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -20,11 +23,19 @@ type Params = Promise<{
 
 export default async function Page({ params }: { params: Params }) {
   const { slug } = await params;
-  const res = await getPost(slug);
+  let res: PostData;
+  try {
+    res = await getPost(slug);
+  } catch (e: any) {
+    if (e.code === 'ENOENT') {
+      notFound();
+    } else throw e;
+  }
 
   return (
     <>
-      <PostMetadataSetter data={res} />
+      <ProgressBar />
+      <PostHeader postMetadata={res} />
       <div className="text-center mt-32 mb-10 text-3xl font-bold">
         {res.title}
       </div>

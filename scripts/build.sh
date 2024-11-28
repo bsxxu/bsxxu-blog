@@ -4,6 +4,6 @@ pnpm service:down &&
   pnpm lint &&
   pnpm service:up &&
   ./scripts/service-check.sh &&
-  pnpm cross-env MEILI_HOST=http://localhost:7700 next build
+  pnpm cross-env MEILI_HOST=127.0.0.1 next build
 
 pnpm service:down

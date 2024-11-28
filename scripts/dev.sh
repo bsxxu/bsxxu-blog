@@ -9,7 +9,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-export MEILI_HOST=127.0.0.1
-export BLOG_URL=http://127.0.0.1:3000
-export REDIS_HOST=127.0.0.1
-next dev
+pnpm cross-env MEILI_HOST=127.0.0.1 \
+            BLOG_URL=http://localhost:3000 \
+            REDIS_HOST=127.0.0.1 \
+            next dev

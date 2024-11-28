@@ -1,14 +1,13 @@
 'use client';
 
+import type { PostMetadata } from '@/data/interfaces/post';
 import { timeFormat } from '@/lib/utils';
-import { useBlogMetadata } from '@/providers/context-state-provider';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import Link from 'next/link';
 import { memo, useRef, useState } from 'react';
 
-function PostHeader() {
+function PostHeader({ postMetadata }: { postMetadata: PostMetadata }) {
   const scrollRef = useRef(0);
-  const postMetadata = useBlogMetadata();
   const { scrollY } = useScroll();
   const [y, setY] = useState(0);
 
@@ -35,9 +34,9 @@ function PostHeader() {
         className=" flex items-center gap-20 backdrop-blur-lg rounded-full px-5 py-2 border"
       >
         <div>
-          <div className="font-semibold">{postMetadata?.title}</div>
+          <div className="font-semibold">{postMetadata.title}</div>
           <div className="text-xs text-muted-foreground">
-            {timeFormat(postMetadata?.date ?? '', 'YYYY-MM-DD')}
+            {timeFormat(postMetadata.date ?? '', 'YYYY-MM-DD')}
             <span className="pl-3">
               {postMetadata?.tags?.slice(0, 3).join(' · ') ?? ''}
             </span>

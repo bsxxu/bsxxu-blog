@@ -29,14 +29,16 @@ const OauthLink = ({
   );
 };
 
-export default function LoginButton() {
+export default function LoginButton({ button }: { button?: React.ReactNode }) {
   return (
     <Dialog>
-      <DialogTrigger>
-        <div className="flex items-center gap-3  hover:bg-muted transition-colors rounded px-2 py-1">
-          <span className="i-ri-login-box-line" />
-          Login
-        </div>
+      <DialogTrigger asChild>
+        {button ?? (
+          <div className="flex items-center gap-3 cursor-pointer hover:bg-muted transition-colors rounded px-2 py-1">
+            <span className="i-ri-login-box-line" />
+            Login
+          </div>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

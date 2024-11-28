@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { baseProcedure, createTRPCRouter } from '@/lib/trpc/init';
-import { set, z } from 'zod';
+import { z } from 'zod';
 
 export const comment = createTRPCRouter({
   getRootCommentsByPage: baseProcedure

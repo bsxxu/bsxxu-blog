@@ -14,7 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { queryClient } from '@/providers/react-query-provider';
 import { createComment, replyComment } from '@/service/server/actions/comment';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import type { CommentType } from './type';
@@ -52,37 +52,37 @@ export default function CommentForm(props: CommentFormProps) {
       content: '',
     },
   });
-  const [processing, setProcessing] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
   const onSubmit = useThrottleFn(
     async (data: z.infer<typeof formSchema>) => {
-      try {
-        setProcessing(true);
-        props.type === 'reply'
-          ? await replyComment(props.replyToComment.id, data.content)
-          : await createComment(props.postKey, data.content);
-        queryClient.invalidateQueries({
-          queryKey: [
-            'comments',
-            props.type === 'reply'
-              ? (props.replyToComment.rootCommentId ?? props.replyToComment.id)
-              : props.postKey,
-          ],
-        });
-        form.reset();
-        props.afterComment?.();
-        toast({
-          description: '评论成功',
-        });
-      } catch (e: any) {
-        toast({
-          variant: 'destructive',
-          title: '评论失败，请刷新或稍后再试',
-        });
-      } finally {
-        setProcessing(false);
-      }
+      startTransition(async () => {
+        try {
+          props.type === 'reply'
+            ? await replyComment(props.replyToComment.id, data.content)
+            : await createComment(props.postKey, data.content);
+          queryClient.invalidateQueries({
+            queryKey: [
+              'comments',
+              props.type === 'reply'
+                ? (props.replyToComment.rootCommentId ??
+                  props.replyToComment.id)
+                : props.postKey,
+            ],
+          });
+          form.reset();
+          props.afterComment?.();
+          toast({
+            description: '评论成功',
+          });
+        } catch (e: any) {
+          toast({
+            variant: 'destructive',
+            title: '评论失败，请刷新或稍后再试',
+          });
+        }
+      });
     },
     1000,
     [toast],
@@ -110,8 +110,8 @@ export default function CommentForm(props: CommentFormProps) {
           )}
         />
         <div className="flex justify-end">
-          <Button type="submit" disabled={processing}>
-            {processing && <span className="animate-spin i-ri-loader-5-fill" />}
+          <Button type="submit" disabled={isPending}>
+            {isPending && <span className="animate-spin i-ri-loader-5-fill" />}
             <span>发送</span>
           </Button>
         </div>
