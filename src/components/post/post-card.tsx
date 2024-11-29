@@ -1,4 +1,4 @@
-import type { PostDataWithoutContent } from '@/data/interfaces/post';
+import type { PostDataWithoutContent } from '@/service/type/post';
 import * as motion from 'framer-motion/client';
 import Link from 'next/link';
 import { memo } from 'react';

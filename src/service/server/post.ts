@@ -1,12 +1,12 @@
 import 'server-only';
 
 import path from 'node:path';
-import type { PostDataWithoutContent } from '@/data/interfaces/post';
 import { POSTS_INDEX } from '@/lib/constants';
 import env from '@/lib/env';
 import { getAllPost, readMDXFile } from '@/lib/mdx';
 import { searchClient } from '@/lib/search';
 import dayjs from 'dayjs';
+import type { PostDataWithoutContent } from '../type/post';
 
 let isInit = false;
 

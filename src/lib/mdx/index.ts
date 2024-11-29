@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { PostMetadata } from '@/data/interfaces/post';
+import type { PostMetadata } from '@/service/type/post';
 import { type RunOptions, compile, run } from '@mdx-js/mdx';
 import dayjs from 'dayjs';
 import matter from 'gray-matter';

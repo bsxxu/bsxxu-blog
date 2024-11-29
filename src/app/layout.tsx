@@ -22,11 +22,7 @@ export default async function RootLayout({
       <body className="bg-background text-foreground transition-colors">
         <ComposeProvider>
           <Toaster />
-          <HeaderShow>
-            <Header />
-          </HeaderShow>
-          <main className="max-w-5xl mx-auto min-h-screen">{children}</main>
-          <Footer />
+          {children}
         </ComposeProvider>
       </body>
     </html>

@@ -1,7 +1,7 @@
 'use client';
 
-import type { PostMetadata } from '@/data/interfaces/post';
 import { timeFormat } from '@/lib/utils';
+import type { PostMetadata } from '@/service/type/post';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import Link from 'next/link';
 import { memo, useRef, useState } from 'react';

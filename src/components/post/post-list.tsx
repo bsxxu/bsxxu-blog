@@ -1,6 +1,6 @@
 'use client';
 
-import type { PostDataWithoutContent } from '@/data/interfaces/post';
+import type { PostDataWithoutContent } from '@/service/type/post';
 import dayjs from 'dayjs';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';

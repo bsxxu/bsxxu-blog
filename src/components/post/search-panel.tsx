@@ -1,7 +1,7 @@
 'use client';
 
-import type { PostData } from '@/data/interfaces/post';
 import useDebounceFn from '@/hooks/use-debounce-fn';
+import type { PostData } from '@/service/type/post';
 import Link from 'next/link';
 import {
   Configure,

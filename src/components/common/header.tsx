@@ -3,14 +3,18 @@ import { auth, isAdmin } from '@/lib/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import ClickView from '../motion/click-view';
+import EntryBar from './entry-bar';
 import MoreButton from './more-button';
-import NavBar from './nav-bar';
 import ThemesToggle from './themes-toggle';
 
 export default async function Header() {
   const session = await auth();
-  const nav = ['post', 'project', 'guestbook'];
-  (await isAdmin()) && nav.push('admin');
+  const items = [
+    { title: '文章', url: '/post' },
+    { title: '项目', url: '/project' },
+    { title: '留言', url: '/guestbook' },
+  ];
+  (await isAdmin()) && items.push({ title: '后台', url: '/admin' });
 
   return (
     <div className="w-full px-2 md:px-20 py-3 fixed top-0 backdrop-blur shadow overflow-hidden z-20 flex items-center justify-between">
@@ -36,7 +40,7 @@ export default async function Header() {
         </div>
       </div>
       <div className="flex items-center gap-6 text-muted-foreground">
-        <NavBar nav={nav} />
+        <EntryBar nav={items} />
         <ThemesToggle />
         <MoreButton />
       </div>
