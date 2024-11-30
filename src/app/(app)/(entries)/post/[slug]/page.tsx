@@ -3,15 +3,17 @@ import PostComment from '@/components/post/comment/comment';
 import PostHeader from '@/components/post/post-header';
 import ProgressBar from '@/components/post/progress-bar';
 import { timeFormat } from '@/lib/utils';
+import { ErrorCode } from '@/service/error';
 import { getAllPostsKeys, getPost } from '@/service/server/post';
-import type { PostData } from '@/service/type/post';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  const keys = await getAllPostsKeys();
+  const { error, result: keys } = await getAllPostsKeys();
+  if (error) throw new Error(error.message);
+
   return keys.map((k) => ({
     slug: k,
   }));
@@ -23,41 +25,36 @@ type Params = Promise<{
 
 export default async function Page({ params }: { params: Params }) {
   const { slug } = await params;
-  let res: PostData;
-  try {
-    res = await getPost(slug);
-  } catch (e: any) {
-    if (e.code === 'ENOENT') {
-      notFound();
-    } else throw e;
-  }
+  const { error, result } = await getPost(slug);
+  if (error?.code === ErrorCode.NotFound) notFound();
+  if (error) throw new Error(error.message);
 
   return (
     <>
       <ProgressBar />
-      <PostHeader postMetadata={res} />
+      <PostHeader postMetadata={result} />
       <div className="text-center mt-32 mb-10 text-3xl font-bold">
-        {res.title}
+        {result.title}
       </div>
       <div className="mb-5 flex justify-center gap-2 text-muted-foreground text-xs">
         <div className="flex items-center gap-1">
           <span className="i-ri-calendar-2-line" />
-          {timeFormat(res.date, 'YYYY-MM-DD')}
+          {timeFormat(result.date, 'YYYY-MM-DD')}
         </div>
-        {res.tags && res.tags.length >= 0 && (
+        {result.tags && result.tags.length >= 0 && (
           <div className="flex items-center gap-1">
             <span className="i-ri-hashtag" />
-            {res.tags.slice(0, 3).join(', ')}
+            {result.tags.slice(0, 3).join(', ')}
           </div>
         )}
         <div className="flex items-center gap-1">
           <span className="i-ri-time-fill" />
-          <span>约{res.readingTime?.words}字</span>
-          <span>需阅读{Math.ceil(res.readingTime?.minutes ?? 10)}分钟</span>
+          <span>约{result.readingTime?.words}字</span>
+          <span>需阅读{Math.ceil(result.readingTime?.minutes ?? 10)}分钟</span>
         </div>
       </div>
-      <Article content={res.content} />
-      <PostComment postKey={res.key} />
+      <Article content={result.content} />
+      <PostComment postKey={result.key} />
     </>
   );
 }

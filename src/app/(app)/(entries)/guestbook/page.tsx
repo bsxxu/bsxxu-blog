@@ -40,7 +40,7 @@ export default async function Page({
     params.data.pageSize ?? 15,
   );
 
-  if (currentPage > totalPages) {
+  if (totalPages > 0 && currentPage > totalPages) {
     return (
       <div className="text-muted-foreground absolute-center flex flex-col gap-5 items-center">
         <div>这一页没有留言</div>

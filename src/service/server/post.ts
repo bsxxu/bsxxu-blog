@@ -1,84 +1,86 @@
 import 'server-only';
 
-import path from 'node:path';
 import { POSTS_INDEX } from '@/lib/constants';
-import env from '@/lib/env';
-import { getAllPost, readMDXFile } from '@/lib/mdx';
+import { db } from '@/lib/db';
 import { searchClient } from '@/lib/search';
+import { result } from '@/lib/utils';
 import dayjs from 'dayjs';
-import type { PostDataWithoutContent } from '../type/post';
+import matter from 'gray-matter';
+import readingTime from 'reading-time';
+import { BizError, ErrorCode } from '../error';
+import type { PostDataWithoutContent, PostMetadata } from '../type/post';
 
-let isInit = false;
+export const transData = (queryResult: { content: string }) => {
+  const { content, data } = matter(queryResult.content) as unknown as {
+    content: string;
+    data: PostMetadata;
+  };
+  const timestamp = dayjs(data.date).unix();
+  return {
+    content,
+    timestamp,
+    readingTime: readingTime(content),
+    ...data,
+  };
+};
 
 export async function getPost(key: string) {
-  const res = await readMDXFile(path.join(env.POSTS_PATH, `${key}.mdx`));
-  return res;
+  try {
+    const dbData = await db.query.posts.findFirst({
+      where: (posts, { eq }) => eq(posts.key, key),
+    });
+    if (!dbData) throw new BizError(ErrorCode.NotFound, '文章不存在');
+    return result(transData(dbData));
+  } catch (e: any) {
+    return result(e, '获取文章失败，请稍后再试');
+  }
 }
 
 export async function getPostsGroupByYear() {
-  await initSearch();
-  const searchParams = {
-    limit: 1000,
-    attributesToRetrieve: [
-      'key',
-      'title',
-      'tags',
-      'description',
-      'date',
-      'timestamp',
-      'readingTime',
-    ],
-    sort: ['timestamp:desc'],
-  };
-  const res = await searchClient
-    .index(POSTS_INDEX)
-    .search<PostDataWithoutContent, typeof searchParams>(null, searchParams);
-  const yearMap = new Map<number, PostDataWithoutContent[]>();
-  for (const p of res.hits) {
-    const year = dayjs.unix(p.timestamp).year();
-    yearMap.set(year, yearMap.get(year) ?? []);
-    yearMap.get(year)?.push(p);
+  try {
+    const searchParams = {
+      limit: 1000,
+      attributesToRetrieve: [
+        'key',
+        'title',
+        'tags',
+        'description',
+        'date',
+        'timestamp',
+        'readingTime',
+      ],
+      sort: ['timestamp:desc'],
+    };
+    const indexList = await searchClient.getIndexes();
+    if (!indexList.results.some((i) => i.uid === POSTS_INDEX))
+      return result([]);
+    const res = await searchClient
+      .index(POSTS_INDEX)
+      .search<PostDataWithoutContent, typeof searchParams>(null, searchParams);
+    const yearMap = new Map<number, PostDataWithoutContent[]>();
+    for (const p of res.hits) {
+      const year = dayjs.unix(p.timestamp).year();
+      yearMap.set(year, yearMap.get(year) ?? []);
+      yearMap.get(year)?.push(p);
+    }
+    return result(Array.from(yearMap.entries()));
+  } catch (e) {
+    return result(e, '获取文章列表失败，请稍后再试');
   }
-  return Array.from(yearMap.entries());
 }
 
 export async function getAllPostsKeys() {
-  const ps = await getAllPost();
-  return ps.map((p) => p.key);
+  try {
+    const ps = await db.query.posts.findMany({
+      columns: { key: true },
+    });
+    return result(ps.map((p) => p.key));
+  } catch (e) {
+    return result(e, '获取所有文章key失败，请稍后再试');
+  }
 }
 
-const init = async () => {
-  const tasks = [];
-  tasks.push(
-    await searchClient.createIndex(POSTS_INDEX, { primaryKey: 'key' }),
-  );
-  tasks.push(
-    await searchClient
-      .index(POSTS_INDEX)
-      .updateSortableAttributes(['timestamp']),
-  );
-  const docs = await getAllPost();
-  tasks.push(await searchClient.index(POSTS_INDEX).addDocuments(docs));
-  await new Promise((res) => setTimeout(res, 3000));
-  // while (true) {
-  //   const ts = await Promise.all(
-  //     tasks.map((t) => searchClient.getTask(t.taskUid)),
-  //   );
-  //   console.log(ts.map((x) => x.status));
-  //   if (ts.some((t) => t.status === 'failed'))
-  //     throw new Error('sync meilisearch failed');
-  //   if (ts.some((t) => t.status === 'processing' || t.status === 'enqueued'))
-  //     await new Promise((res) => setTimeout(res, 1000));
-  //   else break;
-  // }
-  isInit = true;
-};
-
-async function initSearch() {
-  if (isInit) return;
-  try {
-    !(await searchClient.index(POSTS_INDEX).getRawInfo()) && (await init());
-  } catch (e) {
-    await init();
-  }
+export async function getAllPosts() {
+  const ps = await db.query.posts.findMany();
+  return ps.map((p) => transData(p));
 }

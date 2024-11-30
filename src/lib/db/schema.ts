@@ -107,19 +107,18 @@ export const comments = sqliteTable('comment', {
   userId: text('user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  postKey: text('post_key').notNull(),
+  postKey: text('post_key')
+    .notNull()
+    .references(() => posts.key, {
+      onDelete: 'cascade',
+    }),
   content: text('content').notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .default(sql`(unixepoch())`),
 });
 
-export const commentsRelation = relations(comments, ({ one, many }) => ({
-  rootComment: one(comments, {
-    fields: [comments.rootCommentId],
-    references: [comments.id],
-    relationName: 'rootComment',
-  }),
+export const commentsRelation = relations(comments, ({ one }) => ({
   replyToComment: one(comments, {
     fields: [comments.replyToId],
     references: [comments.id],
@@ -128,8 +127,12 @@ export const commentsRelation = relations(comments, ({ one, many }) => ({
     fields: [comments.userId],
     references: [users.id],
   }),
-  descendantComments: many(comments, { relationName: 'rootComment' }),
 }));
+
+export const posts = sqliteTable('post', {
+  key: text('key').primaryKey(),
+  content: text('content').notNull(),
+});
 
 export const messages = sqliteTable('message', {
   id: text('id')

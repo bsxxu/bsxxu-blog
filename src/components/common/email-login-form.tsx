@@ -34,19 +34,15 @@ export default function EmailLoginForm() {
 
   const onSubmit = useThrottleFn(async (values: z.infer<typeof formSchema>) => {
     startTransition(async () => {
-      try {
-        await loginWithEmail(values.email);
-        toast({
-          description: 'Email has been sent, please check your mailbox.',
-        });
-      } catch (e: any) {
-        toast({
-          variant: 'destructive',
-          title:
-            e.message ??
-            'Email sending failed, please refresh or try again later.',
-        });
-      }
+      const { error } = await loginWithEmail(values.email);
+      error
+        ? toast({
+            variant: 'destructive',
+            title: error.message,
+          })
+        : toast({
+            description: '邮件已发送，请查收',
+          });
     });
   });
 

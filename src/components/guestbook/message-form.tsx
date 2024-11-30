@@ -35,13 +35,10 @@ export default function MessageForm() {
 
   const onSubmit = useThrottleFn((data: z.infer<typeof formSchema>) => {
     startTransition(async () => {
-      try {
-        await leaveMessage(data.content);
-        form.reset();
-        toast({ description: '留言成功' });
-      } catch (e) {
-        toast({ description: '留言失败，请稍后再试', variant: 'destructive' });
-      }
+      const { error } = await leaveMessage(data.content);
+      error
+        ? toast({ variant: 'destructive', title: error.message })
+        : toast({ title: '留言成功' });
     });
   });
 

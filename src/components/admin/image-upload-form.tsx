@@ -1,9 +1,8 @@
 'use client';
 
 import { useToast } from '@/hooks/use-toast';
-import { savePost } from '@/service/server/actions/post';
+import { uploadImages } from '@/service/server/actions/post';
 import { zodResolver } from '@hookform/resolvers/zod';
-import matter from 'gray-matter';
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -17,47 +16,37 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 
-const postDataSchema = z.object({
-  content: z.string(),
-  data: z.object({
-    key: z.string(),
-    title: z.string(),
-    tags: z.array(z.string()),
-    description: z.string(),
-    date: z.string().datetime(),
-  }),
-});
-
 const formSchema = z.object({
-  postFile: z
-    .instanceof(File, { message: '文件不能为空' })
-    .refine(async (file) => {
-      const buffer = file.arrayBuffer();
-      const text = new TextDecoder('utf-8').decode(await buffer);
-      const m = matter(text);
-      (file as any).postKey = m.data.key;
-      return postDataSchema.safeParse(m).success;
-    }, '文件内容格式错误'),
+  images: z
+    .instanceof(FileList, { message: '请选择文件' })
+    .refine((files) => files.length > 0, { message: '请选择至少一张图片' })
+    .refine(
+      (files) =>
+        Array.from(files).every((file) => file.type.startsWith('image/')),
+      {
+        message: '请选择图片文件',
+      },
+    ),
 });
 
-export default function PostUploadForm() {
-  const [isPending, startTransition] = useTransition();
+export default function ImageUploadForm() {
   const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     startTransition(async () => {
-      const { error } = await savePost(
-        (data.postFile as any).postKey,
-        data.postFile,
-      );
-      if (error) {
-        toast({ variant: 'destructive', title: error.message });
-      } else {
+      try {
+        await uploadImages(data.images);
         form.reset();
-        toast({ title: '上传成功' });
+        toast({ description: '上传成功' });
+      } catch (error: any) {
+        toast({
+          description: error.message ?? '上传失败，请稍后再试',
+          variant: 'destructive',
+        });
       }
     });
   };
@@ -70,14 +59,16 @@ export default function PostUploadForm() {
       >
         <FormField
           control={form.control}
-          name="postFile"
+          name="images"
           render={({ field: { value, ...fields } }) => (
             <FormItem>
               <FormControl>
                 <Input
                   {...fields}
                   type="file"
-                  onChange={async (e) => fields.onChange(e.target.files?.[0])}
+                  multiple
+                  accept="image/*"
+                  onChange={async (e) => fields.onChange(e.target.files)}
                   className="max-w-52 mx-auto"
                 />
               </FormControl>

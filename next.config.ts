@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'bsxxu-blog.s3.ap-east-1.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {

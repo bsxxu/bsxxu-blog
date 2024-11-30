@@ -16,7 +16,9 @@ const POSTS_PATH = checkEnv('POSTS_PATH');
 const DB_FILE_PATH = checkEnv('DB_FILE_PATH');
 const AWS_ACCESS_KEY_ID = checkEnv('AWS_ACCESS_KEY_ID');
 const AWS_SECRET_ACCESS_KEY = checkEnv('AWS_SECRET_ACCESS_KEY');
-const AWS_REGIN = checkEnv('AWS_REGIN');
+const AWS_EMAIL_REGIN = checkEnv('AWS_EMAIL_REGIN');
+const AWS_S3_REGIN = checkEnv('AWS_S3_REGIN');
+const AWS_S3_BUCKET = checkEnv('AWS_S3_BUCKET');
 const REDIS_PASSWORD = checkEnv('REDIS_PASSWORD');
 const REDIS_HOST = checkEnv('REDIS_HOST');
 const REDIS_PORT = checkEnv('REDIS_PORT', '6379');
@@ -33,7 +35,9 @@ export default {
   DB_FILE_PATH,
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,
-  AWS_REGIN,
+  AWS_EMAIL_REGIN,
+  AWS_S3_REGIN,
+  AWS_S3_BUCKET,
   REDIS_PASSWORD,
   REDIS_HOST,
   REDIS_PORT,

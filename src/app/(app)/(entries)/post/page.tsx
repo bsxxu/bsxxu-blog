@@ -6,7 +6,9 @@ import { getPostsGroupByYear } from '@/service/server/post';
 export const revalidate = 3600;
 
 export default async function Page() {
-  const data = await getPostsGroupByYear();
+  const { error, result: data } = await getPostsGroupByYear();
+  if (error) throw new Error(error.message);
+
   return (
     <>
       <RightToLeftView className="mt-24 ">

@@ -59,6 +59,8 @@ next-env.d.ts
 
 test*.mdx
 
+test
+
 drizzle/
 
 backup/
