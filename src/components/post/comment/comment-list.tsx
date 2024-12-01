@@ -2,7 +2,6 @@
 
 import CommonLoading from '@/components/common/loading';
 import trpc from '@/lib/trpc/client';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useMotionValueEvent, useScroll } from 'framer-motion';
 import React from 'react';
 import { CommentItem } from './comment-item';
@@ -17,18 +16,16 @@ export default function CommentList({ postKey }: { postKey: string }) {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['comments', postKey],
-    queryFn: ({ pageParam }) =>
-      trpc.comment.getRootCommentsByPage.query({
-        page: pageParam,
-        pageSize: 10,
-        postKey,
-      }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, _, lastPageParam) =>
-      lastPage.length < 10 ? null : lastPageParam + 1,
-  });
+  } = trpc.comment.getRootCommentsByPage.useInfiniteQuery(
+    {
+      pageSize: 10,
+      postKey,
+    },
+    {
+      initialCursor: 1,
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    },
+  );
 
   const { scrollYProgress } = useScroll();
   useMotionValueEvent(
@@ -44,7 +41,7 @@ export default function CommentList({ postKey }: { postKey: string }) {
       </div>
     );
 
-  const dataList = data?.pages?.flat();
+  const dataList = data?.pages?.flatMap((d) => d.result);
 
   return (
     <div className="space-y-5 mx-5 mt-8">

@@ -1,14 +1,8 @@
 import 'client-only';
 
-import { createTRPCClient, httpBatchLink } from '@trpc/client';
+import { createTRPCReact } from '@trpc/react-query';
 import type { AppRouter } from './router';
 
-const trpc = createTRPCClient<AppRouter>({
-  links: [
-    httpBatchLink({
-      url: '/api/trpc',
-    }),
-  ],
-});
+const trpc = createTRPCReact<AppRouter>();
 
 export default trpc;

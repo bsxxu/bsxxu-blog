@@ -1,7 +1,7 @@
 import RightToLeftView from '@/components/motion/right-to-left-view';
 import PostList from '@/components/post/post-list';
 import SideMenu from '@/components/post/side-menu';
-import { getPostsGroupByYear } from '@/service/server/post';
+import { getPostsGroupByYear } from '@/service/common/post';
 
 export const revalidate = 3600;
 

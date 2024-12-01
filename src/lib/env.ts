@@ -12,7 +12,6 @@ const checkEnv = (name: string, defaultVal?: string) => {
 const MEILI_MASTER_KEY = checkEnv('MEILI_MASTER_KEY');
 const MEILI_HOST = checkEnv('MEILI_HOST');
 const MEILI_PORT = checkEnv('MEILI_PORT', '7700');
-const POSTS_PATH = checkEnv('POSTS_PATH');
 const DB_FILE_PATH = checkEnv('DB_FILE_PATH');
 const AWS_ACCESS_KEY_ID = checkEnv('AWS_ACCESS_KEY_ID');
 const AWS_SECRET_ACCESS_KEY = checkEnv('AWS_SECRET_ACCESS_KEY');
@@ -31,7 +30,6 @@ export default {
   MEILI_MASTER_KEY,
   MEILI_HOST,
   MEILI_PORT,
-  POSTS_PATH,
   DB_FILE_PATH,
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,

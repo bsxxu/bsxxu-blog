@@ -8,11 +8,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import type { CommentType } from '@/service/type/comment';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import CommentBox from './comment-box';
-import type { CommentType } from './type';
 
+//TODO 区分root和reply
 export default function ReplyButton({ comment }: { comment: CommentType }) {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);

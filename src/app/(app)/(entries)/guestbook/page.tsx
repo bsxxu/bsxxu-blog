@@ -3,7 +3,7 @@ import MessageItem from '@/components/guestbook/message-item';
 import Pagination from '@/components/guestbook/pagination';
 import RightToLeftView from '@/components/motion/right-to-left-view';
 import { Button } from '@/components/ui/button';
-import { getMessagesByPage } from '@/service/server/message';
+import { getMessagesByPage } from '@/service/common/message';
 import Link from 'next/link';
 import { z } from 'zod';
 

@@ -11,13 +11,15 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import useThrottleFn from '@/hooks/use-throttle-fn';
 import { useToast } from '@/hooks/use-toast';
-import { queryClient } from '@/providers/react-query-provider';
-import { createComment, replyComment } from '@/service/server/actions/comment';
+import trpc from '@/lib/trpc/client';
+import { queryClient } from '@/providers/trpc-provider';
+import { createComment, replyComment } from '@/service/action/comment';
+import type { CommentType } from '@/service/type/comment';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { getQueryKey } from '@trpc/react-query';
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import type { CommentType } from './type';
 
 const formSchema = z.object({
   content: z
@@ -62,15 +64,19 @@ export default function CommentForm(props: CommentFormProps) {
           props.type === 'reply'
             ? await replyComment(props.replyToComment.id, data.content)
             : await createComment(props.postKey, data.content);
-          queryClient.invalidateQueries({
-            queryKey: [
-              'comments',
-              props.type === 'reply'
-                ? (props.replyToComment.rootCommentId ??
-                  props.replyToComment.id)
-                : props.postKey,
-            ],
-          });
+          props.type === 'reply'
+            ? await queryClient.invalidateQueries({
+                queryKey: getQueryKey(trpc.comment.getReplyByPage, {
+                  rootCommentId:
+                    props.replyToComment.rootCommentId ??
+                    props.replyToComment.id,
+                }),
+              })
+            : await queryClient.invalidateQueries({
+                queryKey: getQueryKey(trpc.comment.getRootCommentsByPage, {
+                  postKey: props.postKey,
+                }),
+              });
           form.reset();
           props.afterComment?.();
           toast({

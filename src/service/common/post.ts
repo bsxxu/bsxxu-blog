@@ -10,6 +10,9 @@ import readingTime from 'reading-time';
 import { BizError, ErrorCode } from '../error';
 import type { PostDataWithoutContent, PostMetadata } from '../type/post';
 
+export const getImageKey = (postKey: string, name: string) =>
+  `images/${postKey}/${name}.webp`;
+
 export const transData = (queryResult: { content: string }) => {
   const { content, data } = matter(queryResult.content) as unknown as {
     content: string;

@@ -1,9 +1,9 @@
 import DefaultAvatar from '@/assets/default-avatar.png';
 import { cn } from '@/lib/utils';
+import type { CommentType, ReplyType } from '@/service/type/comment';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import ReplyButton from './reply-button';
-import type { CommentType, ReplyType } from './type';
 
 type RootCommentProps = {
   type: 'root';

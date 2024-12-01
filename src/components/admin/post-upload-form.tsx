@@ -1,7 +1,7 @@
 'use client';
 
 import { useToast } from '@/hooks/use-toast';
-import { savePost } from '@/service/server/actions/post';
+import { savePost } from '@/service/action/post';
 import { zodResolver } from '@hookform/resolvers/zod';
 import matter from 'gray-matter';
 import { useTransition } from 'react';

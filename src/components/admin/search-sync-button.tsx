@@ -1,7 +1,7 @@
 'use client';
 
 import { useToast } from '@/hooks/use-toast';
-import { syncSearchEngine } from '@/service/server/actions/post';
+import { syncSearchEngine } from '@/service/action/post';
 import { useTransition } from 'react';
 import { Button } from '../ui/button';
 
@@ -14,10 +14,10 @@ export default function SearchSyncButton() {
       error
         ? toast({
             variant: 'destructive',
-            description: error.message,
+            title: error.message,
           })
         : toast({
-            description: '搜索引擎同步成功',
+            title: '搜索引擎同步成功',
           });
     });
   };

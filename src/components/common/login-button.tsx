@@ -1,7 +1,4 @@
-import {
-  loginWithGithub,
-  loginWithGoogle,
-} from '@/service/server/actions/auth';
+import { loginWithGithub, loginWithGoogle } from '@/service/action/auth';
 import {
   Dialog,
   DialogContent,

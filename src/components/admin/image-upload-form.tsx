@@ -1,7 +1,7 @@
 'use client';
 
 import { useToast } from '@/hooks/use-toast';
-import { uploadImages } from '@/service/server/actions/post';
+import { uploadImage } from '@/service/action/post';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -38,16 +38,18 @@ export default function ImageUploadForm() {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     startTransition(async () => {
-      try {
-        await uploadImages(data.images);
-        form.reset();
-        toast({ description: '上传成功' });
-      } catch (error: any) {
+      const { error } = await uploadImage('test', data.images[0]);
+      if (error) {
         toast({
-          description: error.message ?? '上传失败，请稍后再试',
+          title: error.message,
           variant: 'destructive',
         });
+        return;
       }
+      form.reset();
+      toast({
+        title: '上传成功',
+      });
     });
   };
 

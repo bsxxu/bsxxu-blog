@@ -1,10 +1,10 @@
 import env from '@/lib/env';
 import { ComposeContextProvider } from 'foxact/compose-context-provider';
 import AuthProvider from './auth-provider';
-import ReactQueryProvider from './react-query-provider';
 import ScrollProvider from './scroll-provider';
 import SearchProvider from './search-provider';
 import ThemeProvider from './theme-provider';
+import TrpcProvider from './trpc-provider';
 
 const providers = [
   <ThemeProvider key="theme" />,
@@ -14,7 +14,7 @@ const providers = [
     apikey={env.MEILI_MASTER_KEY}
     key="search"
   />,
-  <ReactQueryProvider key="query" />,
+  <TrpcProvider key="query" />,
   <AuthProvider key="auth" />,
 ];
 

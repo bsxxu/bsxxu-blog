@@ -3,8 +3,8 @@ import PostComment from '@/components/post/comment/comment';
 import PostHeader from '@/components/post/post-header';
 import ProgressBar from '@/components/post/progress-bar';
 import { timeFormat } from '@/lib/utils';
+import { getAllPostsKeys, getPost } from '@/service/common/post';
 import { ErrorCode } from '@/service/error';
-import { getAllPostsKeys, getPost } from '@/service/server/post';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;

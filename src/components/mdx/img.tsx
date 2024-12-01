@@ -1,7 +1,6 @@
 'use client';
 
 import trpc from '@/lib/trpc/client';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
 export default function Img(props: React.ComponentPropsWithoutRef<'img'>) {
@@ -9,10 +8,9 @@ export default function Img(props: React.ComponentPropsWithoutRef<'img'>) {
   if (!src) return <div className="text-center">图片地址为空</div>;
 
   const fileName = src.split('/').pop()?.split('.').shift() ?? '';
-
-  const { data } = useQuery({
-    queryKey: ['image', fileName],
-    queryFn: () => trpc.post.getImageUrl.query(fileName),
+  const { data } = trpc.post.getImageUrl.useQuery({
+    postKey: 'TODO',
+    name: fileName,
   });
 
   return (

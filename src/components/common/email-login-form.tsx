@@ -2,7 +2,7 @@
 
 import useThrottleFn from '@/hooks/use-throttle-fn';
 import { useToast } from '@/hooks/use-toast';
-import { loginWithEmail } from '@/service/server/actions/auth';
+import { loginWithEmail } from '@/service/action/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';

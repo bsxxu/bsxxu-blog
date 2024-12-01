@@ -3,15 +3,14 @@
 import { POSTS_INDEX } from '@/lib/constants';
 import { db } from '@/lib/db';
 import { posts } from '@/lib/db/schema';
-import { s3UploadFile } from '@/lib/s3';
+import { checkObjectExists, s3UploadFile } from '@/lib/s3';
 import { searchClient } from '@/lib/search';
 import { result } from '@/lib/utils';
-import { getImageKey } from '@/service/client/post';
-import { BizError, ErrorCode, transError } from '@/service/error';
+import { BizError, ErrorCode } from '@/service/error';
 import type { EnqueuedTask } from 'meilisearch';
 import { revalidatePath } from 'next/cache';
 import sharp from 'sharp';
-import { getAllPosts, transData } from '../post';
+import { getAllPosts, getImageKey, transData } from '../common/post';
 
 export const savePost = async (key: string, post: File) => {
   try {
@@ -35,30 +34,17 @@ export const savePost = async (key: string, post: File) => {
   }
 };
 
-export async function uploadImages(files: FileList) {
-  const webpFiles = await Promise.all(
-    Array.from(files).map(async (f) => {
-      const name = f.name.replace(/\.[^.]+$/, '');
-      return {
-        name,
-        file: f,
-        buffer: await sharp(await f.arrayBuffer())
-          .webp()
-          .toBuffer(),
-      };
-    }),
-  );
-
-  const failedFiles: { name: string; error: string }[] = [];
-  await Promise.allSettled(
-    webpFiles.map((data) =>
-      s3UploadFile(getImageKey(data.name), data.buffer).catch((e: any) => {
-        failedFiles.push({ name: data.file.name, error: e.message });
-      }),
-    ),
-  );
-  if (failedFiles.length) {
-    throw new Error(`upload failed: ${failedFiles.join(', ')}`);
+export async function uploadImage(postKey: string, file: File) {
+  try {
+    const name = file.name.replace(/\.[^.]+$/, '');
+    const buffer = await file.arrayBuffer();
+    const webpBuffer = await sharp(buffer).webp().toBuffer();
+    const isExist = await checkObjectExists(getImageKey(postKey, name));
+    if (isExist) throw new BizError(ErrorCode.HasExist, '文件已存在');
+    await s3UploadFile(getImageKey(postKey, name), webpBuffer);
+    return result();
+  } catch (e: any) {
+    return result(e, '上传失败，请稍后再试');
   }
 }
 

@@ -1,5 +1,7 @@
 import {
   GetObjectCommand,
+  HeadObjectCommand,
+  NotFound,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -21,6 +23,22 @@ export const s3UploadFile = async (key: string, file: Buffer) => {
     Key: key,
   });
   return await s3Client.send(command);
+};
+
+export const checkObjectExists = async (key: string) => {
+  const command = new HeadObjectCommand({
+    Bucket: env.AWS_S3_BUCKET,
+    Key: key,
+  });
+  try {
+    await s3Client.send(command);
+    return true;
+  } catch (error) {
+    if (error instanceof NotFound) {
+      return false;
+    }
+    throw error;
+  }
 };
 
 export const genPresignedUrl = (key: string, expire: number) => {

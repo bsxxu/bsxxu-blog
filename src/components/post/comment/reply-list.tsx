@@ -2,9 +2,8 @@
 
 import { Button } from '@/components/ui/button';
 import trpc from '@/lib/trpc/client';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import type { CommentType } from '@/service/type/comment';
 import { CommentItem } from './comment-item';
-import type { CommentType } from './type';
 
 export default function ReplyList({
   rootComment,
@@ -12,25 +11,23 @@ export default function ReplyList({
   const {
     data,
     error,
-    isPending,
+    isLoading,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['comments', rootComment.id],
-    queryFn: ({ pageParam }) =>
-      trpc.comment.getReplyByPage.query({
-        page: pageParam,
-        pageSize: 4,
-        rootCommentId: rootComment.id,
-      }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, _, lastPageParam) =>
-      lastPage.length < 4 ? null : lastPageParam + 1,
-  });
+  } = trpc.comment.getReplyByPage.useInfiniteQuery(
+    {
+      pageSize: 4,
+      rootCommentId: rootComment.id,
+    },
+    {
+      initialCursor: 1,
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    },
+  );
 
-  const dataList = data?.pages?.flat();
-  const isLoading = isPending || isFetchingNextPage;
+  const dataList = data?.pages?.flatMap((p) => p.result);
+  const disable = isLoading || isFetchingNextPage;
 
   if (!dataList?.length) return null;
 
@@ -49,9 +46,9 @@ export default function ReplyList({
           <Button
             variant="outline"
             onClick={() => fetchNextPage()}
-            disabled={isLoading}
+            disabled={disable}
           >
-            {isLoading ? (
+            {disable ? (
               <span className="animate-spin i-ri-loader-5-fill" />
             ) : (
               '更多'

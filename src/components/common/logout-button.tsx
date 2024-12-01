@@ -1,7 +1,7 @@
 'use client';
 
 import { useToast } from '@/hooks/use-toast';
-import { logout } from '@/service/server/actions/auth';
+import { logout } from '@/service/action/auth';
 import { signOut } from 'next-auth/react';
 import { useState, useTransition } from 'react';
 import { Button } from '../ui/button';

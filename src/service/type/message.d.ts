@@ -1,4 +1,4 @@
-import type { getMessagesByPage } from '../server/message';
+import type { getMessagesByPage } from '../common/message';
 
 export type MessageType = Awaited<
   ReturnType<typeof getMessagesByPage>
