@@ -1,6 +1,6 @@
-service: bsxxu-blog
+service: aiduorin-blog
 
-image: jzb0bsx/bsxxu-blog
+image: jzb0bsx/aiduorin-blog
 
 servers:
   - ip
@@ -24,7 +24,7 @@ builder:
   driver: docker
 
 volumes:
-  - /var/bsxxu:/var/bsxxu
+  - /var/aiduorin:/var/aiduorin
 
 accessories:
   meilisearch:

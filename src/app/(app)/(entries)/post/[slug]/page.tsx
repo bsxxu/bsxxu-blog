@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: Params }) {
           <span>需阅读{Math.ceil(result.readingTime?.minutes ?? 10)}分钟</span>
         </div>
       </div>
-      <Article content={result.content} />
+      <Article content={result.content} postKey={result.key} />
       <PostComment postKey={result.key} />
     </>
   );

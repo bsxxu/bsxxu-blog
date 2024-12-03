@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -16,11 +17,6 @@ import {
 } from '../ui/sidebar';
 
 const items = [
-  {
-    title: '返回博客',
-    url: '/',
-    icon: <span className="i-ri-home-4-line" />,
-  },
   {
     title: '文章上传',
     url: '/admin/upload',
@@ -97,6 +93,14 @@ export default async function SideMenu({
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
+          <SidebarFooter className="border-t">
+            <Link href="/">
+              <SidebarMenuButton className="flex items-center gap-2 justify-center py-5">
+                <span className="i-ri-arrow-left-s-line" />
+                <span>返回博客</span>
+              </SidebarMenuButton>
+            </Link>
+          </SidebarFooter>
         </Sidebar>
         <SidebarTrigger className="m-3" />
       </div>

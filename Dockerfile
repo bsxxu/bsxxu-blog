@@ -1,6 +1,6 @@
 FROM node:22
 
-WORKDIR /bsxxu/
+WORKDIR /aiduorin/
 
 COPY ./.next/standalone ./
 COPY ./public ./public/
@@ -8,4 +8,4 @@ COPY ./.next/static ./.next/static/
 
 EXPOSE 3000
 
-ENTRYPOINT ["node", "/bsxxu/server.js"]
+ENTRYPOINT ["node", "/aiduorin/server.js"]

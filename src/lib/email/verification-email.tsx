@@ -16,12 +16,12 @@ export default function VerificationEmail({
 }: { magicLink: string }) {
   return (
     <Html lang="en">
-      <Preview>σ`∀´)σ Log in to bsx's blog.</Preview>
+      <Preview>Aiduorin: Hi👋, friend.</Preview>
       <Tailwind>
         <Body>
           <Container className="bg-[#111112] mx-auto border border-solid border-[#ababab] rounded p-4">
             <Heading className="text-[24px] font-normal text-center p-0 my-[30px] mx-0">
-              👋, Welcome to bsxxu.me!
+              👋, Welcome to aiduorin.me!
             </Heading>
             <Text className="text-center">
               Click the button below to log in
@@ -41,7 +41,7 @@ export default function VerificationEmail({
                 possible
               </Text>
               <Text className="text-[#ababab] text-xs">
-                Copyright © {new Date().getFullYear()} Bsx
+                Copyright © {new Date().getFullYear()} Aiduorin
               </Text>
             </Section>
           </Container>

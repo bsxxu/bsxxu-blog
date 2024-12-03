@@ -16,7 +16,7 @@ const sendVerificationRequest = async ({
   url,
 }: { identifier: string; url: string }) => {
   const command = new SendEmailCommand({
-    Source: 'Bsx<noreply@bsxxu.me>',
+    Source: 'Aiduorin<noreply@bsxxu.me>',
     Destination: {
       ToAddresses: [email],
     },
@@ -29,7 +29,7 @@ const sendVerificationRequest = async ({
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: 'Log in to bsxxu.me using your email.',
+        Data: "Log in to Aiduorin's blog using your email.",
       },
     },
   });

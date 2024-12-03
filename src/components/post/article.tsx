@@ -1,9 +1,17 @@
-import { getHeadings } from '@/lib/mdx';
+import { compileAndRun, getHeadings } from '@/lib/mdx';
 import * as motion from 'framer-motion/client';
-import MDXRemote from './mdx-rsc';
+import { getMdxComponents } from '../mdx';
 import Toc from './toc';
 
-export default async function Article({ content }: { content: string }) {
+export default async function Article({
+  content,
+  postKey,
+}: {
+  content: string;
+  postKey: string;
+}) {
+  const Content = await compileAndRun(content);
+
   return (
     <motion.div
       className="flex justify-center p-5 gap-5"
@@ -11,7 +19,9 @@ export default async function Article({ content }: { content: string }) {
       animate={{ opacity: 1, x: 0 }}
       transition={{ ease: 'easeOut' }}
     >
-      <MDXRemote content={content} />
+      <article className="prose max-w-3xl w-full">
+        <Content components={getMdxComponents(postKey)} />
+      </article>
       <Toc headings={await getHeadings(content)} />
     </motion.div>
   );

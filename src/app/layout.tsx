@@ -2,9 +2,6 @@ import { sansFont } from '@/lib/fonts';
 import ComposeProvider from '@/providers';
 import '@/styles/index.css';
 import '@/lib/env';
-import Footer from '@/components/common/footer';
-import Header from '@/components/common/header';
-import HeaderShow from '@/components/common/header-show';
 import { Toaster } from '@/components/ui/toaster';
 
 //TODO seo

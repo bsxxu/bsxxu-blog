@@ -1,4 +1,4 @@
-name: bsxxu-dev-service
+name: aiduorin-dev-service
 
 services:
   meilisearch:

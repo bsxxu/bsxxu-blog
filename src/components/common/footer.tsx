@@ -11,7 +11,7 @@ export default function Footer() {
           <div>
             <span className="mr-2">CC BY-NC-SA 4.0</span>
             2024 - <CurrentYear defaultYear={dayjs().year()} />
-            <span className="ml-2">© Bsx</span>
+            <span className="ml-2">© Aiduorin</span>
           </div>
           <div>Powered by Next.js</div>
         </div>

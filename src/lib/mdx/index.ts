@@ -1,6 +1,7 @@
 import { type RunOptions, compile, run } from '@mdx-js/mdx';
 import * as devRuntime from 'react/jsx-dev-runtime';
 import * as prodRuntime from 'react/jsx-runtime';
+import rehypeUnwrapImages from 'rehype-unwrap-images';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkGithubAlerts from 'remark-github-alerts';
@@ -19,7 +20,7 @@ export async function compileAndRun(content: string) {
       outputFormat: 'function-body',
       development: process.env.NODE_ENV === 'development',
       remarkPlugins: [remarkHeading, remarkGithubAlerts as any, remarkGfm],
-      rehypePlugins: [rehypeCode],
+      rehypePlugins: [rehypeCode, rehypeUnwrapImages],
     }),
   );
   const runtime =

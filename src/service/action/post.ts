@@ -37,11 +37,12 @@ export const savePost = async (key: string, post: File) => {
 export async function uploadImage(postKey: string, file: File) {
   try {
     const name = file.name.replace(/\.[^.]+$/, '');
+    const key = getImageKey(postKey, name);
+    const isExist = await checkObjectExists(key);
+    if (isExist) throw new BizError(ErrorCode.HasExist, '文件已存在');
     const buffer = await file.arrayBuffer();
     const webpBuffer = await sharp(buffer).webp().toBuffer();
-    const isExist = await checkObjectExists(getImageKey(postKey, name));
-    if (isExist) throw new BizError(ErrorCode.HasExist, '文件已存在');
-    await s3UploadFile(getImageKey(postKey, name), webpBuffer);
+    await s3UploadFile(key, webpBuffer);
     return result();
   } catch (e: any) {
     return result(e, '上传失败，请稍后再试');

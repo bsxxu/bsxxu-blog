@@ -4,4 +4,4 @@ export const SHIKI_THEMES = {
 };
 
 export const POSTS_INDEX = 'posts_index';
-export const ADMIN_EMAILS = ['bsxhomu@outlook.com', 'bsxxu123@gmail.com'];
+export const ADMIN_EMAILS = ['bsxhomu@outlook.com', 'aiduorin@outlook.com'];

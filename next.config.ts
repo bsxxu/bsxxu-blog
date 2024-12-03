@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'bsxxu-blog.s3.ap-east-1.amazonaws.com',
+        hostname: 'aiduorin-blog.s3.ap-east-1.amazonaws.com',
         port: '',
         pathname: '/**',
       },

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ ! -f "/var/bsxxu/db/bsxxu.db" ]]; then
-  echo "/var/bsxxu/db/bsxxu.db not existed."
+if [[ ! -f "/var/aiduorin/db/aiduorin.db" ]]; then
+  echo "/var/aiduorin/db/aiduorin.db not existed."
   exit 1
 fi
 

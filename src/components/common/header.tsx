@@ -31,11 +31,11 @@ export default async function Header() {
           </ClickView>
         </Link>
         <div className="font-semibold">
-          Bsx&apos;s blog ✨
+          Aiduorin&apos;s blog ✨
           <div className="text-xs scale-90 font-normal text-muted-foreground translate-x-3">
             {session?.user?.name
               ? `Welcome, ${session.user.name}`
-              : '君の銀の庭'}
+              : 'My dear feature'}
           </div>
         </div>
       </div>

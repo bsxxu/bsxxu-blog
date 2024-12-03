@@ -7,7 +7,7 @@ export default function Home() {
       <main className="max-w-5xl mx-auto min-h-screen">
         <div className="max-w-2xl mx-auto mt-44 px-5">
           <DownToTopView className="font-semibold text-4xl">
-            Hi! 👋, I&apos;m Bsx.
+            Hi! 👋, I&apos;m Aiduorin.
           </DownToTopView>
           <DownToTopView delay={0.05} className="mt-10">
             I am a college student studying software engineering. I mainly use
@@ -27,15 +27,15 @@ export default function Home() {
           </DownToTopView>
           <DownToTopView delay={0.25} className="mt-3">
             You can find me at&nbsp;
-            <Link href="https://github.com/BsXwerse" className=" underline">
+            <Link href="https://github.com/aiduorin" className=" underline">
               GitHub
             </Link>
             ,&nbsp;
-            <Link href="https://x.com/_bsxxu_" className=" underline">
+            <Link href="https://x.com/aiduorin" className=" underline">
               X
             </Link>
             ,&nbsp;
-            <Link href="https://t.me/bsxxu" className=" underline">
+            <Link href="https://t.me/aiduorin" className=" underline">
               telegram
             </Link>
           </DownToTopView>
