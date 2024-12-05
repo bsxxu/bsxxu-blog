@@ -18,14 +18,14 @@ import {
 
 const items = [
   {
-    title: '文章上传',
-    url: '/admin/upload',
-    icon: <span className="i-ri-upload-2-line" />,
-  },
-  {
-    title: '文章列表',
+    title: '文章',
     url: '/admin/post',
     icon: <span className="i-ri-file-list-3-line" />,
+  },
+  {
+    title: '图片',
+    url: '/admin/image',
+    icon: <span className="i-ri-image-line" />,
   },
   {
     title: '评论列表',
@@ -104,7 +104,7 @@ export default async function SideMenu({
         </Sidebar>
         <SidebarTrigger className="m-3" />
       </div>
-      {children}
+      <div className="mx-auto max-w-screen-2xl w-full">{children}</div>
     </SidebarProvider>
   );
 }

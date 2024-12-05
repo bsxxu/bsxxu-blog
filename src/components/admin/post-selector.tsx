@@ -12,7 +12,7 @@ import {
 
 export default function PostSelector({
   onChange,
-}: { onChange: (value: string) => void }) {
+}: { onChange?: (value: string) => void }) {
   const { data, error } = trpc.post.getAllPostsKeys.useQuery();
   const { toast } = useToast();
   if (error)

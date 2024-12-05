@@ -2,6 +2,7 @@ import 'server-only';
 
 import { POSTS_INDEX } from '@/lib/constants';
 import { db } from '@/lib/db';
+import { createPager } from '@/lib/s3';
 import { searchClient } from '@/lib/search';
 import { result } from '@/lib/utils';
 import dayjs from 'dayjs';
@@ -12,6 +13,9 @@ import type { PostDataWithoutContent, PostMetadata } from '../type/post';
 
 export const getImageKey = (postKey: string, name: string) =>
   `images/${postKey}/${name}.webp`;
+
+export const getImagePrefix = (postKey?: string) =>
+  postKey ? `images/${postKey}/` : 'images/';
 
 export const transData = (queryResult: { content: string }) => {
   const { content, data } = matter(queryResult.content) as unknown as {
@@ -86,4 +90,25 @@ export async function getAllPostsKeys() {
 export async function getAllPosts() {
   const ps = await db.query.posts.findMany();
   return ps.map((p) => transData(p));
+}
+
+let ImagePager: Awaited<ReturnType<typeof createPager>> | null = null;
+export async function getImagesByPage(
+  page: number,
+  pageSize: number,
+  postKey?: string,
+) {
+  try {
+    const prefix = getImagePrefix(postKey);
+    if (
+      !ImagePager ||
+      ImagePager.getPageSize() !== pageSize ||
+      ImagePager.getPrefix() !== prefix
+    )
+      ImagePager = await createPager(pageSize, prefix);
+    const { data, next } = await ImagePager.page(page);
+    return result({ data, next });
+  } catch (e) {
+    return result(e, '获取图片列表失败，请稍后再试');
+  }
 }

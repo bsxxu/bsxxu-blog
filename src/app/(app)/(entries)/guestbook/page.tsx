@@ -8,8 +8,8 @@ import Link from 'next/link';
 import { z } from 'zod';
 
 const PageSchema = z.object({
-  page: z.coerce.number().int().positive().optional(),
-  pageSize: z.coerce.number().int().positive().optional(),
+  page: z.coerce.number().int().positive().optional().default(1),
+  pageSize: z.coerce.number().int().positive().optional().default(15),
 });
 
 //TODO 排序
@@ -35,10 +35,7 @@ export default async function Page({
     data: messages,
     currentPage,
     totalPages,
-  } = await getMessagesByPage(
-    params.data.page ?? 1,
-    params.data.pageSize ?? 15,
-  );
+  } = await getMessagesByPage(params.data.page, params.data.pageSize);
 
   if (totalPages > 0 && currentPage > totalPages) {
     return (

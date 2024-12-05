@@ -4,6 +4,7 @@ export enum ErrorCode {
   NotFound = 'NOT_FOUND',
   TooFrequent = 'TOO_FREQUENT',
   Unknown = 'UNKNOWN',
+  NoMore = 'NO_MORE',
 }
 
 export class BizError extends Error {

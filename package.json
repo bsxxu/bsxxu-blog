@@ -32,6 +32,7 @@
     "@react-email/components": "^0.0.28",
     "@shikijs/rehype": "^1.22.0",
     "@tanstack/react-query": "^5.61.0",
+    "@tanstack/react-table": "^8.20.5",
     "@trpc/client": "11.0.0-rc.586",
     "@trpc/react-query": "11.0.0-rc.648",
     "@trpc/server": "11.0.0-rc.586",

@@ -65,6 +65,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.61.0
         version: 5.61.0(react@19.0.0-rc-5c56b873-20241107)
+      '@tanstack/react-table':
+        specifier: ^8.20.5
+        version: 8.20.5(react-dom@19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107))(react@19.0.0-rc-5c56b873-20241107)
       '@trpc/client':
         specifier: 11.0.0-rc.586
         version: 11.0.0-rc.586(@trpc/server@11.0.0-rc.586)
@@ -2036,6 +2039,17 @@ packages:
     resolution: {integrity: sha512-SBzV27XAeCRBOQ8QcC94w2H1Md0+LI0gTWwc3qRJoaGuewKn5FNW4LSqwPFJZVEItfhMfGT7RpZuSFXjTi12pQ==}
     peerDependencies:
       react: ^18 || ^19
+
+  '@tanstack/react-table@8.20.5':
+    resolution: {integrity: sha512-WEHopKw3znbUZ61s9i0+i9g8drmDo6asTWbrQh8Us63DAk/M0FkmIqERew6P71HI75ksZ2Pxyuf4vvKh9rAkiA==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  '@tanstack/table-core@8.20.5':
+    resolution: {integrity: sha512-P9dF7XbibHph2PFRz8gfBKEXEY/HJPOhym8CHmjF8y3q5mWpKx9xtZapXQUWCgkqvsK0R46Azuz+VaxD4Xl+Tg==}
+    engines: {node: '>=12'}
 
   '@trpc/client@11.0.0-rc.586':
     resolution: {integrity: sha512-shCIpBzT+SzEbVXbCdpbSrPogG4c9J6hXh+xh5pidY1MTYcBHkeZVBLjy/fVSX+fB9wRoZXNaaoXO+ijYAZBcQ==}
@@ -6455,6 +6469,14 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.60.6
       react: 19.0.0-rc-5c56b873-20241107
+
+  '@tanstack/react-table@8.20.5(react-dom@19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107))(react@19.0.0-rc-5c56b873-20241107)':
+    dependencies:
+      '@tanstack/table-core': 8.20.5
+      react: 19.0.0-rc-5c56b873-20241107
+      react-dom: 19.0.0-rc-5c56b873-20241107(react@19.0.0-rc-5c56b873-20241107)
+
+  '@tanstack/table-core@8.20.5': {}
 
   '@trpc/client@11.0.0-rc.586(@trpc/server@11.0.0-rc.586)':
     dependencies:
