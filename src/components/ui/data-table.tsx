@@ -5,12 +5,18 @@ import type { Pagination } from '@/service/type/pagination';
 import {
   type ColumnDef,
   type PaginationState,
+  type Table as ReactTable,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import {
+  type ForwardedRef,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { Button } from './button';
 import {
   Table,
@@ -21,16 +27,19 @@ import {
   TableRow,
 } from './table';
 
-export default function DataTable<TData>({
-  currentPage,
-  columns,
-}: {
+type DataTableProps<TData> = {
   currentPage: Pagination<TData>;
   columns: ColumnDef<TData>[];
-}) {
+};
+
+function DataTable<TData>(
+  { currentPage, columns }: DataTableProps<TData>,
+  ref?: ForwardedRef<ReactTable<TData>>,
+) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [rowSelection, setRowSelection] = useState({});
 
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: searchParams.get('page')
@@ -56,10 +65,14 @@ export default function DataTable<TData>({
       replace(`${pathname}?${params.toString()}`);
     },
     manualPagination: true,
+    onRowSelectionChange: setRowSelection,
     state: {
       pagination,
+      rowSelection,
     },
   });
+
+  useImperativeHandle(ref, () => table, [table]);
 
   return (
     <div className="w-full">
@@ -117,7 +130,10 @@ export default function DataTable<TData>({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.previousPage()}
+          onClick={() => {
+            table.previousPage();
+            table.resetRowSelection();
+          }}
           disabled={pagination.pageIndex <= 1}
         >
           上一页
@@ -125,7 +141,10 @@ export default function DataTable<TData>({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.nextPage()}
+          onClick={() => {
+            table.nextPage();
+            table.resetRowSelection();
+          }}
           disabled={!currentPage.next}
         >
           下一页
@@ -134,3 +153,7 @@ export default function DataTable<TData>({
     </div>
   );
 }
+
+export default forwardRef(DataTable) as <TData>(
+  props: DataTableProps<TData> & { ref?: ForwardedRef<ReactTable<TData>> },
+) => ReturnType<typeof DataTable>;

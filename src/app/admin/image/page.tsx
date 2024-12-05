@@ -2,7 +2,6 @@ import ImageTable, {
   ImageColumns,
   type ImageType,
 } from '@/components/admin/image-table';
-import PostSelector from '@/components/admin/post-selector';
 import { Button } from '@/components/ui/button';
 import { PAGE_NUM, PAGE_SIZE } from '@/lib/constants';
 import { getImagesByPage } from '@/service/common/post';
@@ -36,6 +35,7 @@ export default async function Page({
   const { result, error } = await getImagesByPage(
     params.data.page,
     params.data.pageSize,
+    params.data.postKey,
   );
 
   if (error) throw new Error(error.message);
@@ -49,17 +49,6 @@ export default async function Page({
   return (
     <div className="space-y-5 py-10">
       <div className="text-2xl font-bold">图片管理</div>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-5">
-          <span>所属文章</span>
-          <PostSelector />
-        </div>
-        <div className="space-x-5">
-          <Button variant="destructive">批量删除</Button>
-          <Button>批量下载</Button>
-          <Button>上传</Button>
-        </div>
-      </div>
       <ImageTable
         currentPage={{ data: list, next: result.next }}
         columns={ImageColumns}

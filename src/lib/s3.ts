@@ -1,5 +1,6 @@
 import { BizError, ErrorCode } from '@/service/error';
 import {
+  DeleteObjectCommand,
   GetObjectCommand,
   HeadObjectCommand,
   type ListObjectsV2CommandOutput,
@@ -7,6 +8,7 @@ import {
   PutObjectCommand,
   S3Client,
   paginateListObjectsV2,
+  waitUntilObjectNotExists,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import env from './env';
@@ -28,6 +30,18 @@ export const s3UploadFile = async (key: string, file: Buffer) => {
   return await s3Client.send(command);
 };
 
+export const deleteObject = async (key: string) => {
+  const command = new DeleteObjectCommand({
+    Bucket: env.AWS_S3_BUCKET,
+    Key: key,
+  });
+  await s3Client.send(command);
+  await waitUntilObjectNotExists(
+    { client: s3Client, maxWaitTime: 10 },
+    { Bucket: env.AWS_S3_BUCKET, Key: key },
+  );
+};
+
 export const checkObjectExists = async (key: string) => {
   const command = new HeadObjectCommand({
     Bucket: env.AWS_S3_BUCKET,
@@ -47,6 +61,37 @@ export const checkObjectExists = async (key: string) => {
 export const genPresignedUrl = (key: string, expire: number) => {
   const command = new GetObjectCommand({ Bucket: env.AWS_S3_BUCKET, Key: key });
   return getSignedUrl(s3Client, command, { expiresIn: expire });
+};
+
+export const getObjectByPage = async (
+  page: number,
+  pageSize: number,
+  prefix?: string,
+) => {
+  'use cache';
+  const pagerObject = paginateListObjectsV2(
+    {
+      client: s3Client,
+      pageSize,
+    },
+    {
+      Bucket: env.AWS_S3_BUCKET,
+      Prefix: prefix,
+    },
+  );
+  let data: ListObjectsV2CommandOutput | undefined;
+  for (let i = 1; i <= page; i++) {
+    const { value, done } = await pagerObject.next();
+    if (done) throw new BizError(ErrorCode.NoMore, '这一页没有数据');
+    if (i === page) data = value;
+  }
+  const { done } = await pagerObject.next();
+
+  return {
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    data: data!,
+    next: done ? null : page + 1,
+  };
 };
 
 export const createPager = async (pageSize: number, prefix?: string) => {

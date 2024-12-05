@@ -2,11 +2,12 @@ import 'server-only';
 
 import { POSTS_INDEX } from '@/lib/constants';
 import { db } from '@/lib/db';
-import { createPager } from '@/lib/s3';
+import { createPager, getObjectByPage } from '@/lib/s3';
 import { searchClient } from '@/lib/search';
 import { result } from '@/lib/utils';
 import dayjs from 'dayjs';
 import matter from 'gray-matter';
+import { unstable_cacheTag as cacheTag } from 'next/cache';
 import readingTime from 'reading-time';
 import { BizError, ErrorCode } from '../error';
 import type { PostDataWithoutContent, PostMetadata } from '../type/post';
@@ -92,22 +93,18 @@ export async function getAllPosts() {
   return ps.map((p) => transData(p));
 }
 
-let ImagePager: Awaited<ReturnType<typeof createPager>> | null = null;
+export const GET_IMAGE_KEY = 'get-image-key';
 export async function getImagesByPage(
   page: number,
   pageSize: number,
   postKey?: string,
 ) {
+  'use cache';
+  cacheTag(GET_IMAGE_KEY);
   try {
     const prefix = getImagePrefix(postKey);
-    if (
-      !ImagePager ||
-      ImagePager.getPageSize() !== pageSize ||
-      ImagePager.getPrefix() !== prefix
-    )
-      ImagePager = await createPager(pageSize, prefix);
-    const { data, next } = await ImagePager.page(page);
-    return result({ data, next });
+    const data = await getObjectByPage(page, pageSize, prefix);
+    return result(data);
   } catch (e) {
     return result(e, '获取图片列表失败，请稍后再试');
   }
